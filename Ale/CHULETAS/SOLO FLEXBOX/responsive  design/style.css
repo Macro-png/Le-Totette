@@ -1,0 +1,25 @@
+body {
+    margin: 0;
+    z-index: 10;
+}
+
+h1 {
+    margin: 0;
+}
+
+
+.mobile_container_MenuAbajo {
+    background-color: brown;
+    box-sizing: border-box;
+    padding: 10px;
+    width: 100%;
+    position: fixed;
+    bottom: 0;
+    display: flex;
+    justify-content: space-evenly;
+}
+
+/* IMAGENES */
+.botones_abajo__ENLACES {
+    height: 35px;
+}

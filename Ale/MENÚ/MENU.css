@@ -1,0 +1,205 @@
+* {
+    margin: 0;
+    box-sizing: border-box;
+    padding: 0;
+}
+
+/* -------- HEADER DESKTOP --------  */
+.header {
+    background-color: beige;
+    border: 1px solid rgba(165, 42, 42, 0.418);
+    display: flex;
+    width: 100%;
+    height: auto;
+    justify-content: space-evenly;
+    align-items: center;
+    border-radius: 0 0 10px 10px;
+    position: sticky;
+    top: 0px;
+}
+
+/* --- LOGO Y NAV --- */
+.containerHeader_logo_Nav {
+    /* background-color: rgb(0, 136, 255); */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 5px 30px;
+    gap: 30px;
+}
+
+/* logo */
+#header_logo {
+    max-width: 100%;
+    width: 60px;
+}
+/* NAV */
+.header_nav > ul {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+    align-items: center;
+}
+
+.nav_item {
+    list-style: none;
+}
+
+.navlink {
+    text-decoration: none;
+    border-radius: 5px;
+    /* background-color: cadetblue; */
+    /* me falta agregar estilo hover y active  */
+    padding: 8px;
+    font-size: 18px;
+    color: rgb(44, 44, 44);
+    transition: background-color 0.5s;
+}
+
+.navlink:hover {
+    background-color: rgba(165, 42, 42, 0.534);
+}
+#boton_abrir_menu /*CHECKBOX QUE DEBE OCULTARSE*/{
+    display: none;
+}
+#boton_x {
+    display: none;
+}
+label[for="boton_abrir_menu"] {
+    cursor: pointer;
+    display: none;
+}
+
+/* -------- NAV QUERIES -------- */
+@media screen and (max-width: 700px) {
+    label[for="boton_abrir_menu"] {
+        display: block;
+    }
+    /* NAVBAR */
+    .header_nav {
+        position: absolute;
+        background-color: rgba(199, 91, 91, 0.829);
+        height: 40vh;
+        width: 100%;
+        left: -150%;
+        top: 70px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        gap: 30px;
+        transition: all 0.5s;
+    }
+    
+    .header_nav > ul {
+        flex-direction: column;
+        gap: 50px;
+    }
+
+    .navlink {
+        padding: 10px 20px;
+        border-radius: 15px;
+        color: white;
+    }
+
+    .navlink:hover {
+        color: rgb(39, 39, 39);
+        background-color: blanchedalmond;
+    }
+    /* Aparece el menú tras dar clic */
+    #boton_abrir_menu:checked ~ .header_nav {
+        left: 0;
+    }
+    /* Desaparece el botón hamburguesa y aparece la x */
+    #boton_abrir_menu:checked ~ label>#boton_hamburguesa {
+        display: none;
+    }
+    
+    #boton_abrir_menu:checked ~ label>#boton_x {
+        display: inline-block;
+    }
+}
+
+/* BUSCADOR */
+.container_buscador {
+    width: 30%;
+}
+
+form.buscador {
+    box-sizing: border-box;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 10px ;
+    gap: 20px;
+    background-color: white;
+    width: 100%;
+    border-radius: 20px;
+    border: 1px solid black;
+}
+
+#buscador_lupa {
+    flex: 1;
+    /* -ms-flex-align: stretch; */
+    background-color: rgba(222, 184, 135, 0.699);
+    font-size: 20px;
+    padding: 5px 0px;
+    border: 0;
+    border-radius: 100px;
+}
+input[id="buscador"] {
+    flex: 3;
+    font-size: 20px;
+    border: 0;
+    outline: 0;
+    background-color: transparent;
+    min-width: 0;
+}
+
+@media screen and (max-width:900px) {
+    input[id="buscador"] {
+        font-size: 16px;
+    }
+}
+/* BOTONES */
+
+.container_HeaderBotones {
+    display: flex;
+    gap: 15px;
+    padding-right: 20px;
+    align-items: center;
+    justify-content: center;
+}
+
+.header_botones {
+    max-width: 100%;
+    width:40px;
+}
+
+/* ---------- BOTONES MOBILE --------- */
+
+.container_MenuBotonesMobile {
+    position: absolute;
+    background-color: blanchedalmond;
+    bottom: 0;
+    width: 100%;
+    /* display: flex; */
+    display: none;
+    justify-content: space-around;
+    padding: 5px 20%;
+    height: auto;
+}
+
+.menu_mobile_botones {
+    max-width: 100%;
+    width: 50px;
+}
+
+@media screen and (max-width: 900px) {
+    .container_HeaderBotones {
+        display: none;
+    }
+    .container_MenuBotonesMobile {
+        display: flex;
+    }
+}

@@ -1,0 +1,183 @@
+body {
+    margin: 0
+}
+
+.grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(300px, 450px)) ;
+    grid-template-rows: 100px 300px 150px;
+    grid-auto-rows: 50px;
+    border: 10px solid black;
+}
+/* El contenedor grid hace que sus hijos ya no tengan margin colapse. Empiezan a sumarse los márgenes de cada elemento */
+
+/* Al hacer al contenedor padre el display grid. Por defecto hará que todo el contenido interno esté en UNA sola columna y la cantidad de filas como elementos haya. */
+
+
+            /* ------- PROPIEDAD grid-template-columns: ------- */
+/* Es para agregar columnas. Cada medida que agreguemos es una nueva columna (la medida se la damos nosotros) */
+            /* PROPIEDAD grid-template-rows */
+/* Lo mismo pero para las filas */
+
+    /* ------- VALORES ------- */
+/* 
+Se puede colocar px, vh, %.
+----auto: ocupa el espacio disponible (que sobra) para el elemento al que le pusimos ese valor. 
+Si más de uno tiene auto, el espacio disponible se distribuye entre esos elementos en función de su contenido. El que tenga más contenido va a abarcar más
+----fr: 
+Divide el ancho disponible en una fracción dada por la cantidad que de la suma de los FRs que pongamos. Y a cada elemento le asignará el espacio determinado
+*/
+
+            /* ------- FUNCIONES MINMAX Y REPEAT ------- */
+
+        /* REPEAT() */
+/* 
+Sintaxis: 
+repeat(cantidad de veces que se va a repetir, lo que se quiere repetir) 
+
+ejemplo: repeat(4,1fr) --> Coloca 4 veces "1fr". Se puede usar en grid-template-columns/rows
+
+También puede repetir patrones:
+
+repeat(cant_veces, patrón)
+ejemplo: repeat(3, 1fr 2fr)
+*/
+
+        /* ------ minmax() ------ */
+
+    /* Se le dice el mínimo y maximo para cada columna o fila */
+/* 
+-SINTAXIS: 
+minmax(tamaño-mínimo, tamaño-máximo)
+El tamaño-mínimo indica hasta donde se puede achicar y el máximo hasta donde se puede agrandar.
+*/
+
+.grid_item {
+    background-color: rgba(0, 116, 161, 0.549);
+    /* margin: 10px; */
+    padding: 10px;
+    color: white;
+    /* width: 40%; */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+            /* ------ GRID EXPLÍCITO E IMPLÍCITO ------ */
+/* Grid explícito es aquello que definimos nosotros: cantidad de filas o columnas */
+/* Grid implícito: Grid trata a todos los elementos como parte de la grilla. Si agregamos más elementos que cantida de columnas y filas que hayamos definido, Grid va a crear nuevas filas donde colocar los elementos no definidos. Estas filas se van a adaptar automáticamente al restante del espacio del grid-container  */
+
+            /* ------ PROPIEDAD GRID-AUTO-ROWS */
+/* Para solucionar el tema del grid implícito. Colocamos esta propiedad y le agregamos el valor de espacio que van a ocupar las filas automáticamente.  */
+
+            /* ------ GRID GAP ------ */
+/* Es la separación entre elementos, para evitar usar margin en lo posible para no tener problemas con la ausencia de margin-colapse*/
+
+.grid {
+    /* column-gap: 20px; Separación entre columnas */
+    /* row-gap: 20px; Separación entre filas */
+    /* Podemos abreviar las 2 en una sola: 
+    gap: (row-gap) (column-gap);  */
+    gap: 20px;
+    /* Para que el contendor padre (el grid-container) tenga esa misma distancia del gap con los bordes, se le coloca un padding con la misma cantidad */
+    width: 80%;
+    margin: auto;
+}
+
+
+/* ------ GRID DINÁMICO (Y RESPONSIVE) ------ */
+/* Aclaración: el grid por defecto es estático, no dinámico (es decir, no se adapta a distintas resoluciones y espacio) */
+
+/* en el repeat hay 2 valores que podemos poner como primer parámetro:
+auto-fit y auto-fill.
+
+-auto-fit: ajusta
+No crea nuevas columnas como tal. Solo mira si hay o no espacio para colocar los elementos que ya existen en una columna. Si no, el elemento queda abajo como una fila. 
+Si si tiene el tamaño para estar como una columna en la patanlla. la coloca y adapta el contenido al ancho del grid-container
+
+- auto-fill: rellena
+Crea nuevas columnas en el grid. Aunque estén vacías. Para poder rellenar el espacio disponible conforme se va adaptando
+*/
+
+.grid {
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)) ;
+}
+
+@media screen and (max-width: 815px) {
+    .grid {
+        grid-template-columns: 1fr;
+        gap: 20px;
+        padding: 20px;
+    }
+}
+.h2 {
+    display: flex;
+    flex-direction: column;
+    /* width: 100%; */
+    background-color: rgba(250, 235, 215, 0.502);
+    align-items: center ;
+    padding: 10px;
+}
+
+/* grid column y grid row */
+.grid2 {
+    display: grid;
+    grid-template-columns: repeat(auto-fill,minmax(250px, 1fr));
+    gap: 20px;
+    width: 100%;
+    box-sizing: border-box;
+    padding: 30px 10px;
+}
+
+.grid_item2 {
+    background-color: aqua;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.grid_item2:first-child {
+    grid-column-start: 1;
+    grid-column-end: span 2;
+    grid-row-start: 1;
+    grid-row-end: span 3;
+}
+
+/* ALINEACIÓN CON GRID */
+
+/* justify-items: Alinea los elementos hijos en el eje horizontal dentro de su propia celda */
+/* justify-self hace lo mismo pero para un elemento específico */
+/* align-items/self hace lo mismo que el justify. Pero en el eje vertical */
+
+
+/* justify-content:
+ALINEA TODAS LAS CELDAS JUNTAS EN EL EJE HORIZONTAL */
+
+/* align-content:
+Alinea todas las celdas en el eje vertical */
+.grid3 {
+    box-sizing: border-box;
+    margin: 20px;
+    display: grid;
+    grid-template-columns: repeat(3,250px);
+    grid-template-rows: repeat(3, 150px);
+    height: 900px;
+    gap: 10px;
+    padding: 10px;
+    /* justify-items: center; */
+    justify-content: space-evenly;
+    /* align-items: center; */
+    border: 5px solid black;
+    align-content:center;
+}
+
+.griditem3 {
+    background-color: aquamarine;
+    /* font-size: 30px; */
+    /* width: 100%; */
+    border-radius: 15px;
+    /* display: flex;
+    justify-content: center;
+    align-items: center; */
+
+}

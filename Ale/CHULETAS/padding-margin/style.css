@@ -1,0 +1,126 @@
+/* margin y padding | Margin colapse */
+body {
+    margin: 0;
+}
+.header {
+    background-color: #a1a1a1;
+    padding: 10px 20px;
+    margin: 0;
+}
+.box {
+    background-color: blue;
+    width: 40%;
+    height: 40px;
+    margin-top: 20px;
+    margin-bottom: 40px;
+    margin-inline: auto;
+}
+/* el margin bottom de box y el margin-top de box2 no se va a sumar 40+40 = 80. Van a superponerse. */
+
+
+/* Margin Colapse: 
+Los márgenes verticales se superponen. El margen más grande es el que se superpone y es el que va a separar una caja de otra. No se suman entre sí. */
+/* Cuando tenemos 2 elementos hermanos (2 elementos dentro de la misma caja (tienen el mismo padre) ) */
+
+/* MANERA DE CENTRAR ELEMENTOS */
+/* margin: auto */
+
+/* BORDES*/
+/* version sin shorthand */
+.box-bordes {
+    background-color: gray;
+    width: 80%;
+    /* height: 50px; */
+    margin: auto;
+    margin-bottom: 20px;
+    padding: 10px;
+    text-align: center;
+    border-width: 2px;
+    border-style: solid;
+    border-color: transparent;
+    border-radius: 25px;
+
+}
+
+form {
+    margin: auto;
+}
+
+/* version con shorthand */
+input {
+    margin: 10px 20px;
+    /* margin-top: 10px;
+    margin-bottom: 20px; */
+    padding: 12px; 
+    border-radius: 15px;
+    border: 1px solid transparent;
+    width: 50%;
+    background-color: antiquewhite;
+
+}
+
+#buscador {
+    background-color:wheat ;
+}
+/* para definir un borde, debemos colocar tanto width, como color y style. Si no, no se verá */
+
+/* ojo:
+border-style: hidden -> El border directamente no forma parte del tamaño de la caja
+border-color: transparent -> No se ve, pero si afecta el tamaño de la caja */
+
+/* AHORA: border es un shorthand para 3 propiedades */
+/* border: (width) (style) (color) 
+ejemplo: border: 3px solid black;
+border engloba las 4 direcciones. Pero si queremos colocarles propiedades distintas a cada dirección. Hay que hacerlo por propiedades individuales, no es como el padding*/ 
+
+/* También podemos aplicar border en una sola dirección.  Colocando:
+border-top, border-bottom, right,etc */
+
+/* Estos a su vez son shorthands que actúan igual que border:
+border-top: (width) (style) (color) */
+
+/* border-radius funciona por aparte.
+Si solo colocamos border-radius: (cantidad)px lo hará a partes iguales en las 4 direcciones. 
+Pero se puede personalizar en cada direccion:
+de forma larga:
+border-top-right-radius,border-top-left-radius,border-bottom-left-radius, border-bottom-right-radius
+como shorthand:
+border-radius: (arriba-izquierda)px (arriba-derecha)px (abajo-derecha)px (arrriba-izquierda)px */
+
+
+/* BOX SIZING */
+.boxes-s {
+    width: 150px;
+    height: 150px;
+    background-color: #a1a1a1;
+    margin: auto;
+    margin-bottom: 15px;
+}
+.box-s1{
+    padding: 25px;
+    border: 8px solid black;
+    text-align: center;
+}
+
+.box-s2 {
+    box-sizing: border-box;
+    padding: 25px;
+    border: 8px solid;
+}
+
+.texto {
+    text-align: center;
+    margin-top: 0;
+    margin-bottom: 0;
+}
+
+.uni-medida{
+    width: 60vw;
+    height: 70vh;
+    background-color: beige;
+    margin: auto;
+    margin-top: 10vh;
+    margin-bottom: 10vh;
+    border-radius: 20px;
+    text-align: center;
+}

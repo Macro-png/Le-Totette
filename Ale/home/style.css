@@ -1,0 +1,381 @@
+* {
+    margin: 0;
+    box-sizing: border-box;
+    padding: 0;
+}
+
+/* -------- HEADER DESKTOP --------  */
+.header {
+    background-color: beige;
+    border: 1px solid rgba(165, 42, 42, 0.418);
+    display: flex;
+    width: 100%;
+    height: auto;
+    justify-content: space-evenly;
+    align-items: center;
+    border-radius: 0 0 10px 10px;
+    position: sticky;
+    top: 0px;
+}
+
+/* --- LOGO Y NAV --- */
+.containerHeader_logo_Nav {
+    /* background-color: rgb(0, 136, 255); */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 5px 30px;
+    gap: 30px;
+}
+
+/* logo */
+#header_logo {
+    max-width: 100%;
+    width: 60px;
+}
+/* NAV */
+.header_nav > ul {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+    align-items: center;
+}
+
+.nav_item {
+    list-style: none;
+}
+
+.navlink {
+    text-decoration: none;
+    border-radius: 5px;
+    /* background-color: cadetblue; */
+    /* me falta agregar estilo hover y active  */
+    padding: 8px;
+    font-size: 18px;
+    color: rgb(44, 44, 44);
+    transition: background-color 0.5s;
+}
+
+.navlink:hover {
+    background-color: rgba(165, 42, 42, 0.534);
+}
+#boton_abrir_menu /*CHECKBOX QUE DEBE OCULTARSE*/{
+    display: none;
+}
+#boton_x {
+    display: none;
+}
+label[for="boton_abrir_menu"] {
+    cursor: pointer;
+    display: none;
+}
+
+/* -------- NAV QUERIES -------- */
+@media screen and (max-width: 700px) {
+    label[for="boton_abrir_menu"] {
+        display: block;
+    }
+    /* NAVBAR */
+    .header_nav {
+        position: absolute;
+        background-color: rgba(199, 91, 91, 0.829);
+        height: 40vh;
+        width: 100%;
+        left: -150%;
+        top: 70px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        gap: 30px;
+        transition: all 0.5s;
+    }
+    
+    .header_nav > ul {
+        flex-direction: column;
+        gap: 50px;
+    }
+
+    .navlink {
+        padding: 10px 20px;
+        border-radius: 15px;
+        color: white;
+    }
+
+    .navlink:hover {
+        color: rgb(39, 39, 39);
+        background-color: blanchedalmond;
+    }
+    /* Aparece el menú tras dar clic */
+    #boton_abrir_menu:checked ~ .header_nav {
+        left: 0;
+    }
+    /* Desaparece el botón hamburguesa y aparece la x */
+    #boton_abrir_menu:checked ~ label>#boton_hamburguesa {
+        display: none;
+    }
+    
+    #boton_abrir_menu:checked ~ label>#boton_x {
+        display: inline-block;
+    }
+}
+
+/* BUSCADOR */
+.container_buscador {
+    width: 30%;
+}
+
+form.buscador {
+    box-sizing: border-box;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 10px ;
+    gap: 20px;
+    background-color: white;
+    width: 100%;
+    border-radius: 20px;
+    border: 1px solid black;
+}
+
+#buscador_lupa {
+    flex: 1;
+    /* -ms-flex-align: stretch; */
+    background-color: rgba(222, 184, 135, 0.699);
+    font-size: 20px;
+    padding: 5px 0px;
+    border: 0;
+    border-radius: 100px;
+}
+input[id="buscador"] {
+    flex: 3;
+    font-size: 20px;
+    border: 0;
+    outline: 0;
+    background-color: transparent;
+    min-width: 0;
+}
+
+@media screen and (max-width:900px) {
+    input[id="buscador"] {
+        font-size: 16px;
+    }
+}
+/* BOTONES */
+
+.container_HeaderBotones {
+    display: flex;
+    gap: 15px;
+    padding-right: 20px;
+    align-items: center;
+    justify-content: center;
+}
+
+.header_botones {
+    max-width: 100%;
+    width:40px;
+}
+
+/* ---------- BOTONES MOBILE --------- */
+
+.container_MenuBotonesMobile {
+    position: sticky;
+    /* position: absolute; */
+    background-color: blanchedalmond;
+    bottom: 0;
+    width: 100%;
+    /* display: flex; */
+    display: none;
+    justify-content: space-around;
+    padding: 5px 20%;
+    height: auto;
+}
+
+.menu_mobile_botones {
+    max-width: 100%;
+    width: 50px;
+}
+
+@media screen and (max-width: 900px) {
+    .container_HeaderBotones {
+        display: none;
+    }
+    .container_MenuBotonesMobile {
+        display: flex;
+    }
+}
+
+
+
+/* ---------- CONTENIDO DEL SITIO ---------- */
+
+.Container_Catalogo_DisTuTotebag {
+    /* background-color: rgba(0, 255, 255, 0.116); */
+    display: flex;
+    gap: 5%;
+    padding: 5% 10%;
+    /* column-gap: 100px; */
+    width: 100%;
+    justify-content: center;
+}
+
+/* temporal */
+.Container_Catalogo_DisTuTotebag  img {
+    max-width: 100%;
+    min-width: 100px;
+    width: 500px;
+}
+
+/* ------- CATALOGO ------- */
+.container_disTuTotebag, .container_catalogo {
+    border: 1px solid rgb(238, 0, 0);
+    background-color: beige;
+    border-radius: 20px;
+}
+
+
+.container_catalogo {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    flex: 2;
+    max-width: 100%;
+    /* min-width: 360px; */
+}
+
+/* -- PRODUCTOS -- */
+.container_productos {
+    display: flex;
+    padding: 20px;
+    /* background-color: beige; */
+    gap: 20px;
+}
+
+.productos {
+    border: 1px solid black;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+@media screen and (max-width:599px) {
+    .container_productos {
+        flex-direction: column;
+    }
+    .container_productos img {
+        max-width: 100%;
+        width: 300px;
+        min-width: 100px;
+        max-width: 100%;
+    }
+}
+
+/* @media screen and (max-width:380px) {
+    .container_catalogo {
+        min-width: 100px;
+        max-width: 100%;
+    }
+} */
+
+/* DISEÑA TU TOTEBAG */
+.container_disTuTotebag {
+    display: flex;
+    flex: 1;
+    min-width: 200px;
+    max-width: 100%;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 20px;
+}
+
+img[id="disTuTotebag"] {
+    max-width: 100%;
+    width: 300px;
+    min-width: 100px;
+
+}
+
+
+/* ---------- CATEGORÍAS -------- */
+.img_categoria {
+    max-width: 100%;
+    width: 300px;
+    min-width: 100px;
+}
+
+.container_categorias {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    padding: 0 10%;
+}
+
+.categoria {
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    align-content: center;
+    align-items: center;
+    border: 1px solid burlywood;
+    border-radius: 30px;
+}
+
+/* -------- CARACTERÍSTICAS --------- */
+.img_caracteristica {
+    max-width: 100%;
+    width: 100px;
+    min-width: 0;
+}
+
+.container_caracteristicas {
+    display: flex;
+    justify-content: center;
+    /* background-color: aqua; */
+    padding: 2% 10%;
+    gap: 40px;
+    /* width: 80%; */
+    /* margin: auto; */
+}
+
+.caracteristicas {
+    border-bottom: 1px solid burlywood;
+    background-color: beige;
+    border-radius: 20px;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+#Caracteristicas {
+    text-align: center;
+    margin-top: 40px;
+}
+
+@media screen and (max-width:650px) {
+    .Container_Catalogo_DisTuTotebag{
+        flex-direction: column;
+        gap: 40px;
+        width: 100%;
+        align-items: center;
+
+    }
+}
+
+@media screen and (max-width:600px) {
+    .Container_Catalogo_DisTuTotebag {
+        padding: 10px;
+    }
+}
+
+@media screen and (max-width:500px) {
+    .container_categorias {
+        flex-direction: column;
+    }
+
+    .container_caracteristicas {
+        flex-direction: column;
+    }
+}
