@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Catálogo - E-commerce</title>
+  <link rel="stylesheet" href="catalogo.css">
+  <script src="https://kit.fontawesome.com/56579e118f.js" crossorigin="anonymous"></script>
+</head>
+<body>
+<body>
+    <!-- HEADER -->
+    <header class="header">
+        <div class="containerHeader_logo_Nav">
+            <!-- LOGO -->
+            <img src="img/logo minimalista.png" alt="logo_letotte   " id="header_logo">
+            <!-- NAV -->
+            <input type="checkbox" id="boton_abrir_menu">
+            <label for="boton_abrir_menu" >
+                <i class="fa-solid fa-x" id="boton_x" title="Cerrar Menú"></i>
+                <i class="fa-solid fa-bars" title="Abrir Menú" id="boton_hamburguesa"></i> 
+                Menú
+            </label>
+            <nav class="header_nav">
+                <ul>
+                    <li class="nav_item"><a href="" class="navlink">Home</a></li>
+                    <li class="nav_item"><a href="" class="navlink">Catálogo</a></li>
+                    <li class="nav_item"><a href="" class="navlink">Diseña tu Totebag</a></li>
+                </ul>
+            </nav>
+        </div>
+
+        <!-- BUSCADOR -->
+        <div class="container_buscador">
+            <form class="buscador">
+                <input type="text" id="buscador" placeholder="¿Qué estás buscando?">
+                <i class="fa-solid fa-magnifying-glass" id="buscador_lupa"></i>
+            </form>
+        </div>
+        <!-- BOTONES DESKTOP -->
+        <div class="container_HeaderBotones">
+            <a href=""><img src="img/whats.png" alt="whatsapp" class="header_botones"></a>
+            <a href=""><img src="img/carrito.png" alt="carrito" class="header_botones"></a>
+            <a href=""><img src="img/login.png" alt="login" class="header_botones"></a>
+        </div>
+        <!-- BOTONES MOBILE -->
+    </header>
+    <div class="container_MenuBotonesMobile">
+            <a href=""><img src="img/whats.png" alt="whatsapp" class="menu_mobile_botones"></a>
+            <a href=""><img src="img/carrito.png" alt="carrito" class="menu_mobile_botones"></a>
+            <a href=""><img src="img/login.png" alt="login" class="menu_mobile_botones"></a>
+        </div>
+
+  <main>
+    <aside>
+      <div class="filters">
+        <h3>Filtros</h3>
+        <label><input type="checkbox"> Filtro 1</label>
+        <label><input type="checkbox"> Filtro 2</label>
+        <label><input type="checkbox"> Filtro 3</label>
+      </div>
+    </aside>
+
+    <section class="products">
+      <div class="product">
+        <img id="img-prod1" src="img/tote1.jpg" alt="Producto 1">
+        <h4>Producto 1</h4>
+        <p>$1000</p>
+        <div class="color-options">
+          <span class="color-circle" style="background:red;" onclick="document.getElementById('img-prod1').src='img/tote1-rojo.jpg'"></span>
+          <span class="color-circle" style="background:blue;" onclick="document.getElementById('img-prod1').src='img/tote1-azul.jpg'"></span>
+          <span class="color-circle" style="background:green;" onclick="document.getElementById('img-prod1').src='img/tote1-verde.jpg'"></span>
+        </div>
+        <button>Mas Informacion</button>
+      </div>
+      <div class="product">
+        <img id="img-prod2" src="img/tote2.jpg" alt="Producto 2">
+        <h4>Producto 2</h4>
+        <p>$2000</p>
+        <div class="color-options">
+          <span class="color-circle" style="background:purple;" onclick="document.getElementById('img-prod2').src='img/tote2-violeta.jpg'"></span>
+          <span class="color-circle" style="background:orange;" onclick="document.getElementById('img-prod2').src='img/tote2-naranja.jpg'"></span>
+          <span class="color-circle" style="background:gray;" onclick="document.getElementById('img-prod2').src='img/tote2-gris.jpg'"></span>
+        </div>
+        <button>Mas Informacion</button>
+      </div>
+      <div class="product">
+        <img id="img-prod3" src="img/tote3.jpg" alt="Producto 3">
+        <h4>Producto 3</h4>
+        <p>$3000</p>
+        <div class="color-options">
+          <span class="color-circle" style="background:yellow;" onclick="document.getElementById('img-prod3').src='img/tote3-amarillo.jpg'"></span>
+          <span class="color-circle" style="background:black;" onclick="document.getElementById('img-prod3').src='img/tote3-negro.jpg'"></span>
+          <span class="color-circle" style="background:pink;" onclick="document.getElementById('img-prod3').src='img/tote3-rosa.jpg'"></span>
+        </div>
+        <button>Mas Informacion</button>
+      </div>
+    </section>
+  </main>
+</body>
+</html>

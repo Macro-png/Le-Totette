@@ -1,0 +1,141 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background: #FAD6B1;
+    color: #333;
+}
+
+/* HEADER */
+header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 15px 30px;
+    background: #D6786A;
+    color: black;
+    width: 100%;
+    position: fixed;
+}
+
+header .logo {
+    font-size: 1.5em;
+    font-weight: bold;
+}
+
+header .search-bar {
+    flex: 1;
+    margin: 0 20px;
+}
+
+header input[type="text"] {
+    width: 100%;
+    padding: 8px;
+    border-radius: 4px;
+    border: none;
+}
+
+header .cart {
+    font-size: 1.2em;
+    cursor: pointer;
+}
+
+main {
+    display: flex;
+    padding: 20px;
+    padding-top: 70px;
+    gap: 20px;
+}
+
+/* Lista de productos */
+.cart-items {
+    flex: 2;
+    background: white;
+    padding: 1.5rem;
+    border-radius: 10px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+.cart-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 1rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid #ddd;
+}
+
+.cart-item img {
+    width: 80px;
+    border-radius: 8px;
+}
+
+.item-info {
+    flex: 2;
+    margin-left: 1rem;
+}
+
+.item-info h4 {
+    margin: 0 0 0.5rem;
+}
+
+.item-quantity input {
+    width: 50px;
+    text-align: center;
+    padding: 5px;
+}
+
+.item-price {
+    font-weight: bold;
+    margin-left: 1rem;
+}
+
+/* Resumen del pedido */
+.cart-summary {
+    flex: 1;
+    background: white;
+    padding: 1.5rem;
+    border-radius: 10px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    height: fit-content;
+}
+
+.cart-summary h3 {
+    margin-top: 0;
+    margin-bottom: 1rem;
+}
+
+.summary-line {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 0.8rem;
+}
+
+.summary-line.total {
+    font-size: 1.2rem;
+    font-weight: bold;
+    border-top: 2px solid #222;
+    padding-top: 0.8rem;
+}
+
+.btn-checkout {
+    display: block;
+    width: 100%;
+    padding: 0.8rem;
+    margin-top: 1rem;
+    background: #28a745;
+    color: white;
+    font-weight: bold;
+    text-align: center;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+.btn-checkout:hover {
+    background: #218838;
+}

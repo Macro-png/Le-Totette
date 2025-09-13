@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="es">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Carrito de Compras</title>
+        <link rel="stylesheet" href="carrito.css">
+    </head>
+<body>
+
+    <header>
+        <div class="logo">Le Totette</div>
+            <div class="search-bar">
+                <input type="text" placeholder="Buscar productos...">
+            </div>
+        <div class="cart">🛒</div>
+    </header>
+
+    <main>
+        <!-- Lista de productos -->
+        <div class="cart-items">
+            <div class="cart-item">
+                <img src="https://via.placeholder.com/80" alt="Producto 1">
+                <div class="item-info">
+                    <h4>Producto 1</h4>
+                    <p>Descripción breve</p>
+                </div>
+                <div class="item-quantity">
+                    <input type="number" value="1" min="1">
+                </div>
+                <div class="item-price">$20.00</div>
+            </div>
+
+            <div class="cart-item">
+                <img src="https://via.placeholder.com/80" alt="Producto 2">
+                <div class="item-info">
+                    <h4>Producto 2</h4>
+                    <p>Descripción breve</p>
+                </div>
+                <div class="item-quantity">
+                    <input type="number" value="2" min="1">
+                </div>
+                <div class="item-price">$15.00</div>
+            </div>
+        </div>
+
+        <!-- Resumen -->
+        <div class="cart-summary">
+            <h3>Resumen de compra</h3>
+            <div class="summary-line">
+                <span>Subtotal</span>
+                <span>$50.00</span>
+            </div>
+            <div class="summary-line total">
+                <span>Total</span>
+                <span>$50.00</span>
+            </div>
+            <button class="btn-checkout">Finalizar Compra</button>
+        </div>
+    </main>
+
+    </body>
+</html>
