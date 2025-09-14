@@ -214,7 +214,7 @@ input[id="buscador"] {
 main {
     display: flex;
     padding: 20px;
-    padding-top: 70px;
+    padding-top: 50px;
     gap: 20px;
 }
 
