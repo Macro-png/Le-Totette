@@ -75,11 +75,11 @@ input[type="submit"], input[type="button"] {
 }
 
 body{
-    background-image: url("../img/fondo.jpeg");
+    background-image: url("0. img\fondo.jpeg");
     display: flex;
     flex-direction: column;
     justify-content: center;
-    align-items: center;
+    align-items: center;    
     height: 100vh;
 }
 
