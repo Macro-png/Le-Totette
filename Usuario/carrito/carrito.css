@@ -214,7 +214,7 @@ input[id="buscador"] {
 main {
     display: flex;
     padding: 20px;
-    padding-top: 70px;
+    padding-top: 50px;
     gap: 20px;
 }
 
@@ -242,7 +242,7 @@ main {
 }
 
 .item-info {
-    flex: 2;
+    flex: 2;        
     margin-left: 1rem;
 }
 
@@ -274,6 +274,12 @@ main {
 @media screen and (max-width: 900px) {
     main {
         flex-direction: column;
+    }
+}
+
+@media screen and (max-width: 400px) {
+    .item-info{
+        display: none;
     }
 }
 

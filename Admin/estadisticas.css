@@ -235,3 +235,9 @@ h2 {
   font-weight: bold;
   color: brown;
 }
+
+@media screen and (max-width:700px) {
+  .cards {
+    flex-direction: column;
+  }
+}

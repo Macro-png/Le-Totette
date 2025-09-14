@@ -244,7 +244,6 @@ aside {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 20px;
-  margin-top: 50px;
 }
 
 .product {
@@ -285,23 +284,6 @@ aside {
 
 .product button:hover {
   background: #D6786A;
-  color: black;
-}
-
-.color-options {
-  margin: 8px 0;
-}
-.color-circle {
-  display: inline-block;
-  width: 24px;
-  height: 24px;
-  border-radius: 50%;
-  margin-right: 8px;
-  cursor: pointer;
-  border: 2px solid #ccc;
-}
-.color-circle:hover {
-  border: 2px solid #333;
 }
 
 @media (max-width: 900px) {
