@@ -1,0 +1,130 @@
+* {
+  box-sizing: border-box;
+  font-family: 'Courier New', Courier, monospace;
+  font-size:medium;
+  margin: 0;
+}
+
+
+.login{
+    font-size:x-large;
+    width: 100%;
+    display: inline-block;
+    text-align: center;
+    font-weight: bold
+}
+
+.cont{
+    background-color: #ddbd9d;
+    opacity:80%;
+    width:80vw;
+    margin: auto;
+    margin-top: 15%;
+    border-radius: 10px;
+    display:flex;
+    flex-direction: column;
+    overflow: auto;
+}
+
+label {
+    display: flex;
+    margin-left: 20%;
+}
+.form {
+    display: flex;
+    flex-direction: column;
+}
+input[type="email"], input[type="password"] {
+    display: flex;
+    width: 60%;
+    height: 30%;
+    margin: auto;
+    margin-top: 10px;
+    margin-bottom: 5px;
+    padding: 5px 0 5px 0 ;
+    border: 1.5px solid #c3a78a;
+    border-radius: 10px;
+}
+
+/*contenedor de los dos botones*/
+.botones {
+    text-align: center;
+    padding: 10px 5px;
+    margin-bottom: 10px;
+    
+}
+
+
+
+/*cada boton en si*/
+input[type="submit"], input[type="button"] {
+    display: inline-block;
+    margin: auto;
+    border-radius: 5px;
+    border: 1.5px solid #c3a78a;
+    padding: 10px;
+    background-color:#fad6b1;
+    color: black;
+    cursor: pointer;
+}
+
+.bot:hover{
+    background-color: #d6786a;
+    
+}
+
+body{
+    background-image: url("../img/fondo.jpeg");
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+aside{
+    display:none;
+}
+
+.flexbox{
+    display:flex;
+    padding: 0 5%;
+    width: 100%; /*para que no se rompa*/
+    justify-content: center;
+    align-items: center;
+    gap: 40px;
+}
+
+
+
+
+
+
+input[type="button"] {
+    display: inline-block;
+    margin: auto;
+    border-radius: 5px;
+    border: 1.5px solid #c3a78a;
+    padding: 10px;
+    background-color:#fad6b1;
+    color: black;
+    transition: all 0.5s;
+    cursor: pointer;
+}
+
+form{
+    text-align: left;
+    margin-bottom: 1vh;
+}
+
+@media screen and (max-width: 200px){
+     input[type="submit"], input[type="button"] {
+        font-size:10px;
+    }
+    .login{
+        font-size: 15px;
+    }
+    label{
+        font-size: 10px;
+    }
+}
