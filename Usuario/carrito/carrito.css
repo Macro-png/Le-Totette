@@ -242,7 +242,7 @@ main {
 }
 
 .item-info {
-    flex: 2;
+    flex: 2;        
     margin-left: 1rem;
 }
 
@@ -274,6 +274,12 @@ main {
 @media screen and (max-width: 900px) {
     main {
         flex-direction: column;
+    }
+}
+
+@media screen and (max-width: 400px) {
+    .item-info{
+        display: none;
     }
 }
 
