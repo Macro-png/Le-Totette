@@ -1,0 +1,282 @@
+* {
+    margin: 0;
+    box-sizing: border-box;
+    padding: 0;
+}
+
+/* ------------ CONTENIDO DE LA PÁGINA -------------- */
+/* Config. Generales */
+body {
+    background-color: #FAD6B1;
+    color: #333;
+}
+
+.flexbox {
+    display: flex;
+    width: 100%;
+    flex-direction: row;
+    height: 100vh;
+}
+
+
+aside, main {
+    border: 1px solid black;
+    height: 100%;
+    background-color: antiquewhite;
+}
+
+main {
+    width: 90%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 10px 15px;
+}
+
+/* ------------------- Aside ------------------- */
+aside {
+    background-color: beige;
+    padding: 10% 0;
+    width: 10%;
+    min-width: 120px;
+}
+
+/* NAV ASIDE */
+.nav {
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+    justify-content: center;
+    align-items: center ;
+    padding: 20px 10px;
+}
+
+#admin_icono {
+    font-size: 40px;
+}
+
+.nav_list {
+    display: flex;
+    flex-direction: column;
+    gap: 34px;
+    margin-top: 50px;
+    list-style: none;
+}
+
+.nav_link {
+    text-decoration: none;
+    color: #333;
+    font-size: 20px;
+    padding: 8px;
+    transition: background-color 0.5s;
+    border-radius: 10px;
+}
+
+.nav_link:hover {
+    background-color: rgba(165, 42, 42, 0.534);
+}
+
+aside input[type="checkbox"], aside label {
+    display: none;
+}
+
+/* Primer cambio de disposición (menú de vertical a horizontal) */
+@media screen and (max-width:700px) {
+    .flexbox {
+        flex-direction: column;
+    }
+    aside, main {
+        width: 100%;
+    }
+    aside {
+        height: 10vh;
+        justify-content: center;
+        align-items: center;
+        padding: 10px;
+    }
+    .nav {
+    flex-direction: row;
+    gap: 5px;
+    text-wrap: balance;
+    justify-content: space-evenly;
+    padding: 10px;
+}
+    .nav_list {
+    flex-direction: row;
+    margin-top: 0;
+    gap: 10px;
+}
+}
+
+/* 2do cambio (direccion row a dirección column) */
+@media screen and (max-width:500px) {
+    .nav {
+        flex-direction: column;
+        margin: 0;
+        padding: 0;
+        /* gap: 0; */
+    }
+    .nav_list {
+        padding: 0;
+        margin: 0;
+        justify-content: space-evenly;
+        gap: 0;
+    }
+    aside {
+        height: auto;
+        margin: 0;
+        padding: 0;
+    }
+}
+/* MENU DE HAMBURGUESA PARA PANTALLAS MUY CHIQUITAS */
+@media screen and (max-width:291px) {
+    label {
+        display: flex;
+        flex-direction: row;
+    }
+    #boton_x {
+        display: none;
+    }
+
+    .botonmenu{
+        display: flex;
+        flex-direction: row;
+    }
+
+    .nav ul {
+        background-color: rgba(199, 91, 91, 0.829);
+        position: absolute;
+        margin-top: 35vh;
+        flex-direction: column;
+        gap: 20px;
+        width: 100%;
+        border-radius: 10px;
+        justify-content: center;
+        align-items: center;
+        left: -150%;
+        transition: left 0.5s;
+    }
+    /* cuando se chequea, se despliega el menu */
+    aside input:checked ~ ul {
+        left: 0;
+    }
+    aside input:checked ~ label>#boton_hamburguesa {
+        display: none;
+    }
+    aside input:checked ~ label>#boton_x {
+        display: block;
+    }
+}
+
+
+input[type="submit"]{
+    display: inline-block;
+    /* margin: auto; */
+    border-radius: 30px;
+    border: 1.5px solid #c3a78a;
+    padding: 10px;
+    background-color:#fad6b1;
+    color: black;
+    transition: all 0.5s;
+}
+
+input[type="reset"]{
+    display: inline-block;
+    /* margin: auto; */
+    border-radius: 30px;
+    border: 1.5px solid #c3a78a;
+    padding: 10px;
+    background-color:#fad6b1;
+    color: black;
+    transition: all 0.5s;
+}
+
+#caract{
+    width: 80%;
+    min-height: fit-content;
+    resize: vertical;
+    background-color: #fad6b1;
+    border-color: #c3a78a;
+    border-radius: 10px;
+}
+
+input[type="text"]{
+    background-color: #fad6b1;
+    border-color: #c3a78a;
+    width: 80%;
+    margin-top: 10px;
+    border-radius: 10px;
+
+}
+.bot:hover{
+    background-color: #d6786a;
+    
+}
+
+.nombre{
+    font-size: xx-large;
+    text-align: center;
+    font-weight: bold;
+}
+
+.caract{
+    text-align: justify;
+    font-size: x-large;
+}
+
+/* add: padding entre texts de colo1 2 y 3 */
+#color1, #color2, #color3, #Precio {
+    padding: 5px 0;
+}
+form{
+    text-align: left;
+    margin-bottom: 1vh;
+    width: 90%;
+}
+/* pequeño añadido a los label para hacerlos tipo block (y que estén arriba del input) */
+label {
+    display: block;
+    text-align: justify;
+}
+
+label[for="nombre"] {
+    display: flex;
+}
+
+.botones{
+    /* display: block; */
+    display: flex;
+    gap: 50px;
+    padding: 10px 5px;
+    margin-bottom: 10px;
+
+}
+
+.descr{
+    display: flex;
+    flex-direction: column;
+    /* text-align: center ; */
+    gap: 30px;
+    margin: auto;
+}
+
+.archivo{
+    display: flex;
+    overflow: hidden;
+    margin-top: 10px;
+}
+
+
+input[type="file"]::file-selector-button {
+    border-radius: 10px;
+    border: 1.5px solid #c3a78a;
+    padding: 10px;
+    background-color:#fad6b1;
+    color: black;
+    transition: all 0.5s;
+    cursor: pointer;
+}
+
+input[type="file"]::file-selector-button:hover{
+    background-color: #d6786a;
+}
