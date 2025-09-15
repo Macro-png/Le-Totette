@@ -194,6 +194,7 @@ input[id="buscador"] {
     justify-content: space-around;
     padding: 5px 20%;
     height: auto;
+    z-index: 1;
 }
 
 .menu_mobile_botones {
