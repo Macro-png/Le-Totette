@@ -135,7 +135,7 @@ input[type="checkbox"], label {
     .nav ul {
         background-color: rgba(199, 91, 91, 0.829);
         position: absolute;
-        margin-top: 25vh;
+        margin-top: 30vh;
         flex-direction: column;
         gap: 20px;
         width: 100%;
