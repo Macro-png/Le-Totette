@@ -194,6 +194,7 @@ input[id="buscador"] {
     justify-content: space-around;
     padding: 5px 20%;
     height: auto;
+    z-index: 1;
 }
 
 .menu_mobile_botones {
@@ -268,6 +269,7 @@ aside {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 20px;
+  z-index: 0;
 }
 
 .product {
