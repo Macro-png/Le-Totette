@@ -229,6 +229,30 @@ aside {
   border-radius: 8px;
 }
 
+
+/* filters */
+.filters_responsive {
+  background-color: white;
+  padding: 10px;
+  display: none;
+  /* display: flex; */
+  justify-content: space-evenly;
+}
+
+.filters_responsive label {
+  padding: 10px;
+  border-radius: 10px;
+  transition: background-color .5s;
+}
+.filters_responsive label:hover {
+  background-color: #FAD6B1;
+}
+
+.filters_responsive label:has(input:checked) {
+  text-decoration: underline;
+  font-weight: bold;
+}
+
 .filters h3 {
   margin-bottom: 10px;
 }
@@ -290,8 +314,13 @@ aside {
   .products {
     grid-template-columns: repeat(2, 1fr);
   }
+
+  /* filtros responsive */
   aside {
     display: none;
+  }
+  .filters_responsive {
+    display: flex;
   }
 }
 
