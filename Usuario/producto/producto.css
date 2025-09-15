@@ -1,8 +1,8 @@
 * {
-  box-sizing: border-box;
-  font-family: 'Courier New', Courier, monospace;
-  font-size:medium;
-  margin: 0;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+    font-size:medium;
+    margin: 0;
 }
 
 /* INICIO CODIGO ALE HEADER*/
@@ -243,7 +243,7 @@ aside>img{
     .flexbox{
         flex-direction: column;
         padding: 30% 5%;
-        margin-top: 200px;
+        margin-top: 500px;
     }
     aside>img{
         max-width: 100%;
@@ -257,6 +257,7 @@ h1{
 
 .caract{
     font-size: larger;
+    text-align: justify;
 }
 
 
