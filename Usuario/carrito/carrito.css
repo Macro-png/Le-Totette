@@ -278,8 +278,8 @@ main {
 }
 
 @media screen and (max-width: 400px) {
-    .item-info{
-        display: none;
+    .cart-item{
+        flex-direction: column;
     }
 }
 
