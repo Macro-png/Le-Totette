@@ -39,24 +39,21 @@
                     <label for="caract" class="caract">Caracteristicas:</label>
                     <textarea type="text" id="caract" class="caract"> </textarea>
                 </div>
-                <div>
-                    <label for="color1">Color 1</label>
-                    <input type="text" id="color1">
-                </div>
-                <div>
-                    <label for="color2">Color 2</label>
-                    <input type="text" id="color2">
-                </div>
-                <div>
-                    <label for="color3">Color 3</label>
-                    <input type="text" id="color3">
+                <div class="menucolor">
+                    <div class="colores">
+                        <label for="color1">Codigo hexadecimal del color 1</label>
+                        <input type="text" id="color1" class="color">
+                    </div>
+                    <div>
+                        <input type="button" value="+" id="agregarcolor" class="agregarcolor">
+                    </div>
                 </div>
                 <div class="archivo">
                     <input type="file" name="archivo" id="archivo" accept=".jpeg">
                 </div>
                 <div>
                     <label for="precio">Precio</label>
-                    <input type="text" id="Precio">
+                    <input type="text" id="Precio" class="precio">
                 </div>
                 <div class="botones"> 
                     <input type="submit" value="Agregar producto" class="bot">
