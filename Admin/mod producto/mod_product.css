@@ -7,7 +7,7 @@
 /* ------------ CONTENIDO DE LA PÁGINA -------------- */
 /* Config. Generales */
 body {
-    background-color: #FAD6B1;
+    background-color: antiquewhite;
     color: #333;
 }
 
@@ -16,13 +16,6 @@ body {
     width: 100%;
     flex-direction: row;
     height: 100vh;
-}
-
-
-aside, main {
-    border: 1px solid black;
-    /* height: 100%; */
-    background-color: antiquewhite;
 }
 
 main {
