@@ -312,6 +312,11 @@ aside {
   background: #D6786A;
 }
 
+a{
+  text-decoration: none;
+  color: black;
+}
+
 @media (max-width: 900px) {
   .products {
     grid-template-columns: repeat(2, 1fr);
@@ -329,6 +334,9 @@ aside {
 @media (max-width: 600px) {
   .products {
     grid-template-columns: 1fr;
+  }
+  main{
+    padding-bottom: 100px;
   }
 }
 
