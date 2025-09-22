@@ -173,6 +173,7 @@ input[type="submit"]{
     background-color:#fad6b1;
     color: black;
     transition: all 0.5s;
+    cursor: pointer;
 }
 
 input[type="reset"]{
@@ -182,6 +183,7 @@ input[type="reset"]{
     background-color:#fad6b1;
     color: black;
     transition: all 0.5s;
+    cursor: pointer;
 }
 
 .botones{
@@ -288,7 +290,9 @@ input[type="file"]::file-selector-button:hover{
         margin-left: 15px;
         width:30px;
         height:30px;
+        cursor: pointer;
 }
+
 .colores{
     display: flex;
     flex-direction: row;
