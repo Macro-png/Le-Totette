@@ -27,23 +27,38 @@
         </aside>
 
         <main>
-            <h1>Panel de Pedidos</h1>
-            <div class="orders">
-                <div class="order espera">
-                    <p><strong>Pedido #101</strong></p>
-                    <span class="badge">Espera</span>
-                </div>
-
-                <div class="order produccion">
-                    <p><strong>Pedido #102</strong></p>
-                    <span class="badge">Producción</span>
-                </div>
-
-                <div class="order enviar">
-                    <p><strong>Pedido #103</strong></p>
-                    <span class="badge">Para enviar</span>
-                </div>
+        <h1>Panel de Pedidos</h1>
+        <div class="orders">
+            <div class="order espera">
+            <p><strong>Pedido #101</strong></p>
+            <select class="status">
+                <option value="espera" selected>Espera</option>
+                <option value="produccion">Producción</option>
+                <option value="enviar">Para enviar</option>
+                <option value="cancelado">Cancelado</option>
+            </select>
             </div>
+
+            <div class="order produccion">
+            <p><strong>Pedido #102</strong></p>
+            <select class="status">
+                <option value="espera">Espera</option>
+                <option value="produccion" selected>Producción</option>
+                <option value="enviar">Para enviar</option>
+                <option value="cancelado">Cancelado</option>
+            </select>
+            </div>
+
+            <div class="order enviar">
+            <p><strong>Pedido #103</strong></p>
+            <select class="status">
+                <option value="espera">Espera</option>
+                <option value="produccion">Producción</option>
+                <option value="enviar" selected>Para enviar</option>
+                <option value="cancelado">Cancelado</option>
+            </select>
+            </div>
+        </div>
         </main>
     </div>
 </body>

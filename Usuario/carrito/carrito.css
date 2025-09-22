@@ -216,6 +216,7 @@ main {
     padding: 20px;
     padding-top: 50px;
     gap: 20px;
+    margin-bottom: 50px;
 }
 
 /* Lista de productos */
@@ -317,4 +318,19 @@ main {
 
 .btn-checkout:hover {
     background: #218838;
+}
+
+.btn-remove {
+    background: none;
+    border: none;
+    color: crimson;
+    font-size: 18px;
+    cursor: pointer;
+    margin-left: 10px;
+    transition: transform 0.2s, color 0.2s;
+}
+
+.btn-remove:hover {
+    color: darkred;
+    transform: scale(1.2);
 }
