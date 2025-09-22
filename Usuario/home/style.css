@@ -217,6 +217,13 @@ input[id="buscador"] {
     justify-content: center;
 }
 
+@media screen and (max-width: 900px) {
+    .Container_Catalogo_DisTuTotebag {
+        flex-direction: column;
+        row-gap: 30px;
+    }
+}
+
 /* temporal */
 .Container_Catalogo_DisTuTotebag  img {
     max-width: 100%;
@@ -339,7 +346,7 @@ img[id="disTuTotebag"] {
     text-align: center;
     margin-top: 40px;
 }
-
+/* 
 @media screen and (max-width:650px) {
     .Container_Catalogo_DisTuTotebag{
         flex-direction: column;
@@ -348,7 +355,7 @@ img[id="disTuTotebag"] {
         align-items: center;
 
     }
-}
+} */
 
 @media screen and (max-width:600px) {
     .Container_Catalogo_DisTuTotebag {
