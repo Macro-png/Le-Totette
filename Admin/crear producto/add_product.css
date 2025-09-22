@@ -7,7 +7,8 @@
 /* ------------ CONTENIDO DE LA PÃGINA -------------- */
 /* Config. Generales */
 body {
-    background-color: #FAD6B1;
+    background-color: aqua;
+    /*background-color: #FAD6B1;*/
     color: #333;
 }
 
@@ -315,4 +316,23 @@ input[type="file"]::file-selector-button:hover{
         display: flex;
         flex-direction: column;
     }
+}
+
+/*para que se vea al pasar por el boton*/
+
+.txtoculto{
+    visibility: hidden; 
+    position: absolute; 
+    bottom: 100%; 
+    left: 50%;
+    transform: translateX(-50%); /* Centra el texto horizontalmente */
+    background-color: lightblue;
+    padding: 5px 10px;
+    border-radius: 4px;
+    margin-bottom: 5px; 
+    white-space: nowrap; /* Evita que el texto se divida en varias líneas */
+}
+
+.agregarcolor:hover .txtoculto{
+    visibility: visible;
 }
