@@ -34,7 +34,7 @@ label {
     display: flex;
     flex-direction: column;
 }
-input[type="email"], input[type="password"] {
+input[type="text"], input[type="password"] {
     display: flex;
     width: 60%;
     height: 30%;
@@ -111,4 +111,8 @@ form{
     label{
         font-size: 10px;
     }
+}
+
+.error{
+    background-color: rgb(255, 69, 69);
 }
