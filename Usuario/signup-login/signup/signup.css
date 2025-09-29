@@ -33,7 +33,7 @@ label {
     text-align: left;
     margin-bottom: 1vh;
 }
-input[type="email"], input[type="password"] {
+input[type="text"], input[type="password"] {
     display: flex;
     width: 60%;
     height: 30%;
@@ -138,4 +138,8 @@ input[type="button"] {
     display: inline-block;
     text-align: center;
     font-weight: bold
+}
+
+.error{
+    background-color: rgb(255, 69, 69);
 }
