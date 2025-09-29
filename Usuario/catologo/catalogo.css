@@ -19,7 +19,7 @@ body {
     justify-content: space-evenly;
     align-items: center;
     border-radius: 0 0 10px 10px;
-    position: sticky;
+    position: fixed;
     top: 0px;
     z-index: 1;
 }
@@ -214,7 +214,7 @@ input[id="buscador"] {
 /* LAYOUT PRINCIPAL */
 main {
   display: flex;
-  padding: 20px;
+  padding: 100px 20px 0 20px;
   gap: 20px;
   z-index: 0;
 }
@@ -235,9 +235,11 @@ aside {
 .filters_responsive {
   background-color: white;
   padding: 10px;
+  margin-top: 73px;
   display: none;
   /* display: flex; */
   justify-content: space-evenly;
+  border-radius: 5px;
 }
 
 .filters_responsive label {
@@ -328,6 +330,10 @@ a{
   }
   .filters_responsive {
     display: flex;
+  }
+  /* padding del main */
+  main {
+    padding: 50px 30px 100px 30px;
   }
 }
 

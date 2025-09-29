@@ -2,6 +2,8 @@
     margin: 0;
     box-sizing: border-box;
     padding: 0;
+    text-decoration: none;
+    color: rgb(44, 44, 44);
 }
 
 /* -------- HEADER DESKTOP --------  */
@@ -14,7 +16,7 @@
     justify-content: space-evenly;
     align-items: center;
     border-radius: 0 0 10px 10px;
-    position: sticky;
+    position: fixed;
     top: 0px;
 }
 
@@ -208,6 +210,9 @@ input[id="buscador"] {
 
 
 /* ---------- CONTENIDO DEL SITIO ---------- */
+main {
+    padding-top: 5%;
+}
 
 .Container_Catalogo_DisTuTotebag {
     display: flex;
@@ -217,11 +222,16 @@ input[id="buscador"] {
     justify-content: center;
 }
 
+
+
 @media screen and (max-width: 900px) {
     .Container_Catalogo_DisTuTotebag {
         flex-direction: column;
         row-gap: 30px;
     }
+    main {
+    padding-top: 10%;
+}
 }
 
 /* temporal */
@@ -286,6 +296,11 @@ input[id="buscador"] {
     text-align: center;
     padding: 20px;
 }
+/* Estilo para que no se agreguen estilos de enalces */
+/* .container_disTuTotebag * {
+    
+    
+} */
 
 img[id="disTuTotebag"] {
     max-width: 100%;
@@ -346,21 +361,15 @@ img[id="disTuTotebag"] {
     text-align: center;
     margin-top: 40px;
 }
-/* 
-@media screen and (max-width:650px) {
-    .Container_Catalogo_DisTuTotebag{
-        flex-direction: column;
-        gap: 40px;
-        width: 100%;
-        align-items: center;
-
-    }
-} */
 
 @media screen and (max-width:600px) {
     .Container_Catalogo_DisTuTotebag {
         padding: 10px;
     }
+    main {
+    padding-top: 100px;
+    padding: 100px 20px 0 20px;
+}
 }
 
 @media screen and (max-width:500px) {

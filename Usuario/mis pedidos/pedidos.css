@@ -19,7 +19,7 @@ body {
     justify-content: space-evenly;
     align-items: center;
     border-radius: 0 0 10px 10px;
-    position: sticky;
+    position: fixed;
     top: 0px;
     z-index: 1;
 }
@@ -218,6 +218,8 @@ main {
     justify-content: center;
     align-items: center;
     margin-bottom: 20%;
+    /* padding para compensar el position fixed del header */
+    padding-top: 50px;
 }
 
 section {
@@ -305,6 +307,10 @@ h2 {
     }
     button {
         display: block;
+    }
+    /* padding para compensar el position fixed del header */
+    main {
+        padding-top: 80px;
     }
 }
 
