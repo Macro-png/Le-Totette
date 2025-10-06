@@ -15,7 +15,8 @@ function validar() {
     if (nombreInput.value === "") {
         nombreValido = false
     } else {
-        nombreValido = true
+        const regex = /^[a-zA-Z]+$/
+        nombreValido = regex.test(nombreInput.value);
     }
 
     if (emailInput.value === "") {
@@ -40,39 +41,62 @@ function validar() {
         }
     }
 
+    camposValidos = emailValido && contrasenaValida && nombreValido && contrasenaRequisitos
+
     if (nombreValido) {
         if (document.getElementById("nombre").classList.contains("error")) {
             document.getElementById("nombre").classList.remove("error")
         }
+        document.getElementById("nombre").placeholder=""
     } else {
         document.getElementById("nombre").classList.add("error")
+        document.getElementById("nombre").placeholder="Nombre inválido"
+
+        document.getElementById("nombre").value=""
     }
 
     if (contrasenaValida) {
         if (document.getElementById("verificarcontrasena").classList.contains("error")) {
             document.getElementById("verificarcontrasena").classList.remove("error")
         }
+        document.getElementById("verificarcontrasena").placeholder=""
     } else {
         document.getElementById("verificarcontrasena").classList.add("error")
+        if(contrasenaRequisitos){
+            document.getElementById("verificarcontrasena").placeholder="No coincide"
+
+            document.getElementById("verificarcontrasena").value=""
+        }
+        else{
+            document.getElementById("verificarcontrasena").placeholder="Error en la contrasena"
+
+            document.getElementById("verificarcontrasena").value=""
+        }
     }
 
     if (contrasenaRequisitos) {
         if (document.getElementById("contrasena").classList.contains("error")) {
             document.getElementById("contrasena").classList.remove("error")
         }
+        document.getElementById("contrasena").placeholder=""
     } else {
         document.getElementById("contrasena").classList.add("error")
+        document.getElementById("contrasena").placeholder="Min. 6 digitos"
+
+        document.getElementById("contrasena").value=""
     }
 
     if (emailValido) {
         if (document.getElementById("email").classList.contains("error")) {
             document.getElementById("email").classList.remove("error")
         }
+        document.getElementById("email").placeholder=""
     } else {
         document.getElementById("email").classList.add("error")
+        document.getElementById("email").placeholder="Email inválido"
+        
+        document.getElementById("email").value=""
     }
-
-    camposValidos = emailValido && contrasenaValida && nombreValido && contrasenaRequisitos
 
     if (camposValidos) {
         if (document.getElementById("textoerror").classList.contains("textoerrorsi")) {

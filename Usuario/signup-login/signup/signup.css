@@ -157,3 +157,6 @@ input[type="button"] {
     color:transparent;
 }
     
+::placeholder{
+    color:black
+}
