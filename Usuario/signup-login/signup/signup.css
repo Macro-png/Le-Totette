@@ -26,6 +26,7 @@ main {
 label {
     display: flex;
     margin-left: 20%;
+    margin-right: 20%;
 }
 .form {
     display: flex;
@@ -104,9 +105,6 @@ aside{
 
 
 
-
-
-
 input[type="button"] {
     display: inline-block;
     margin: auto;
@@ -137,9 +135,25 @@ input[type="button"] {
     width: 100%;
     display: inline-block;
     text-align: center;
-    font-weight: bold
+    font-weight: bold;
+    margin-bottom: 10px;
 }
 
 .error{
     background-color: rgb(255, 69, 69);
 }
+
+.textoerrorsi{
+    font-size:large !important;
+    width: 100% !important;
+    display: inline-block !important;
+    text-align: center !important;
+    font-weight: bold !important;
+    color: rgb(177, 2, 2) !important;
+}
+
+.textoerrorno{
+    display:none;
+    color:transparent;
+}
+    

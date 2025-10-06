@@ -5,6 +5,7 @@ function validar() {
     let emailValido = false
     let contrasenaValida = false
     let camposValidos = false
+    let contrasenaRequisitos = false
 
     const nombreInput = document.getElementById("nombre")
     const emailInput = document.getElementById("email")
@@ -24,9 +25,14 @@ function validar() {
         emailValido = regex.test(emailInput.value); //si es mail da true, sino false
     }
 
+
+
     if (contrasenaInput.value === "") {
         contrasenaValida = false
+        contrasenaRequisitos = false
     } else {
+        const regex = /^.{6,}$/;
+        contrasenaRequisitos = regex.test(contrasenaInput.value);
         if (verificarContrasenaInput.value === contrasenaInput.value) {
             contrasenaValida = true
         } else {
@@ -50,6 +56,14 @@ function validar() {
         document.getElementById("verificarcontrasena").classList.add("error")
     }
 
+    if (contrasenaRequisitos) {
+        if (document.getElementById("contrasena").classList.contains("error")) {
+            document.getElementById("contrasena").classList.remove("error")
+        }
+    } else {
+        document.getElementById("contrasena").classList.add("error")
+    }
+
     if (emailValido) {
         if (document.getElementById("email").classList.contains("error")) {
             document.getElementById("email").classList.remove("error")
@@ -58,7 +72,19 @@ function validar() {
         document.getElementById("email").classList.add("error")
     }
 
-    camposValidos = emailValido && contrasenaValida && nombreValido
+    camposValidos = emailValido && contrasenaValida && nombreValido && contrasenaRequisitos
+
+    if (camposValidos) {
+        if (document.getElementById("textoerror").classList.contains("textoerrorsi")) {
+            document.getElementById("textoerror").classList.remove("textoerrorsi")
+        }
+        document.getElementById("textoerror").classList.add("textoerrorno")
+    } else {
+        if (document.getElementById("textoerror").classList.contains("textoerrorno")) {
+            document.getElementById("textoerror").classList.remove("textoerrorno")
+        }
+        document.getElementById("textoerror").classList.add("textoerrorsi")
+    }
 
     return camposValidos
 
