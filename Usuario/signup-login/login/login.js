@@ -43,6 +43,30 @@ function validar() {
 
     camposValidos = emailValido && contrasenaValida
 
+    if (camposValidos) {
+        if (document.getElementById("textoerror").classList.contains("textoerrorsi")) {
+            document.getElementById("textoerror").classList.remove("textoerrorsi")
+        }
+        document.getElementById("textoerror").classList.add("textoerrorno")
+    } else {
+        if (document.getElementById("textoerror").classList.contains("textoerrorno")) {
+            document.getElementById("textoerror").classList.remove("textoerrorno")
+        }
+        document.getElementById("textoerror").classList.add("textoerrorsi")
+    }
+
+    if (emailValido) {
+        if (document.getElementById("email").classList.contains("error")) {
+            document.getElementById("email").classList.remove("error")
+        }
+        document.getElementById("email").placeholder=""
+    } else {
+        document.getElementById("email").classList.add("error")
+        document.getElementById("email").placeholder="Email inválido"
+        
+        document.getElementById("email").value=""
+    }
+
     return camposValidos
 
 }

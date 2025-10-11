@@ -116,3 +116,21 @@ form{
 .error{
     background-color: rgb(255, 69, 69);
 }
+
+::placeholder{
+    color:black
+}
+
+.textoerrorsi{
+    font-size:large !important;
+    width: 100% !important;
+    display: inline-block !important;
+    text-align: center !important;
+    font-weight: bold !important;
+    color: rgb(177, 2, 2) !important;
+}
+
+.textoerrorno{
+    display:none;
+    color:transparent;
+}
