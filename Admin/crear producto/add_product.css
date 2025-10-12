@@ -7,7 +7,7 @@
 /* ------------ CONTENIDO DE LA PAGINA -------------- */
 /* Config. Generales */
 body {
-    background-color: #FAD6B1;
+    background-color: antiquewhite;
     color: #333;
 }
 
@@ -19,7 +19,6 @@ body {
 }
 
 aside, main {
-    border: 1px solid black;
     height: 100%;
     background-color: antiquewhite;
 }
@@ -33,6 +32,7 @@ main {
 }
 
 aside {
+    border: 1px solid gray;
     background-color: beige;
     padding: 10% 0;
     width: 10%;
@@ -81,16 +81,22 @@ aside input[type="checkbox"], aside label {
 /* Primer cambio de disposicion (menu de vertical a horizontal) */
 @media screen and (max-width:700px) {
     .flexbox {
+        /* antes solo cambiabas la dirección */
         flex-direction: column;
+        height: auto;        /* <-- permitir que crezca */
+        min-height: 100dvh;  /* <-- alternativa moderna a 100vh en móviles */
     }
     aside, main {
         width: 100%;
     }
     aside {
-        height: 10vh;
+        /* height: 10vh;  <-- generaba superposicion vertical */
+        height: auto;       /* <-- que su altura la determine el contenido */
+        min-height: 10vh;   /* <-- opcional: un mínimo, pero no lo limita */
         justify-content: center;
         align-items: center;
         padding: 10px;
+}
     }
     .nav {
     flex-direction: row;
@@ -103,7 +109,6 @@ aside input[type="checkbox"], aside label {
     flex-direction: row;
     margin-top: 0;
     gap: 10px;
-}
 }
 
 /* 2do cambio (direccion row a direccion column) */
@@ -264,12 +269,18 @@ form{
 
 .archivo{
     display: flex;
+    flex-direction: column;   /* coloca el input y el texto en columna */
+    align-items: flex-start;  /* alinea el texto de error a la izquierda */
     overflow: hidden;
     margin-top: 10px;
+    margin-bottom: 15px;
 }
 
 input[type="file"]{
     margin:20px 0px;
+    /* Asegura que el bloque del input file y su mensaje se apilen verticalmente */
+    display: block;
+    margin-bottom: 5px; /* deja un pequeño espacio para el mensaje */
 }
 
 input[type="file"]::file-selector-button {
