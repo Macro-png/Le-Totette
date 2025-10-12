@@ -8,7 +8,7 @@
     <script src="https://kit.fontawesome.com/56579e118f.js" crossorigin="anonymous"></script>
 </head>
 <body>
-    <!-- ------------ CONTENIDO DE LA PÁGINA :) -------------->
+    <!-- ------------ CONTENIDO DE LA PÁGINA -------------->
     <div class="flexbox">
         <aside class="menu_lateral">
             <nav class="nav">
@@ -29,39 +29,48 @@
                 </ul>
             </nav>
         </aside>
+        
         <main>
-            <form class="descr">
+            <form class="descr" id="formProducto">
                 <div>
-                    <label for="nombre" class="nombre">Producto:</label>
+                    <label for="nombre" class="nombre">Nombre del Producto:</label>
                     <input type="text" id="nombre" class="nombre">
+                    <small class="error-text"></small>
                 </div>
                 <div> 
                     <label for="caract" class="caract">Caracteristicas:</label>
                     <textarea type="text" id="caract" class="caract"> </textarea>
+                    <small class="error-text"></small>
                 </div>
                 <div class="menucolor">
-                    <div class="colores">
-                        <label for="color1">Codigo hexadecimal del color 1</label>
-                        <input type="text" id="color1" class="color">
+                     <div id="contenedor-colores">  <!--Agregado para que contenga los bloques de color agregados dinamicamente-->
+                         <div class="colores">  <!--Bloque a duplicar con js-->
+                            <label for="color1">Código hexadecimal del color 1</label>
+                            <input type="text" id="color1" class="color">
+                            <small class="error-text"></small>
+                        </div>
                     </div>
                     <div>
                         <input type="button" value="+" id="agregarcolor" class="agregarcolor" title="Agregar color">
                     </div>
                 </div>
+
                 <div class="archivo">
                     <input type="file" name="archivo" id="archivo" accept=".jpeg">
+                    <small class="error-text"></small>
                 </div>
                 <div>
                     <label for="precio">Precio</label>
-                    <input type="text" id="Precio" class="precio">
+                    <input type="text" id="precio" class="precio">
+                    <small class="error-text"></small>
                 </div>
                 <div class="botones"> 
                     <input type="submit" value="Agregar producto" class="bot">
                     <input type="reset" value="Resetear" class="bot">
                 </div>
-            
             </form> 
         </main>
-    </div>    
+    </div>
+    <script src="add_product.js"></script>    
 </body>
 </html>
