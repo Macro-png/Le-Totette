@@ -97,7 +97,6 @@ aside input[type="checkbox"], aside label {
         align-items: center;
         padding: 10px;
 }
-    }
     .nav {
     flex-direction: row;
     gap: 5px;
@@ -110,6 +109,7 @@ aside input[type="checkbox"], aside label {
     margin-top: 0;
     gap: 10px;
 }
+    }
 
 /* 2do cambio (direccion row a direccion column) */
 @media screen and (max-width:500px) {
