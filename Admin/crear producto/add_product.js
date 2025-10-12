@@ -202,15 +202,19 @@ function validarFormulario(event) {
       valido = false;
     }
   }
+  var mensaje = document.getElementById("mensaje-general");
 
   if (valido) {
-    alert("✅ Producto agregado correctamente.");
-    form.submit();
-  } else {
-    alert("⚠️ Hay campos con errores. Corrígelos antes de continuar.");
+    mensaje.textContent = "✅ Producto agregado correctamente.";
+    mensaje.className = "mensaje-general ok";
+    form.submit()
+    } else {
+      mensaje.textContent = "⚠️ Hay campos con errores. Corrígelos antes de continuar.";
+      mensaje.className = "mensaje-general error";
+    }
   }
-}
 
+  
 // ------------------ EVENTOS PRINCIPALES ------------------
 btnAgregarColor.addEventListener("click", agregarColor);
 form.addEventListener("submit", validarFormulario);

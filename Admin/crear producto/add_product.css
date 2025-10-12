@@ -383,4 +383,24 @@ input[type="file"]::file-selector-button:hover{
 /* Cuando el boton agregar color llego a su maximo */
 #agregarcolor:disabled { opacity: 0.6; cursor: not-allowed; }
 
+/* -------- MENSAJE GENERAL ANTES DE ENVIAR EL FORMULARIO -------- */
+.mensaje-general {
+    text-align: center;
+    font-size: 1rem;
+    font-weight: 500;
+    margin-bottom: 10px;
+    display: none; /* Oculto por defecto */
+    transition: opacity 0.3s ease;
+}
 
+.mensaje-general.ok {
+    display: block !important; 
+    color: green;
+    opacity: 1;
+}
+
+.mensaje-general.error {
+    display: block;
+    color: red;
+    opacity: 1;
+}
