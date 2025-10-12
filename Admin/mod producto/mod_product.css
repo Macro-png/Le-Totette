@@ -15,7 +15,7 @@ body {
     display: flex;
     width: 100%;
     flex-direction: row;
-    height: 100vh;
+    min-height: 100dvh; /*Ocupa toda la pantalla*/
 }
 
 main {
@@ -28,6 +28,9 @@ main {
 
 /* ------------------- Aside ------------------- */
 aside {
+    position: sticky;           /* se pega al top al hacer scroll */
+    top: 0;
+    height: 100dvh; 
     background-color: beige;
     padding: 10% 0;
     width: 10%;
@@ -78,12 +81,15 @@ aside input[type="checkbox"], aside label {
 @media screen and (max-width:700px) {
     .flexbox {
         flex-direction: column;
+        min-height: auto;      /* que crezca según contenido */
     }
     aside, main {
         width: 100%;
+        height: auto;
     }
     aside {
-        height: 10vh;
+        position: static;      /* deja de ser sticky en mobile */
+        height: auto;          /* el alto lo define el contenido (nav horizontal) */
         justify-content: center;
         align-items: center;
         padding: 10px;
@@ -269,10 +275,13 @@ input[type="text"].precio {
 /* Archivo */
 .archivo {
   display: flex;
+  flex-direction: column;
   overflow: hidden;
   margin-top: 10px;
-  align-items: center;
-  gap: 10px;
+  align-items: flex-start;
+  /* gap: 10px; */
+  gap: 0;
+  margin-bottom: 15px;
 }
 
 input[type="file"] {
@@ -389,4 +398,24 @@ input[type="text"].color {
 #agregarcolor:disabled {
   opacity: 0.6;
   cursor: not-allowed;
+}
+
+/* -------- MENSAJE GENERAL -------- */
+.mensaje-general{
+  display:none;
+  text-align:center;
+  font-size:1rem;
+  font-weight:500;
+  margin-bottom:10px;
+  transition:opacity .3s ease;
+}
+.mensaje-general.ok{
+  display:block;
+  color:green;
+  opacity:1;
+}
+.mensaje-general.error{
+  display:block;
+  color:red;
+  opacity:1;
 }

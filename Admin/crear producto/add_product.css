@@ -19,7 +19,7 @@ body {
 }
 
 aside, main {
-    height: 100%;
+    /* height: 100%; */
     background-color: antiquewhite;
 }
 
@@ -29,6 +29,7 @@ main {
     flex-direction: column;
     justify-content: center;
     padding: 10px 15px;
+    margin: auto;
 }
 
 aside {
