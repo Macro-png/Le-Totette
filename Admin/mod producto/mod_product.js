@@ -1,12 +1,12 @@
 // ------------------ SELECCIÓN DE ELEMENTOS ------------------
 var form = document.getElementById("formProducto");
 var btnAgregarColor = document.getElementById("agregarcolor");
-var contenedorColores = document.getElementById("contenedor-colores");
+var contenedorColores = document.getElementById("contenedor-colores"); /*Para llevar conteo de colores*/
 const MAX_COLORES = 3;
 
 // ------------------ FUNCIONES DE APOYO ------------------
 function mostrarError(input, mensaje) {
-  input.classList.remove("input-ok");
+  input.classList.remove("input-ok"); /*itera la classList, si no esta la class, no pasa nada. Solo la remueve si esta*/
   input.classList.add("input-error");
 
   var errorText = input.parentElement.querySelector(".error-text");
