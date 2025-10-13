@@ -97,5 +97,21 @@
             <button class="btn-checkout">Finalizar Compra</button>
         </div>
     </main>
+    <!-- Modal: Confirmar eliminación del producto -->
+    <div id="confirm-remove" class="modal">
+        <div class="modal__box">
+            <h4>¿Quitar este producto?</h4>
+            <p>Esta acción eliminará el artículo del carrito.</p>
+            <div class="modal__actions">
+                <button id="remove-yes" class="btn btn--danger">Sí, eliminar</button>
+                <button id="remove-no" class="btn btn--secondary">No, conservar</button>
+            </div>
+        </div>
+        <button class="modal__backdrop" data-close="true"></button>
+    </div>
+
+<!-- Script del carrito -->
+<script src="carrito.js" defer></script>
+
     </body>
 </html>

@@ -333,3 +333,55 @@ main {
     color: darkred;
     transform: scale(1.2);
 }
+
+/* ===== Modal básico (sin animaciones) ===== */
+.modal {
+  display: none;                /* Oculto por defecto */
+  position: fixed;
+  inset: 0;
+  align-items: center;          /* Centrado vertical */
+  justify-content: center;      /* Centrado horizontal */
+  z-index: 100;
+}
+
+.modal.is-open {
+  display: flex;                /* Se muestra al agregar la clase desde JS */
+}
+
+/* Fondo */
+.modal__backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(0,0,0,0.35); /* Sombra ligera */
+  border: 0;
+}
+
+/* Caja del modal */
+.modal__box {
+  position: relative;
+  background: #fff;
+  width: min(92vw, 420px);
+  padding: 16px;
+  border-radius: 8px;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.2);
+  z-index: 1000;
+}
+
+/* Acciones (botones) */
+.modal__actions {
+  display: flex;
+  gap: 8px;
+  justify-content: flex-end;
+  margin-top: 12px;
+}
+
+/* Botones mínimos (por si no tienes estilos previos) */
+.btn {
+  padding: 8px 12px;
+  border: 0;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.btn--danger { background: #d7263d; color: #fff; }
+.btn--secondary { background: #e6e6e6; color: #333; }
