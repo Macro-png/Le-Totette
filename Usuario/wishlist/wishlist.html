@@ -66,6 +66,10 @@
             Mas Informacion
           </a>
         </button>
+        <!-- Botón de quitar de la wishlist (señuelo para el JS) -->
+        <button class="btn-remove" title="Quitar de la wishlist">
+          <i class="fa-solid fa-trash"></i>
+        </button>
       </div>
       <div class="product">
         <img id="img-prod2" src="../../0. img/IMAGENES HOME/1.png" alt="Producto 2">
@@ -76,15 +80,9 @@
             Mas Informacion
           </a>
         </button>
-      </div>
-      <div class="product">
-        <img id="img-prod3" src="../../0. img/IMAGENES HOME/1.png" alt="Producto 3">
-        <h4>Producto 3</h4>
-        <p>$3000</p>
-        <button>
-          <a href="../producto/producto.html">
-            Mas Informacion
-          </a>
+        <!-- Botón de quitar de la wishlist (señuelo para el JS) -->
+        <button class="btn-remove" title="Quitar de la wishlist">
+          <i class="fa-solid fa-trash"></i>
         </button>
       </div>
       <div class="product">
@@ -96,9 +94,13 @@
             Mas Informacion
           </a>
         </button>
+        <!-- Botón de quitar de la wishlist (señuelo para el JS) -->
+        <button class="btn-remove" title="Quitar de la wishlist">
+          <i class="fa-solid fa-trash"></i>
+        </button>
       </div>
       <div class="product">
-        <img id="img-prod3" src="../../0. img/IMAGENES HOME/1.png" alt="Producto 3">
+        <img id="img-prod4" src="../../0. img/IMAGENES HOME/1.png" alt="Producto 3">
         <h4>Producto 3</h4>
         <p>$3000</p>
         <button>
@@ -106,9 +108,13 @@
             Mas Informacion
           </a>
         </button>
+        <!-- Botón de quitar de la wishlist (señuelo para el JS) -->
+        <button class="btn-remove" title="Quitar de la wishlist">
+          <i class="fa-solid fa-trash"></i>
+        </button>
       </div>
       <div class="product">
-        <img id="img-prod3" src="../../0. img/IMAGENES HOME/1.png" alt="Producto 3">
+        <img id="img-prod5" src="../../0. img/IMAGENES HOME/1.png" alt="Producto 3">
         <h4>Producto 3</h4>
         <p>$3000</p>
         <button>
@@ -116,38 +122,28 @@
             Mas Informacion
           </a>
         </button>
-      </div>
-      <div class="product">
-        <img id="img-prod3" src="../../0. img/IMAGENES HOME/1.png" alt="Producto 3">
-        <h4>Producto 3</h4>
-        <p>$3000</p>
-        <button>
-          <a href="../producto/producto.html">
-            Mas Informacion
-          </a>
-        </button>
-      </div>
-      <div class="product">
-        <img id="img-prod3" src="../../0. img/IMAGENES HOME/1.png" alt="Producto 3">
-        <h4>Producto 3</h4>
-        <p>$3000</p>
-        <button>
-          <a href="../producto/producto.html">
-            Mas Informacion
-          </a>
-        </button>
-      </div>
-      <div class="product">
-        <img id="img-prod3" src="../../0. img/IMAGENES HOME/1.png" alt="Producto 3">
-        <h4>Producto 3</h4>
-        <p>$3000</p>
-        <button>
-          <a href="../producto/producto.html">
-            Mas Informacion
-          </a>
+        <!-- Botón de quitar de la wishlist (señuelo para el JS) -->
+        <button class="btn-remove" title="Quitar de la wishlist">
+          <i class="fa-solid fa-trash"></i>
         </button>
       </div>
     </section>
   </main>
+<!-- Modal: Confirmar quitar de wishlist -->
+<div id="confirm-remove-wish" class="modal">
+  <div class="modal__box">
+    <h4>¿Quitar este producto de la wishlist?</h4>
+    <p>Esta acción eliminará el artículo de tu lista.</p>
+    <div class="modal__actions">
+      <button id="remove-yes-wish" class="btn btn--danger">Sí, eliminar</button>
+      <button id="remove-no-wish" class="btn btn--secondary">No, conservar</button>
+    </div>
+  </div>
+  <button class="modal__backdrop"></button>
+</div>
+
+<!-- JS específico de wishlist (maneja abrir/cerrar modal y borrar el .product correcto) -->
+<script src="wishlist.js" defer></script>
+
 </body>
 </html>

@@ -35,7 +35,7 @@ function actualizarEstadoBotonAgregar() {
   btnAgregarColor.title = alMaximo 
     ? "Ya alcanzaste el máximo de " + MAX_COLORES + " colores."
     : "Agregar un nuevo color";
-    // Operador ternario -> manera corte de if-else -> ? si es true, : si es false
+    // Operador ternario -> manera corta de if-else -> ? si es true, : si es false
 }
 
 // ------------------ VALIDACIONES INDIVIDUALES ------------------
@@ -162,7 +162,7 @@ function agregarColor() {
   nuevoDiv.appendChild(nuevoSmall);
   contenedorColores.appendChild(nuevoDiv);
 
-  // Agregar validación en tiempo real
+  // Agregar validación en tiempo real  
   nuevoInput.addEventListener("input", function() {
     validarColor(nuevoInput);
   });
@@ -184,7 +184,7 @@ function activarValidaciones() {
 }
 
 // ------------------ VALIDACIÓN GENERAL DEL FORMULARIO ------------------
-function validarFormulario(event) {
+function validarFormulario() {
   event.preventDefault();
 
   var valido = true; 

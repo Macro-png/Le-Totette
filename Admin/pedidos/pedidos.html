@@ -1,65 +1,119 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Panel de Pedidos</title>
-  <link rel="stylesheet" href="pedidos.css">
+  <link rel="stylesheet" href="pedidos.css"/>
 </head>
 <body>
-    <div class="flexbox">
-        <aside class="menu_lateral">
-            <nav class="nav">
-                <i class="fa-solid fa-circle-user" id="admin_icono"></i>
-                <h2 id="admin">ADMIN</h2>
-                <input type="checkbox" id="boton_abrir_menu">
-                <label for="boton_abrir_menu">
-                    <i class="fa-solid fa-x" id="boton_x" title="Cerrar Menú"></i>
-                    <i class="fa-solid fa-bars" title="Abrir Menú" id="boton_hamburguesa"></i> 
-                    Menú
-                </label>
-                <ul class="nav_list">
-                    <li><a href="" class="nav_link">Estadísticas</a></li>
-                    <li><a href="" class="nav_link">Productos</a></li>
-                    <li><a href="" class="nav_link">Pedidos</a></li>
-                </ul>
-            </nav>
-        </aside>
+  <div class="flexbox">
+    <!-- ASIDE / MENÚ LATERAL-->
+    <aside class="menu_lateral">
+      <nav class="nav">
+        <i class="fa-solid fa-circle-user" id="admin_icono"></i>
+        <h2 id="admin">ADMIN</h2>
+        <!-- checkbox oculto para responsive y label para menu-hamburguesa -->
+        <input type="checkbox" id="boton_abrir_menu">
+        <label for="boton_abrir_menu" class="botonmenu">
+          <i class="fa-solid fa-x" id="boton_x" title="Cerrar Menú"></i>
+          <i class="fa-solid fa-bars" id="boton_hamburguesa" title="Abrir Menú"></i>
+          Menú
+        </label>
+        <!-- links -->
+        <ul class="nav_list">
+          <li><a href="#" class="nav_link">Estadísticas</a></li>
+          <li><a href="#" class="nav_link">Productos</a></li>
+          <li><a href="#" class="nav_link">Pedidos</a></li>
+        </ul>
+      </nav>
+    </aside>
 
-        <main>
-        <h1>Panel de Pedidos</h1>
-        <div class="orders">
-            <div class="order espera">
-            <p><strong>Pedido #101</strong></p>
-            <select class="status">
-                <option value="espera" selected>Espera</option>
-                <option value="produccion">Producción</option>
-                <option value="enviar">Para enviar</option>
-                <option value="cancelado">Cancelado</option>
-            </select>
-            </div>
+    <!-- CONTENIDO PRINCIPAL -->
+    <main>
+      <h1>Panel de Pedidos</h1>
 
-            <div class="order produccion">
-            <p><strong>Pedido #102</strong></p>
-            <select class="status">
-                <option value="espera">Espera</option>
-                <option value="produccion" selected>Producción</option>
-                <option value="enviar">Para enviar</option>
-                <option value="cancelado">Cancelado</option>
-            </select>
-            </div>
+      <!-- Barra de acciones -->
+      <div class="orders__toolbar">
+        <button type="button" id="btn-simular" class="btn btn--primary">
+          Simulación de pedido nuevo
+        </button>
+      </div>
 
-            <div class="order enviar">
-            <p><strong>Pedido #103</strong></p>
-            <select class="status">
-                <option value="espera">Espera</option>
-                <option value="produccion">Producción</option>
-                <option value="enviar" selected>Para enviar</option>
-                <option value="cancelado">Cancelado</option>
-            </select>
+      <!-- Contenedor de pedidos -->
+        <div class="orders" id="orders">
+            <!-- Pedido #1 -->
+            <div class="order espera" data-order-id="1">
+                <p class="order__title">
+                    <strong>Pedido #<span class="order__number">1</span></strong>
+                </p>
+                <span class="badge">Espera</span>
+                <select class="status">
+                    <option value="espera" selected>Espera</option>
+                    <option value="produccion">Producción</option>
+                    <option value="retirar">Para retirar</option>
+                    <option value="cancelado">Cancelado</option>
+                </select>
             </div>
-        </div>
-        </main>
+            <!-- Pedido #2 -->
+            <div class="order produccion" data-order-id="2">
+                <p class="order__title">
+                    <strong>Pedido #<span class="order__number">2</span></strong>
+                </p>
+                <span class="badge">Producción</span>
+                <select class="status">
+                    <option value="espera">Espera</option>
+                    <option value="produccion" selected>Producción</option>
+                    <option value="retirar">Para retirar</option>
+                    <option value="cancelado">Cancelado</option>
+                </select>
+            </div>
+            <!-- Pedido #3 -->
+            <div class="order retirar" data-order-id="3">
+                <p class="order__title">
+                    <strong>Pedido #<span class="order__number">3</span></strong>
+                </p>
+                <span class="badge">Para retirar</span>
+                <select class="status">
+                    <option value="espera">Espera</option>
+                    <option value="produccion">Producción</option>
+                    <option value="retirar" selected>Para retirar</option>
+                    <option value="cancelado">Cancelado</option>
+                </select>
+            </div>
+      </div>
+    </main>
+  </div>
+
+  <!-- TEMPLATE para clonar nuevos pedidos -->
+  <template id="order-template">
+    <div class="order espera" data-order-id="">
+      <p class="order__title">
+        <strong>Pedido #<span class="order__number"></span></strong>
+      </p>
+      <span class="badge">Espera</span>
+      <select class="status">
+        <option value="espera" selected>Espera</option>
+        <option value="produccion">Producción</option>
+        <option value="retirar">Para retirar</option>
+        <option value="cancelado">Cancelado</option>
+      </select>
     </div>
+  </template>
+
+  <!-- Modal de confirmación -->
+  <div id="confirm-cancel" class="modal">
+    <div class="modal__content">
+      <p class="modal__text">¿Seguro que deseas cancelar este pedido?</p>
+      <div class="modal__actions">
+        <button type="button" id="confirm-yes" class="btn btn--danger">Sí, cancelar</button>
+        <button type="button" id="confirm-no" class="btn">No</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Enlace al JS (Paso 3) -->
+  <script src="pedidos.js"></script>
+  <script src="https://kit.fontawesome.com/56579e118f.js" crossorigin="anonymous"></script>
 </body>
 </html>
