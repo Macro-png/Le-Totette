@@ -59,11 +59,9 @@ VALUES
 
 
 -- ELIMINAR USUARIOS (va a tener la opcion el admin)
-DELETE FROM clientes where id=1
+DELETE FROM clientes where id=14
 
-DELETE FROM clientes where id=2
-
-DELETE FROM clientes where id=4
+DELETE FROM clientes where id=19
 
 
 
