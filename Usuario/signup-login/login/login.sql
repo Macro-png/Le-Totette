@@ -1,11 +1,11 @@
-SHOW DATABASES
+SHOW DATABASES;
 
-Use base_le_totette
+Use base_le_totette;
 
-show tables
+show tables;
 
-describe clientes
+describe clientes;
 
 --CONSULTAS (solo las importantes )
-select mail, contrasena from clientes
+select mail, contrasena from clientes;
 

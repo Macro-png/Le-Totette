@@ -1,10 +1,10 @@
-use base_le_totette
+use base_le_totette;
 
-show tables
+show tables;
 
-describe clientes
+describe clientes;
 
-select * from clientes
+select * from clientes;
 
 
 --AGREGAR USUARIOS
@@ -56,12 +56,14 @@ VALUES
 (null, "Roberto", "cliente", "robert@gmail.com","contrasena"),
 (null, "Roberto", "cliente", "r@gmail.com","contrasena"),
 (null, "Gerberto", "cliente", "gerbert@gmail.com","contrasena");
+--puede tener mismo nombre pero el mail es distinto
 
 
 -- ELIMINAR USUARIOS (va a tener la opcion el admin)
-DELETE FROM clientes where id=14
+DELETE FROM clientes where id=14;
 
-DELETE FROM clientes where id=19
+DELETE FROM clientes where id=19;
 
-
+-- INNER JOIN
+SELECT
 
