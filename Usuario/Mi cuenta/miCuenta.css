@@ -16,6 +16,7 @@
     border-radius: 0 0 10px 10px;
     position: fixed;
     top: 0px;
+    z-index: 1000;
 }
 
 /* --- LOGO Y NAV --- */
@@ -251,7 +252,7 @@ h2 {
     height: 100%;
     justify-content: center;
     gap: 50px;
-    padding: 50px 0;
+    /* padding: 50px 0; */
     
 }
 
@@ -300,4 +301,195 @@ a {
     h1, p {
         font-size: 24px;
     }
+}
+
+/* =========================
+   Bloque "Datos del usuario"
+   ========================= */
+.datos-usuario{
+  width: min(900px, 92%);
+  margin: 20px auto 10px;
+  text-align: center;
+}
+#nombre-usuario{
+  font-size: 24px;
+  margin-bottom: 6px;
+}
+#correo-usuario{
+  font-size: 20px;
+  opacity: .9;
+}
+
+/* =========================
+   Formulario: layout y look
+   ========================= */
+.form-usuario{
+  /* contenedor centrado horizontal y visualmente contenido */
+  width: min(560px, 92%);
+  margin: 16px auto 28px;         /* auto centra horizontalmente */
+  padding: 18px 20px;
+  background: rgba(255,255,240,.8);/* marfil/beige claro */
+  border: 1px solid rgba(0,0,0,.08);
+  border-radius: 16px;
+  box-shadow: 0 6px 18px rgba(0,0,0,.06);
+  display: grid;
+  gap: 14px;
+  justify-items: stretch;
+}
+
+/* “Centro” visual vertical dentro del bloque del formulario */
+.form-usuario .botones{
+  display: flex;
+  justify-content: center;
+  margin-top: 4px;
+}
+
+/* Campos */
+.campo{
+  display: grid;
+  gap: 6px;
+}
+.label-usuario{
+  font-weight: 600;
+  text-align: left;
+}
+
+/* Inputs con fondo beige como las cards */
+.input-usuario{
+  height: 42px;
+  padding: 0 12px;
+  border-radius: 10px;
+  border: 1.5px solid #c3a78a;
+  background: beige;              /* mismo tono visual de wishlist/pedidos */
+  outline: none;
+  transition: box-shadow .2s, border-color .2s, background-color .2s;
+  font-size: 16px;
+  width: 100%;
+}
+.input-usuario::placeholder{ opacity: .7; }
+
+/* Estado focus accesible */
+.input-usuario:focus-visible{
+  box-shadow: 0 0 0 3px rgba(214, 120, 106, .25);
+  border-color: #d6786a;
+}
+
+/* Botón */
+.boton-usuario{
+  border-radius: 10px;
+  border: 1.5px solid #c3a78a;
+  padding: 10px 14px;
+  background-color:#fad6b1;
+  color: #222;
+  cursor: pointer;
+  font-weight: 600;
+  transition: transform .08s ease, background-color .2s ease;
+}
+.boton-usuario:hover{ background:#d6786a; color:#111; }
+.boton-usuario:active{ transform: translateY(1px); }
+
+/* Mensajes y estados (JS) */
+
+/* Texto de error debajo de cada input (oculto por defecto) */
+.error-text{
+  display: none;
+  color: #c62828;
+  font-size: 13px;
+  line-height: 1.2;
+  text-align: left;
+  margin-top: 2px;
+}
+/* Cuando JS detecta error, agrega esta clase al <small> */
+.mensaje-error{ display: block !important; }
+
+/* Estados de input: éxito / error (los agrega/quita JS) */
+.input-error{
+  border: 2px solid #d32f2f !important;
+  background: #ffe6e6 !important;     /* rojo MUY clarito */
+}
+.input-ok{
+  border: 2px solid #2e7d32 !important;
+  background: #e7ffe7 !important;     /* verde MUY clarito */
+}
+
+/* Mensaje general del formulario (igual patrón que add_product) */
+.mensaje-general{
+  display: none;
+  text-align: center;
+  font-size: 0.95rem;
+  font-weight: 600;
+  margin-top: 2px;
+}
+.mensaje-general.ok{
+  display: block !important;
+  color: #2e7d32;
+}
+.mensaje-general.error{
+  display: block !important;
+  color: #c62828;
+}
+
+/* =========================
+   Responsive suave
+   ========================= */
+@media (max-width: 480px){
+  #nombre-usuario{ font-size: 20px; }
+  #correo-usuario{ font-size: 16px; }
+  .form-usuario{ padding: 14px; gap: 12px; }
+  .input-usuario{ height: 40px; font-size: 15px; }
+}
+
+/* ====== XS: 350px o menos ====== */
+@media (max-width: 350px){
+  /* main{
+    padding-left: 10px;
+    padding-right: 10px;  /* aire lateral }*/
+  
+
+  /* .datos-usuario{
+    width: 96%;
+    margin: 6px auto 8px;
+    text-align: center;
+  } */
+  #nombre-usuario{ font-size: 18px; line-height: 1.2; }
+  #correo-usuario{ font-size: 14px; word-break: break-word; }
+
+  .form-usuario{
+    border-radius: 14px;
+    gap: 12px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    align-content: center;
+    justify-items: center;
+    padding: 10px;
+  }
+
+  .campo{ gap: 6px; }
+
+  .label-usuario{
+    font-size: 15px;
+    text-align: left;
+  }
+
+  .input-usuario{
+    margin: auto;
+    width: 100%;
+    height: 44px;
+    font-size: 15px;
+    padding: 0 12px;
+  }
+
+  .error-text{
+    font-size: 12px;
+  }
+
+  .boton-usuario{
+    
+    padding: 12px 14px;
+    font-size: 12px;
+    text-align:center;
+
+  }
 }
