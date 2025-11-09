@@ -20,6 +20,11 @@ INSERT INTO productos (nombre, descripcion, precio_unidad, img) VALUES
 ('Tote Bag Floral', 'Totebag con estampado de flores', 30.00, 'img2'),
 ('Tote Bag Negra', 'Totebag negra con diseño moderno', 28.50, 'img3');
 select * from productos;
+
+-- CAMBIANDO FECHA A TIPO DATE
+ALTER TABLE pedidos
+MODIFY fecha DATE NOT NULL DEFAULT (CURRENT_DATE());
+
 -- 3 Insertar algunos pedidos
 INSERT INTO pedidos (cliente_id,  fecha, estado, precio_total) VALUES
 (1, NOW(), 'espera', 55.00),
@@ -27,6 +32,7 @@ INSERT INTO pedidos (cliente_id,  fecha, estado, precio_total) VALUES
 (3, NOW(), 'retirar', 28.50),
 (1, NOW(), 'espera', 83.50),
 (2, NOW(), 'produccion', 25.00);
+DESCRIBE pedidos;
 
 -- 4 Insertar detalles de los pedidos
 INSERT INTO detalle_pedido (pedidos_id, productos_id, cantidad, precio_unidad) VALUES

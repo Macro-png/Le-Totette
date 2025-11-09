@@ -67,3 +67,6 @@ INNER JOIN clientes c ON c.id = p.cliente_id
 WHERE p.estado = 'cancelado'
 ORDER BY p.fecha DESC;
 -- FIN DE CONSULTAS DEL ADMINISTRADOR
+
+select * from detalle_pedido;
+select * from pedidos;
