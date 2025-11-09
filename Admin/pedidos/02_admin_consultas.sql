@@ -70,3 +70,4 @@ ORDER BY p.fecha DESC;
 
 select * from detalle_pedido;
 select * from pedidos;
+SELECT * from clientes;
