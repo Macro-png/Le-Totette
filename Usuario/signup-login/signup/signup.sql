@@ -66,4 +66,5 @@ DELETE FROM clientes where id=14;
 
 DELETE FROM clientes where id=19;
 
-
+delete from clientes;
+alter table clientes auto_increment = 1;
