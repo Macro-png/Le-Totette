@@ -2,7 +2,7 @@ use base_le_totette;
 
 show tables;
 
-describe productos;
+describe productos
 
 select * from productos;
 
@@ -35,14 +35,3 @@ delete from colores where productos_id = 2;
 delete from productos where id=2;  
 
 select * from productos;
-
--- ELIMINAR TODOS LOS PRODUCTOS (Y RELACIONADOS)
-
-delete from colores;
-alter table colores auto_increment = 1;
-
-delete from filtros;
-alter table filtros auto_increment = 1;
-
-delete from productos;
-alter table productos auto_increment = 1;
