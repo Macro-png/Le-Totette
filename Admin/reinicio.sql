@@ -1,10 +1,10 @@
 -- ELIMINAR TODOS LOS USUARIOS (Y RELACIONADOS)
 
-delete from detalle_personalizado;
-alter table detalle_personalizado auto_increment = 1;
+delete from detalle_personalizados;
+alter table detalle_personalizados auto_increment = 1;
 
-delete from detalle_pedidos;
-alter table detalle_pedidos auto_increment = 1;
+delete from detalle_pedido;
+alter table detalle_pedido auto_increment = 1;
 
 delete from pedidos;
 alter table pedidos auto_increment = 1;
