@@ -7,7 +7,8 @@ SELECT * FROM clientes;
 
 SELECT * FROM pedidos;
 alter table pedidos auto_increment = 1;
-delete from pedidos;
+-- delete from pedidos;
+delete from pedidos where id = 2;
 SELECT * FROM productos;
 
 -- 1) Insertar el pedido (cliente por mail; fecha y estado inicial)

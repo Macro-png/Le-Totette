@@ -16,8 +16,7 @@ USE base_le_totette;
 -- Así se evita romper las claves foráneas o tener duplicados.
 -- ===========================================================
 SELECT * FROM clientes;
-SELECT * FROM productos WHERE id = 1;
-select * from productos;
+SELECT * FROM productos;
 SELECT* FROM wishlist;
 
 INSERT INTO wishlist (cliente_id, producto_id)
