@@ -9,7 +9,7 @@
 USE base_le_totette;
 -- delete from wishlist;
 delete from wishlist where id = 5;
-SELECT * from wishlist;
+SELECT * from wishlist ORDER BY id ASC;
 -- alter table wishlist auto_increment = 1;
 -- ===========================================================
 -- 2.b) AGREGAR evitando duplicados (usando NOT EXISTS)
@@ -32,8 +32,6 @@ VALUES
 (5, 3),
 (7, 1),
 (2, 1);
-
-
 -- ===========================================================
 -- 3) CONSULTAR TODOS LOS PRODUCTOS DE LA WISHLIST DE UN CLIENTE
 --    Une con 'productos' para mostrar info útil.

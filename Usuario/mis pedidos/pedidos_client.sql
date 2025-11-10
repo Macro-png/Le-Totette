@@ -9,7 +9,6 @@ SELECT * FROM pedidos;
 alter table pedidos auto_increment = 1;
 -- delete from pedidos;
 delete from pedidos where id = 2;
-SELECT * FROM productos;
 
 -- 1) Insertar el pedido (cliente por mail; fecha y estado inicial)
 INSERT INTO pedidos (cliente_id, fecha, estado, precio_total)
@@ -30,91 +29,63 @@ VALUES
 (4,NOW(),'espera', 10),
 (6,NOW(),'espera', 50);
 
-SELECT * FROM detalle_pedido;
--- 2) Insertar DETALLE 1 (trae productos_id y precio_unidad desde productos)
+-- ============================================
+-- 2) Insertar los detalles del pedido
+-- ============================================
+-- Antes de esto, hay que ver el id del pedido recién creado.
+
+-- Producto 1, cantidad 2:
 INSERT INTO detalle_pedido (pedidos_id, productos_id, cantidad, precio_unidad)
-SELECT
-  ( SELECT id
-    FROM pedidos
-    WHERE cliente_id = (SELECT id FROM clientes WHERE mail = 'mariano@gmail.com' LIMIT 1)
-    ORDER BY id DESC
-    LIMIT 1 ),
-  p.id,
-  1,                              -- << cantidad del producto 1
-  p.precio_unidad
+SELECT 8, p.id, 2, p.precio_unidad
 FROM productos p
-WHERE p.nombre = 'Tote Bag Clásica'   -- << nombre exacto del producto 1
-LIMIT 1;
+WHERE p.id = 1;
 
--- 3) Insertar DETALLE 2
+-- Producto 3, cantidad 1:
 INSERT INTO detalle_pedido (pedidos_id, productos_id, cantidad, precio_unidad)
-SELECT
-  ( SELECT id
-    FROM pedidos
-    WHERE cliente_id = (SELECT id FROM clientes WHERE mail = 'mariano@gmail.com' LIMIT 1)
-    ORDER BY id DESC
-    LIMIT 1 ),
-  p.id,
-  2,                              -- << cantidad del producto 2
-  p.precio_unidad
+SELECT 8, p.id, 1, p.precio_unidad
 FROM productos p
-WHERE p.nombre = 'Tote Bag Floral'    -- << nombre exacto del producto 2
-LIMIT 1;
+WHERE p.id = 3;
 
--- 4) Recalcular y actualizar el precio_total del pedido recién creado
-UPDATE pedidos p
-JOIN (
-  SELECT d.pedidos_id, SUM(d.cantidad * d.precio_unidad) AS total
-  FROM detalle_pedido d
-  WHERE d.pedidos_id = (
-    SELECT id
-    FROM pedidos
-    WHERE cliente_id = (SELECT id FROM clientes WHERE mail = 'mariano@gmail.com' LIMIT 1)
-    ORDER BY id DESC
-    LIMIT 1
-  )
-  GROUP BY d.pedidos_id
-) x ON x.pedidos_id = p.id
-SET p.precio_total = x.total
-WHERE p.id = (
-  SELECT id
-  FROM pedidos
-  WHERE cliente_id = (SELECT id FROM clientes WHERE mail = 'mariano@gmail.com' LIMIT 1)
-  ORDER BY id DESC
-  LIMIT 1
-);
+-- Producto 5, cantidad 4 -----> no devuelve nada cuando colocas un id que no existe:
+INSERT INTO detalle_pedido (pedidos_id, productos_id, cantidad, precio_unidad)
+SELECT 8, p.id, 4, p.precio_unidad
+FROM productos p
+WHERE p.id = 5;
 
--- 5) Ver CABECERA del pedido creado
-SELECT 
+-- ============================================
+-- 3) Actualizar el precio total del pedido
+-- ============================================
+UPDATE pedidos
+SET precio_total = (
+  SELECT SUM(dp.cantidad * dp.precio_unidad)
+  FROM detalle_pedido dp
+  WHERE dp.pedidos_id = 8
+)
+WHERE id = 8;
+
+-- ============================================
+-- 4) Consultar el pedido y sus detalles
+-- ============================================
+
+-- Cabecera:
+SELECT
   p.id AS pedido_id,
   c.nombre AS cliente,
-  DATE_FORMAT(p.fecha,'%d/%m/%Y') AS fecha,
+  p.fecha,
   p.estado,
   p.precio_total
 FROM pedidos p
-INNER JOIN clientes c ON c.id = p.cliente_id
-WHERE p.id = (
-  SELECT id
-  FROM pedidos
-  WHERE cliente_id = (SELECT id FROM clientes WHERE mail = 'mariano@gmail.com' LIMIT 1)
-  ORDER BY id DESC
-  LIMIT 1
-);
+JOIN clientes c ON c.id = p.cliente_id
+WHERE p.id = 8;
 
--- 6) Ver DETALLES del pedido
+-- Detalles:
 SELECT
-  d.id AS detalle_id,
+  dp.id AS detalle_id,
   pr.nombre AS producto,
-  d.cantidad,
-  d.precio_unidad,
-  (d.cantidad * d.precio_unidad) AS subtotal
-FROM detalle_pedido d
-INNER JOIN productos pr ON pr.id = d.productos_id
-WHERE d.pedidos_id = (
-  SELECT id
-  FROM pedidos
-  WHERE cliente_id = (SELECT id FROM clientes WHERE mail = 'mariano@gmail.com' LIMIT 1)
-  ORDER BY id DESC
-  LIMIT 1
-)
-ORDER BY d.id;
+  dp.cantidad,
+  dp.precio_unidad,
+  (dp.cantidad * dp.precio_unidad) AS subtotal
+FROM detalle_pedido dp
+JOIN productos pr ON pr.id = dp.productos_id
+WHERE dp.pedidos_id = 8
+ORDER BY dp.id;
