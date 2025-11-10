@@ -9,10 +9,11 @@ select * from filtros;
 insert into filtros
 (id, productos_id, filtro)
 values
-(NULL, 1, "naturaleza"),
+(NULL, 1, "arte"),
 (NULL, 1, "abstracto"),
-(NULL, 2, "arte"),
-(NULL, 3, "anime");
+(NULL, 2, "naturaleza"),
+(NULL, 3, "abstracto"),
+(NULL, 4, "vintage");
 
 select * from filtros;
 
