@@ -63,4 +63,7 @@ WHERE w.cliente_id = 1            -- ← cliente
 
 -- ===========================================================
 -- 5) ELIMINAR un producto de la wishlist
-DELETE FROM wishlist WHERE cliente_id = 1 AND producto_id = 7;
+DELETE FROM wishlist WHERE cliente_id = 1 AND producto_id = 5;
+
+SELECT * from wishlist;
+

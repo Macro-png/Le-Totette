@@ -40,3 +40,8 @@ SET estado = 'cancelado'
 WHERE id = 1;
 
 select * from pedidos;
+
+DELETE from pedidos where id = 11;
+
+select * from detalle_pedido;
+DELETE from detalle_pedido where id = 15;
