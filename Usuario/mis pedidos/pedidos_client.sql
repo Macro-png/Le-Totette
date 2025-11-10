@@ -14,11 +14,21 @@ SELECT * FROM productos;
 -- 1) Insertar el pedido (cliente por mail; fecha y estado inicial)
 INSERT INTO pedidos (cliente_id, fecha, estado, precio_total)
 VALUES
-(1,NOW(),'espera', 150);
-/* SELECT c.id, NOW(), 'espera', 0
-FROM clientes c
-WHERE c.mail = 'fede@gmail.com'
-LIMIT 1; */
+(1,NOW(),'espera', 20),
+(2,NOW(),'espera', 80.30),
+(3,NOW(),'espera', 15.20),
+(2,NOW(),'espera', 25),
+(1,NOW(),'espera', 30),
+(4,NOW(),'espera', 50),
+(2,NOW(),'espera', 50),
+(5,NOW(),'espera', 50),
+(2,NOW(),'espera', 50),
+(1,NOW(),'espera', 60),
+(1,NOW(),'espera', 70),
+(2,NOW(),'espera', 90),
+(3,NOW(),'espera', 10),
+(4,NOW(),'espera', 10),
+(6,NOW(),'espera', 50);
 
 SELECT * FROM detalle_pedido;
 -- 2) Insertar DETALLE 1 (trae productos_id y precio_unidad desde productos)
