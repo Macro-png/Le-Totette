@@ -5,10 +5,12 @@ USE base_le_totette;
 
 SELECT * FROM clientes;
 
+SELECT * FROM detalle_pedido;
+
 SELECT * FROM pedidos;
-alter table pedidos auto_increment = 1;
+-- alter table pedidos auto_increment = 1;
 -- delete from pedidos;
-delete from pedidos where id = 2;
+-- delete from pedidos where id = 2;
 
 -- 1) Insertar el pedido (cliente por mail; fecha y estado inicial)
 INSERT INTO pedidos (cliente_id, fecha, estado, precio_total)
@@ -51,7 +53,15 @@ INSERT INTO detalle_pedido (pedidos_id, productos_id, cantidad, precio_unidad)
 SELECT 8, p.id, 4, p.precio_unidad
 FROM productos p
 WHERE p.id = 5;
+-- PEDIDOS PERSONALIZADOS
+INSERT INTO detalle_personalizados (detalle_pedido_id, img)
+VALUES
+(22, 'uploads/personalizados/tote_cliente1.png');
 
+-- Si hubiera más de una tote personalizada en el mismo pedido:
+INSERT INTO detalle_personalizados (detalle_pedido_id, img)
+VALUES
+(21, 'uploads/personalizados/tote_cliente2.png');
 -- ============================================
 -- 3) Actualizar el precio total del pedido
 -- ============================================
@@ -87,5 +97,21 @@ SELECT
   (dp.cantidad * dp.precio_unidad) AS subtotal
 FROM detalle_pedido dp
 JOIN productos pr ON pr.id = dp.productos_id
+WHERE dp.pedidos_id = 8
+ORDER BY dp.id;
+
+-- ============================================
+-- 5) Consultar detalles personalizados del pedido
+-- ============================================
+SELECT
+  dp.id AS detalle_id,
+  pr.nombre AS producto,
+  dp.cantidad,
+  dp.precio_unidad,
+  (dp.cantidad * dp.precio_unidad) AS subtotal,
+  COALESCE(dpz.img, 'Sin personalización') AS imagen_personalizada
+FROM detalle_pedido dp
+JOIN productos pr ON pr.id = dp.productos_id
+LEFT JOIN detalle_personalizados dpz ON dpz.detalle_pedido_id = dp.id
 WHERE dp.pedidos_id = 8
 ORDER BY dp.id;
