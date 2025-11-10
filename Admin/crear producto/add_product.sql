@@ -15,9 +15,21 @@ values
 (null, "Tote Vintage", "2200", "../../0. img/logo vintage.png", "Bolso tote con un toque vintage, perfecto para amantes de la moda retro y clásica.", 0);
 
 delete from colores where productos_id = 1;
+delete from filtros where productos_id = 1;
 delete from productos where id = 1;
+delete from filtros where productos_id = 2;
 delete from colores where productos_id = 2;
 delete from productos where id=2;  
+
+select * from productos;
+
+-- ELIMINAR TODOS LOS PRODUCTOS (Y RELACIONADOS)
+
+delete from colores;
+alter table colores auto_increment = 1;
+
+delete from filtros;
+alter table filtros auto_increment = 1;
 
 delete from productos;
 alter table productos auto_increment = 1;
