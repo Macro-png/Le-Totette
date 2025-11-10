@@ -7,31 +7,27 @@
 
 -- 1) Seleccionar la base
 USE base_le_totette;
+-- delete from wishlist;
+delete from wishlist where id = 5;
+SELECT * from wishlist;
+-- alter table wishlist auto_increment = 1;
 -- ===========================================================
 -- 2.b) AGREGAR evitando duplicados (usando NOT EXISTS)
---      Inserta SOLO si ese cliente aún no tiene ese producto en su wishlist.
--- Este insert agrega un producto a la wishlist del cliente solo si:
--- 1) El cliente y el producto existen realmente en sus tablas.
--- 2) Aún no hay una relación entre ambos en la wishlist.
--- Así se evita romper las claves foráneas o tener duplicados.
 -- ===========================================================
-SELECT * FROM clientes;
-SELECT * FROM productos;
-SELECT* FROM wishlist;
 
+-- Agrega directamente un producto a la wishlist del cliente
+-- (asegúrate de que ambos IDs existan en sus tablas)
+ALTER TABLE wishlist
+ADD CONSTRAINT uq_wishlist_cliente_producto
+UNIQUE (cliente_id, producto_id);
 INSERT INTO wishlist (cliente_id, producto_id)
-SELECT c.id, p.id
-FROM clientes  c,
-     productos p
-WHERE c.id = 1          -- ← cliente existente
-  AND p.id = 1        -- ← producto existente
-  AND NOT EXISTS (
-        SELECT 1
-        FROM wishlist w
-        WHERE w.cliente_id = c.id
-          AND w.producto_id = p.id
-  )
-LIMIT 1;
+VALUES 
+(2, 4),
+(2, 3),
+(2, 2),
+(1, 1),
+(2, 1);
+
 
 -- ===========================================================
 -- 3) CONSULTAR TODOS LOS PRODUCTOS DE LA WISHLIST DE UN CLIENTE
