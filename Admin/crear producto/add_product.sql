@@ -14,7 +14,9 @@ values
 (null, "Tote Geométrico", "2000", "../../0. img/logo geometrico.png", "Bolso tote con diseño geométrico moderno, ideal para quienes buscan un estilo contemporáneo.", 0),
 (null, "Tote Vintage", "2200", "../../0. img/logo vintage.png", "Bolso tote con un toque vintage, perfecto para amantes de la moda retro y clásica.", 0);
 
-delete from productos where id=1;
+delete from colores where productos_id = 1;
+delete from productos where id = 1;
+delete from colores where productos_id = 2;
 delete from productos where id=2;  
 
 delete from productos;
