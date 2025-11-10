@@ -13,10 +13,12 @@ SELECT * FROM productos;
 
 -- 1) Insertar el pedido (cliente por mail; fecha y estado inicial)
 INSERT INTO pedidos (cliente_id, fecha, estado, precio_total)
-SELECT c.id, NOW(), 'espera', 0
+VALUES
+(1,NOW(),'espera', 150);
+/* SELECT c.id, NOW(), 'espera', 0
 FROM clientes c
-WHERE c.mail = 'mariano@gmail.com'
-LIMIT 1;
+WHERE c.mail = 'fede@gmail.com'
+LIMIT 1; */
 
 SELECT * FROM detalle_pedido;
 -- 2) Insertar DETALLE 1 (trae productos_id y precio_unidad desde productos)
