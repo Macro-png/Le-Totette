@@ -44,7 +44,7 @@ SELECT
   p.precio_unidad
 FROM wishlist w
 INNER JOIN productos p ON p.id = w.producto_id
-WHERE w.cliente_id = 1;           -- ← cambia por el cliente que quieras
+WHERE w.cliente_id = 2;           -- ← cambia por el cliente que quieras
 
 
 -- ===========================================================
@@ -59,7 +59,7 @@ SELECT
   p.precio_unidad
 FROM wishlist w
 INNER JOIN productos p ON p.id = w.producto_id
-WHERE w.cliente_id = 1            -- ← cliente
+WHERE w.cliente_id = 2            -- ← cliente
   AND w.producto_id = 1;          -- ← producto
 
 -- ===========================================================
