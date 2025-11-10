@@ -56,12 +56,12 @@ WHERE p.id = 5;
 -- PEDIDOS PERSONALIZADOS
 INSERT INTO detalle_personalizados (detalle_pedido_id, img)
 VALUES
-(22, 'uploads/personalizados/tote_cliente1.png');
+(1, 'uploads/personalizados/tote_cliente1.png');
 
 -- Si hubiera más de una tote personalizada en el mismo pedido:
 INSERT INTO detalle_personalizados (detalle_pedido_id, img)
 VALUES
-(21, 'uploads/personalizados/tote_cliente2.png');
+(2, 'uploads/personalizados/tote_cliente2.png');
 -- ============================================
 -- 3) Actualizar el precio total del pedido
 -- ============================================
