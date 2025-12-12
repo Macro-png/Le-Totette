@@ -27,3 +27,21 @@
     group by clientes.id, clientes.nombre
     order by clientes.id;
 
+SELECT
+    productos.nombre AS 'Nombre del Producto',
+    filtros.filtro AS 'Nombre del Filtro'
+FROM
+    productos
+INNER JOIN
+    filtros ON productos.id = filtros.productos_id
+WHERE
+    filtros.filtro = "abstracto";
+
+SELECT
+    productos.nombre AS 'Nombre del Producto'
+FROM
+    productos
+INNER JOIN
+    filtros ON productos.id = filtros.productos_id
+WHERE
+    filtros.filtro = "abstracto";

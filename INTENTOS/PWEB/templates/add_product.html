@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin - Agregar producto</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/add_product.css') }}">
+    <script src="https://kit.fontawesome.com/56579e118f.js" crossorigin="anonymous"></script>
+</head>
+<body>
+    <div class="flexbox">
+<!-- navbar_admin.html -->
+<!-- Mantengo tu menú lateral admin original -->
+
+    <!-- ASIDE / MENÚ LATERAL-->
+    <aside class="menu_lateral">
+      <nav class="nav">
+        <i class="fa-solid fa-circle-user" id="admin_icono"></i>
+        <h2 id="admin">ADMIN</h2>
+        <!-- checkbox oculto para responsive y label para menu-hamburguesa -->
+        <input type="checkbox" id="boton_abrir_menu">
+        <label for="boton_abrir_menu" class="botonmenu">
+          <i class="fa-solid fa-x" id="boton_x" title="Cerrar Menú"></i>
+          <i class="fa-solid fa-bars" id="boton_hamburguesa" title="Abrir Menú"></i>
+          Menú
+        </label>
+        <!-- links -->
+        <ul class="nav_list">
+            <li><a href="{{ url_for('estadisticas') }}">Estadísticas</a></li>
+            <li><a href="{{ url_for('ver_pedidos_admin') }}">Pedidos</a></li>
+            <li><a href="{{ url_for('add_product') }}">Agregar Producto</a></li>
+        </ul>
+      </nav>
+    </aside>
+
+
+        <main>
+            <!-- formulario add_product -->
+            <!-- INICIO NUEVO
+                 Motivo: la action apuntaba a 'admin_add_product_post_route' que no existe.
+                 Se corrige para usar la ruta definida en route.py -> 'guardar_producto_route'.
+            -->
+            <form class="descr" id="formProducto" action="{{ url_for('guardar_producto_route') }}" method="post" enctype="multipart/form-data">
+            <!-- FIN NUEVO -->
+                <div>
+                    <label for="nombre" class="nombre">Nombre del Producto:</label>
+                    <input type="text" id="nombre" name="nombre" class="nombre">
+                    <small class="error-text"></small>
+                </div>
+                <div>
+                    <label for="caract">Descripción</label>
+                    <!-- MANTENGO name="caract" (tu estilo). controller ahora acepta 'caract' -->
+                    <textarea id="caract" name="caract" class="caract"></textarea>
+                </div>
+                <div>
+                    <label for="precio">Precio</label>
+                    <input type="text" id="precio" name="precio_unidad" class="precio" />
+                </div>
+                <div>
+                    <label for="archivo">Imagen</label>
+                    <!-- MANTENGO name="imagen" para compatibilidad con controller -->
+                    <input type="file" name="imagen" id="archivo" accept=".jpg,jpeg,png" />
+                </div>
+                <div class="botones">
+                  <input type="submit" value="Agregar producto" class="bot" />
+                  <input type="reset" value="Resetear" class="bot" />
+                </div>
+            </form>
+        </main>
+    </div>
+    <script src="{{ url_for('static', filename='js/add_product.js') }}"></script>
+</body>
+</html>

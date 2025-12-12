@@ -1,0 +1,374 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: Arial, sans-serif;
+}
+/* CONFIG. GENERALES */
+body {
+    background-color: #FAD6B1;
+    color: #333;
+}
+
+.flexbox {
+    display: flex;
+    width: 100%;
+    flex-direction: row;
+    height: 100vh;
+}
+
+aside {
+    border: 1px solid black;
+    height: 100%;
+    /* background-color: antiquewhite; */
+}
+
+main {
+    width: 90%;
+    padding: 20px;
+}
+
+aside {
+    background-color: beige;
+    padding: 10% 0;
+    width: 10%;
+    min-width: 120px;
+}
+
+/* NAV ASIDE */
+.nav {
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+    justify-content: center;
+    align-items: center ;
+    padding: 20px 10px;
+}
+
+#admin_icono {
+    font-size: 40px;
+}
+
+.nav_list {
+    display: flex;
+    flex-direction: column;
+    gap: 34px;
+    margin-top: 50px;
+    list-style: none;
+}
+
+.nav_link {
+    text-decoration: none;
+    color: #333;
+    font-size: 20px;
+    padding: 8px;
+    transition: background-color 0.5s;
+    border-radius: 10px;
+}
+
+.nav_link:hover {
+    background-color: rgba(165, 42, 42, 0.534);
+}
+
+input[type="checkbox"], label {
+    display: none;
+}
+
+/* Primer cambio de disposición (menú de vertical a horizontal) */
+@media screen and (max-width:700px) {
+    .flexbox {
+        flex-direction: column;
+    }
+    aside, main {
+        width: 100%;
+    }
+    aside {
+        height: 10vh;
+        justify-content: center;
+        align-items: center;
+        padding: 10px;
+    }
+    .nav {
+    flex-direction: row;
+    gap: 5px;
+    text-wrap: balance;
+    justify-content: space-evenly;
+    padding: 10px;
+}
+    .nav_list {
+    flex-direction: row;
+    margin-top: 0;
+    gap: 10px;
+}
+}
+
+/* 2do cambio (direccion row a dirección column) */
+@media screen and (max-width:500px) {
+    .nav {
+        flex-direction: column;
+        margin: 0;
+        padding: 0;
+        /* gap: 0; */
+    }
+    .nav_list {
+        padding: 0;
+        margin: 0;
+        justify-content: space-evenly;
+        gap: 0;
+    }
+    aside {
+        height: auto;
+        margin: 0;
+        padding: 0;
+    }
+}
+/* MENU DE HAMBURGUESA PARA PANTALLAS MUY CHIQUITAS */
+@media screen and (max-width:291px) {
+    label {
+        display: flex;
+        flex-direction: row;
+    }
+    #boton_x {
+        display: none;
+    }
+
+    .nav ul {
+        background-color: rgba(199, 91, 91, 0.829);
+        position: absolute;
+        margin-top: 25vh;
+        flex-direction: column;
+        gap: 20px;
+        width: 100%;
+        border-radius: 10px;
+        justify-content: center;
+        align-items: center;
+        left: -150%;
+        transition: left 0.5s;
+    }
+    /* cuando se chequea, se despliega el menu */
+    input:checked ~ ul {
+        left: 0;
+    }
+    input:checked ~ label>#boton_hamburguesa {
+        display: none;
+    }
+    input:checked ~ label>#boton_x {
+        display: block;
+    }
+}
+/* CONTENIDO DEL SITIO */
+h1 {
+  text-align: center;
+  margin-bottom: 20px;
+}
+.orders {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 1rem;
+  align-items: start;
+}
+/* TARJETA DE PEDIDO */
+.order {
+  background: white;                
+  border: 1px solid #2a2a2a;
+  border-radius: 12px;
+  padding: 1rem;
+  display: grid;
+  grid-template-columns: 1fr auto;
+  grid-template-rows: auto auto auto;
+  /* El auto lo pongo para que el contenido determine la altura y no se rompa todo */
+  grid-column-gap: .75rem;
+  grid-row-gap: .5rem;
+  transition: box-shadow .2s ease, transform .2s ease, opacity .3s ease;
+/* el "ease" lo pongo para que la transicion empiece lento, en el medio vaya rapido y termine lento */
+}
+
+@media screen and (max-width:350px) {
+    .orders {
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    }
+    .order {
+        grid-template-columns: 1fr;
+        grid-template-rows: auto auto;
+    }
+    .status {
+        display: block;
+    }
+}
+.order:hover {
+  box-shadow: 0 6px 20px rgba(0,0,0,.25);
+  transform: translateY(-2px);
+}
+
+.order__title {
+  grid-column: 1 / 3; /* para que abarque las 2 columnas */
+  margin: 0;
+  font-size: 1rem;
+  line-height: 1.2;
+}
+
+.badge {
+  justify-self: start;
+  font-size: .75rem;
+  font-weight: 600;
+  padding: .25rem .5rem;
+  border-radius: 999px;
+  background: #333;
+  border: 1px solid #444;
+}
+
+.status {
+  justify-self: end;
+  min-width: 150px;
+  padding: .4rem .6rem;
+  border-radius: 8px;
+  border: 1px solid #3a3a3a;
+  background-color: beige;
+  color: rgb(43, 43, 43);
+}
+/* ==========================
+   COLORES POR ESTADO (Del PADRE .order)
+   ========================== */
+.order.espera .badge {
+  color: #2e2e2e;
+  background-color: #f3ffad;
+  border-color: #2c2c2c;
+}
+
+.order.produccion .badge {
+  color: #2e2e2e;
+  background-color: #f8e197;
+  border-color: #4f2f66;
+}
+
+.order.retirar .badge {
+  color: #2e2e2e;
+  background: #b4f5d3;
+  border-color: #6fd1a7;
+}
+
+.order.cancelado .badge {
+  color: #ffd2d2;
+  background: #3a1515;
+  border-color: #6a2a2a;
+}
+
+/* ==========================
+   TOOLBAR
+   ========================== */
+.orders__toolbar {
+  display: flex;
+  align-items: center;
+  gap: .75rem;
+  margin: 0 0 1rem 0;
+  flex-wrap: wrap;
+}
+
+/* ==========================
+   BOTONES (base + variantes) del simulador y del modal
+   ========================== */
+.btn {
+  display: inline-flex; /*Es como un inline-block pero flexible*/
+  align-items: center;
+  justify-content: center;
+  gap: .5rem;
+  padding: .6rem .9rem;
+  font-weight: 600;
+  font-size: .95rem;
+  border-radius: 10px;
+  border: 1px solid #333;
+  background: #1b1b1b;
+  color: #eaeaea;
+  cursor: pointer;
+  transition: transform .1s ease, box-shadow .2s ease, background .2s ease, border-color .2s ease;
+}
+
+.btn:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 6px 16px rgba(0,0,0,.25);
+}
+
+.btn:active {
+  transform: translateY(0);
+  box-shadow: none;
+}
+
+/* primer boton: boton de simulacion */
+.btn--primary {
+  background: #2744f5;
+  border-color: #1c2fb5;
+  color: #fff;
+}
+
+.btn--primary:hover {
+  background-color: #071570;
+}
+/* boton de modal -> cancelar */
+.btn--danger {
+  background: #b21c1c;
+  border-color: #7f1313;
+  color: #fff;
+}
+
+.btn--danger:hover {
+  background: #951818;
+}
+
+/* -------- VENTANA MODAL -------- */
+.modal {
+  position: fixed;
+  inset: 0; /*Abarca toda la pantalla el overlay negro -> solo valido porque es position distinta de static*/
+  display: grid;
+  place-items: center; /*Centra todo horizontal y verticalmente (solo valido porque puse grid)*/
+  background: rgba(0,0,0,.5);
+  opacity: 0;            /* Oculto por defecto */
+  pointer-events: none;  /* No interactuable oculto */
+  transition: none;      /* SIN animación */
+  z-index: 1000;
+}
+
+/* Al abrir: aparece de golpe (sin transición) */
+.modal.is-open {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.modal__content {
+  width: min(520px, 92vw);
+  background: #151515;
+  border: 1px solid #333;
+  border-radius: 14px;
+  padding: 1.1rem;
+  box-shadow: 0 20px 60px rgba(0,0,0,.45);
+  transform: none;       /* SIN animación/transform */
+  transition: none;      /* SIN animación */
+}
+
+/* PREGUNTA DE ADVERTENCIA: */
+.modal__text {
+  margin: 0 0 1rem 0;
+  font-size: 1rem;
+}
+/* BOTONES DEL MODAL */
+.modal__actions {
+  display: flex;
+  gap: .5rem;
+  justify-content: flex-end;
+  flex-wrap: wrap;
+}
+
+/* ==========================
+   MEDIA QUERIES (ajustes suaves)
+   ========================== */
+@media (max-width: 480px) {
+  .status {
+    min-width: 130px;
+  }
+  .order {
+    grid-template-columns: 1fr;
+    grid-template-rows: auto auto auto auto;
+  }
+  .status {
+    justify-self: stretch;
+  }
+}

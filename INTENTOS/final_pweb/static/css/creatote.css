@@ -1,0 +1,430 @@
+* {
+  box-sizing: border-box;
+  font-family: Arial, sans-serif;
+  font-size:medium;
+  margin: 0;
+}
+
+/* INICIO CODIGO ALE HEADER*/
+/* -------- HEADER DESKTOP --------  */
+.header {
+    background-color: beige;
+    border: 1px solid rgba(165, 42, 42, 0.418);
+    display: flex;
+    width: 100%;
+    height: auto;
+    justify-content: space-evenly;
+    align-items: center;
+    border-radius: 0 0 10px 10px;
+    position: fixed;
+    top: 0px;
+    margin: 0;
+}
+
+/* --- LOGO Y NAV --- */
+.containerHeader_logo_Nav {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 5px 30px;
+    gap: 30px;
+}
+
+/* logo */
+#header_logo {
+    max-width: 100%;
+    width: 60px;
+}
+/* NAV */
+.header_nav > ul {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+    align-items: center;
+}
+
+.nav_item {
+    list-style: none;
+}
+
+.navlink {
+    text-decoration: none;
+    border-radius: 5px;
+    padding: 8px;
+    font-size: 18px;
+    color: rgb(44, 44, 44);
+    transition: background-color 0.5s;
+}
+
+.navlink:hover {
+    background-color: rgba(165, 42, 42, 0.534);
+}
+#boton_abrir_menu /*CHECKBOX QUE DEBE OCULTARSE*/{
+    display: none;
+}
+#boton_x {
+    display: none;
+}
+label[for="boton_abrir_menu"] {
+    cursor: pointer;
+    display: none;
+}
+
+/* -------- NAV QUERIES -------- */
+@media screen and (max-width: 700px) {
+    label[for="boton_abrir_menu"] {
+        display: block;
+    }
+    /* NAVBAR */
+    .header_nav {
+        position: absolute;
+        background-color: rgba(199, 91, 91, 0.829);
+        height: 40vh;
+        width: 100%;
+        left: -150%;
+        top: 70px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        gap: 30px;
+        transition: all 0.5s;
+    }
+    
+    .header_nav > ul {
+        flex-direction: column;
+        gap: 50px;
+    }
+
+    .navlink {
+        padding: 10px 20px;
+        border-radius: 15px;
+        color: white;
+    }
+
+    .navlink:hover {
+        color: rgb(39, 39, 39);
+        background-color: blanchedalmond;
+    }
+    /* Aparece el menú tras dar clic */
+    #boton_abrir_menu:checked ~ .header_nav {
+        left: 0;
+    }
+    /* Desaparece el botón hamburguesa y aparece la x */
+    #boton_abrir_menu:checked ~ label>#boton_hamburguesa {
+        display: none;
+    }
+    
+    #boton_abrir_menu:checked ~ label>#boton_x {
+        display: inline-block;
+    }
+}
+
+/* BUSCADOR */
+.container_buscador {
+    width: 30%;
+}
+
+form.buscador {
+    box-sizing: border-box;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 10px ;
+    gap: 20px;
+    background-color: white;
+    width: 100%;
+    border-radius: 20px;
+    border: 1px solid black;
+}
+
+#buscador_lupa {
+    flex: 1;
+    /* -ms-flex-align: stretch; */
+    background-color: rgba(222, 184, 135, 0.699);
+    font-size: 20px;
+    padding: 5px 0px;
+    border: 0;
+    border-radius: 100px;
+}
+input[id="buscador"] {
+    flex: 3;
+    font-size: 20px;
+    border: 0;
+    outline: 0;
+    background-color: transparent;
+    min-width: 0;
+}
+
+@media screen and (max-width:900px) {
+    input[id="buscador"] {
+        font-size: 16px;
+    }
+}
+/* BOTONES */
+
+.container_HeaderBotones {
+    display: flex;
+    gap: 15px;
+    padding-right: 20px;
+    align-items: center;
+    justify-content: center;
+}
+
+.header_botones {
+    max-width: 100%;
+    width:40px;
+}
+
+/* ---------- BOTONES MOBILE --------- */
+
+.container_MenuBotonesMobile {
+    position: fixed;
+    background-color: blanchedalmond;
+    bottom: 0;
+    width: 100%;
+    /* display: flex; */
+    display: none;
+    justify-content: space-around;
+    padding: 5px 20%;
+    height: auto;
+}
+
+.menu_mobile_botones {
+    max-width: 100%;
+    width: 50px;
+}
+
+@media screen and (max-width: 900px) {
+    .container_HeaderBotones {
+        display: none;
+    }
+    .container_MenuBotonesMobile {
+        display: flex;
+    }
+}
+/* FIN CODIGO ALE HEADER*/
+
+body{
+    background-color: #fad6b1 ;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+
+
+.flexbox{
+    display:flex;
+    padding: 0 5%;
+    width: 100%; /*para que no se rompa*/
+    justify-content: center;
+    align-items: center;
+    gap: 40px;
+}
+
+.descr{
+    background-color: #fce2c8;
+    background-blend-mode: color;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    gap:20px;
+    padding: 25px 20px;
+    align-items: center;
+}
+
+
+@media screen and (max-width: 900px){
+    .flexbox{
+        flex-direction: column;
+        padding: 30% 5%;
+        margin-top: 500px;
+    }
+    aside>img{
+        display: block;
+        max-width: 100%;
+        width: 300px;
+        justify-content: center;
+    }
+}
+
+h1{
+    font-size: xx-large;
+}
+
+.caract{
+    font-size: larger;
+    text-align: justify;
+}
+
+
+.opciones {
+    display: flex;
+    gap: 20px; /* Espacio entre los círculos */
+    justify-content: center;
+}
+
+.circle {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+/* Oculta los radio buttons por defecto */
+input[type="radio"] {
+    display: none;
+}
+
+.circle {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%; /* Para que sea un círculo */
+    cursor: pointer;
+    border: 3px solid transparent; /* Borde transparente inicial */
+    transition: border-color 0.3s ease; /* Transición suave para el borde */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Estilo para el color seleccionado */
+input[type="radio"]:checked + label .circle {
+/*se fija que seleccionado el invisible*/
+/*se mueve del input checkeado al hermano siguiente, label*/
+/*va al div dentro del label con clase circle*/
+    border-color: black;
+}
+
+
+.botones{
+    display: flex;
+    justify-content: center;
+    gap:10px;
+    padding: 10px 0;
+}
+
+.bot {
+    display: inline-block;
+    margin: auto;
+    border-radius: 5px;
+    border: 1.5px solid #c3a78a;
+    padding: 10px;
+    background-color:#fad6b1;
+    color: black;
+    transition: all 0.5s;
+    cursor: pointer;
+}
+
+form{
+    text-align: left;
+    margin-bottom: 1vh;
+}
+
+.bot:hover{
+    background-color: #d6786a;
+}
+
+.col1{
+    background-color: red;
+}
+
+.col2{
+    background-color: blue;
+}
+
+input[type="file"]{
+  width:100%;
+  margin: 10px 0;
+}
+
+input[type="file"]::file-selector-button {
+    border-radius: 5px;
+    border: 1.5px solid #c3a78a;
+    padding: 10px;
+    background-color:#fad6b1;
+    color: black;
+    transition: all 0.5s;
+    cursor: pointer;
+}
+
+input[type="file"]::file-selector-button:hover{
+    background-color: #d6786a;
+}
+
+/*#preview{
+    position: absolute;
+    display: block;
+    width: 20%;
+    z-index: -1;
+    margin-left: 7%;
+    bottom: 20%;
+}*/
+
+#totevacia{
+    display: block;
+    position:relative;
+    width: 1000px;
+    max-width: 100%;
+    z-index: -2;
+}
+
+.imagenespreview {
+    position: relative; /* Es el punto de referencia para la imagen superpuesta */
+    display: flex; /* O usa `display: grid; place-items: center;` */
+    justify-content: center; /* Centra horizontalmente el contenido flex */
+    align-items: center; /* Centra verticalmente el contenido flex */
+}
+
+
+
+#preview {
+    position: absolute; /* superposicion */
+    display: block;
+    max-width: max-content; 
+    max-height: max-content; 
+    width: 60%;
+    height: 40%;
+    /*porcentajes, tamaño de la imagen
+    de la vista previa siempre será un 60% del ancho y un 40% del alto
+    de su contenedor padre (.imagenespreview).*/
+    z-index: -1; /*imagen de preview esté ariba*/
+    margin: 0; /* Elimina márgenes extra si existen */
+    top: 65%;
+    left: 50%;
+    /*Mueven el punto de inicio (la esquina superior izquierda)
+    de la imagen de la vista previa al 50% horizontal y al 65% vertical del contenedor*/
+    transform: translate(-50%, -50%); /* centra elemento respecto a tamaño */
+}
+
+@media screen and (max-width: 900px){
+    #preview {
+        background-color: black;
+        position: absolute; /* superposicion */
+        display: block;
+        max-width: max-content;
+        max-height: max-content;
+        width: 60%;
+        height: 40%;
+        z-index: -1; /*hace que la imagen de preview esté ariba */
+        margin: 0; /* saca márgenes extra si existen */
+        top: 65%;
+        left: 50%;
+        transform: translate(-50%, -50%); /* centra el elemento respecto a su tamaño */
+    }
+}
+
+@media screen and (max-width: 900px) and (min-width:700px){
+    .imagenespreview {
+        margin-top: 350px;
+    }
+}
+
+@media screen and (max-width: 700px) and (min-width:500px){
+    .imagenespreview {
+        margin-top: 150px;
+    }
+}

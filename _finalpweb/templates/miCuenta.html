@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mi cuenta</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/miCuenta.css') }}">
+    <script src="https://kit.fontawesome.com/56579e118f.js" crossorigin="anonymous"></script>
+</head>
+<body>
+        <!--INICIO CODIGO ALE MENU-->
+    
+    <!-- HEADER -->
+    <header class="header">
+        <div class="containerHeader_logo_Nav">
+            <!-- LOGO -->
+            <img src="{{ url_for('static', filename='img/logominimalista.png') }}" alt="logo_letotte   " id="header_logo">
+            <!-- NAV -->
+            <input type="checkbox" id="boton_abrir_menu">
+            <label for="boton_abrir_menu" >
+                <i class="fa-solid fa-x" id="boton_x" title="Cerrar Menú"></i>
+                <i class="fa-solid fa-bars" title="Abrir Menú" id="boton_hamburguesa"></i> 
+                Menú
+            </label>
+            <nav class="header_nav">
+                <ul>
+                    <li class="nav_item"><a href="{{ url_for('home') }}" class="navlink">Home</a></li>
+                    <li class="nav_item"><a href="{{ url_for('catalogo') }}" class="navlink">Catálogo</a></li>
+                    <li class="nav_item"><a href="{{ url_for('creatote') }}" class="navlink">Diseña tu Totebag</a></li>
+                </ul>
+            </nav>
+
+        </div>
+
+        <!-- BUSCADOR 
+        <div class="container_buscador">
+            <form class="buscador">
+                <input type="text" id="buscador" placeholder="¿Qué estás buscando?">
+                <i class="fa-solid fa-magnifying-glass" id="buscador_lupa"></i>
+            </form>
+        </div>-->
+
+    <!-- BOTONES DESKTOP -->
+    <div class="container_HeaderBotones">
+        <a href="https://wa.link/2fr9ok">
+            <img src="{{ url_for('static', filename='img/whats.png') }}" class="header_botones">
+        </a>
+
+        <a href="{{ url_for('ver_carrito') }}">
+            <img src="{{ url_for('static', filename='img/carrito.png') }}" class="header_botones">
+        </a>
+
+        <a href="{{ url_for('mi_cuenta') }}">
+            <img src="{{ url_for('static', filename='img/login.png') }}" class="header_botones">
+        </a>
+    </div>
+    </header>
+
+        <!--- BOTONES MOBILE -->
+    <div class="container_MenuBotonesMobile">
+        <a href=""><img src="{{ url_for('static', filename='img/whats.png') }}" class="menu_mobile_botones"></a>
+
+       
+        <a href="{{ url_for('ver_carrito') }}"><img src="{{ url_for('static', filename='img/carrito.png') }}" class="menu_mobile_botones"></a>
+        
+
+        
+        <a href="{{ url_for('mi_cuenta') }}"><img src="{{ url_for('static', filename='img/login.png') }}" class="menu_mobile_botones"></a>
+        
+    </div>
+    
+    <!--FIN CODIGO ALE MENU-->
+
+    <main>
+        <div class="texto">
+            <section class="datos-usuario">
+                <h2 id="nombre-usuario">👤 Nombre: {{ nombre_usuario }}</h2>
+                <p id="correo-usuario">📧 Correo: {{ mail_usuario }}</p>
+            </section>
+
+            <form id="formUsuario" class="form-usuario">
+                <div class="campo">
+                    <label for="passActual" class="label-usuario">Contraseña actual:</label>
+                    <input type="password" id="passActual" class="input-usuario" placeholder="Ingresa tu contraseña actual" name="passActual">
+                    <small class="error-text"></small>
+                </div>
+                <div class="campo">
+                    <label for="passNueva" class="label-usuario">Nueva contraseña:</label>
+                    <input type="password" id="passNueva" class="input-usuario" placeholder="Crea una nueva contraseña" name="passNueva">
+                    <small class="error-text"></small>
+                </div>
+                <p id="mensaje-general" class="mensaje-general"></p>
+                <div class="botones">
+                    <input type="submit" value="Actualizar" class="bot boton-usuario">
+                </div>
+            </form>
+        </div>
+    </main>
+
+    <script src="{{ url_for('static', filename='js/miCuenta.js') }}"></script>
+</body>
+</html>
+

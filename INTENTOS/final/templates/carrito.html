@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="es">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Carrito de Compras</title>
+        <link rel="stylesheet" href="carrito.css">
+        <script src="https://kit.fontawesome.com/56579e118f.js" crossorigin="anonymous"></script>
+    </head>
+<body>
+
+    <!-- HEADER -->
+    <header class="header">
+        <div class="containerHeader_logo_Nav">
+            <!-- LOGO -->
+            <img src="../../0. img/logo minimalista.png" alt="logo_letotte   " id="header_logo">
+            <!-- NAV -->
+            <input type="checkbox" id="boton_abrir_menu">
+            <label for="boton_abrir_menu" >
+                <i class="fa-solid fa-x" id="boton_x" title="Cerrar Menú"></i>
+                <i class="fa-solid fa-bars" title="Abrir Menú" id="boton_hamburguesa"></i> 
+                Menú
+            </label>
+            <nav class="header_nav">
+                <ul>
+                    <li class="nav_item"><a href="../home/index.html" class="navlink">Home</a></li>
+                    <li class="nav_item"><a href="../catologo/catalogo.html" class="navlink">Catálogo</a></li>
+                    <li class="nav_item"><a href="../creatote/creatote.html" class="navlink">Diseña tu Totebag</a></li>
+                </ul>
+            </nav>
+        </div>
+
+        <!-- BUSCADOR -->
+        <div class="container_buscador">
+            <form class="buscador">
+                <input type="text" id="buscador" placeholder="¿Qué estás buscando?">
+                <i class="fa-solid fa-magnifying-glass" id="buscador_lupa"></i>
+            </form>
+        </div>
+        <!-- BOTONES DESKTOP -->
+        <div class="container_HeaderBotones">
+            <a href="https://wa.link/2fr9ok"><img src="../../0. img/whats.png" alt="whatsapp" class="header_botones"></a>
+            <a href="../carrito/carrito.html"><img src="../../0. img/carrito.png" alt="carrito" class="header_botones"></a>
+            <a href="../Mi cuenta/miCuenta.html"><img src="../../0. img/login.png" alt="login" class="header_botones"></a>
+        </div>
+        <!-- BOTONES MOBILE -->
+    </header>
+    <div class="container_MenuBotonesMobile">
+            <a href="https://wa.link/2fr9ok"><img src="../../0. img/whats.png" alt="whatsapp" class="menu_mobile_botones"></a>
+            <a href="../carrito/carrito.html"><img src="../../0. img/carrito.png" alt="carrito" class="menu_mobile_botones"></a>
+            <a href="../Mi cuenta/miCuenta.html"><img src="../../0. img/login.png" alt="login" class="menu_mobile_botones"></a>
+        </div>
+
+        <main>
+        <div class="cart-items">
+            <div class="cart-item">
+                <img src="../../0. img/tote1.jpg" alt="Producto 1">
+                <div class="item-info">
+                    <h4>Producto 1</h4>
+                    <p>Descripción breve</p>
+                </div>
+                <div class="item-quantity">
+                    <input type="number" value="1" min="1">
+                </div>
+                <div class="item-price">$20.00</div>
+                <button class="btn-remove">
+                    <i class="fa-solid fa-trash"></i>
+                </button>
+            </div>
+
+            <div class="cart-item">
+                <img src="../../0. img/tote2.jpg" alt="Producto 2">
+                <div class="item-info">
+                    <h4>Producto 2</h4>
+                    <p>Descripción breve</p>
+                </div>
+                <div class="item-quantity">
+                    <input type="number" value="2" min="1">
+                </div>
+                <div class="item-price">$15.00</div>
+                <button class="btn-remove">
+                    <i class="fa-solid fa-trash"></i>
+                </button>
+            </div>
+        </div>
+
+        <div class="cart-summary">
+            <h3>Resumen de compra</h3>
+            <div class="summary-line">
+                <span>Subtotal</span>
+                <span>$50.00</span>
+            </div>
+            <div class="summary-line total">
+                <span>Total</span>
+                <span>$50.00</span>
+            </div>
+            <button class="btn-checkout">Finalizar Compra</button>
+        </div>
+    </main>
+    <!-- Modal: Confirmar eliminación del producto -->
+    <div id="confirm-remove" class="modal">
+        <div class="modal__box">
+            <h4>¿Quitar este producto?</h4>
+            <p>Esta acción eliminará el artículo del carrito.</p>
+            <div class="modal__actions">
+                <button id="remove-yes" class="btn btn--danger">Sí, eliminar</button>
+                <button id="remove-no" class="btn btn--secondary">No, conservar</button>
+            </div>
+        </div>
+        <button class="modal__backdrop" data-close="true"></button>
+    </div>
+
+<!-- Script del carrito -->
+<script src="carrito.js" defer></script>
+
+    </body>
+</html>

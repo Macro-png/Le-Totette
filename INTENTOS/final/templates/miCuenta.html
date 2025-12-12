@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mi cuenta</title>
+    <link rel="stylesheet" href="miCuenta.css">
+    <script src="https://kit.fontawesome.com/56579e118f.js" crossorigin="anonymous"></script>
+</head>
+<body>
+
+        <!-- HEADER -->
+    <header class="header">
+        <div class="containerHeader_logo_Nav">
+            <!-- LOGO -->
+            <img src="../../0. img/logo minimalista.png" alt="logo_letotte   " id="header_logo">
+            <!-- NAV -->
+            <input type="checkbox" id="boton_abrir_menu">
+            <label for="boton_abrir_menu" >
+                <i class="fa-solid fa-x" id="boton_x" title="Cerrar Menú"></i>
+                <i class="fa-solid fa-bars" title="Abrir Menú" id="boton_hamburguesa"></i> 
+                Menú
+            </label>
+            <nav class="header_nav">
+                <ul>
+                    <li class="nav_item"><a href="../home/index.html" class="navlink">Home</a></li>
+                    <li class="nav_item"><a href="../catologo/catalogo.html" class="navlink">Catálogo</a></li>
+                    <li class="nav_item"><a href="../creatote/creatote.html" class="navlink">Diseña tu Totebag</a></li>
+                </ul>
+            </nav>
+        </div>
+
+        <!-- BUSCADOR -->
+        <div class="container_buscador">
+            <form class="buscador">
+                <input type="text" id="buscador" placeholder="¿Qué estás buscando?">
+                <i class="fa-solid fa-magnifying-glass" id="buscador_lupa"></i>
+            </form>
+        </div>
+        <!-- BOTONES DESKTOP -->
+        <div class="container_HeaderBotones">
+            <a href="https://wa.link/2fr9ok"><img src="../../0. img/whats.png" alt="whatsapp" class="header_botones"></a>
+            <a href="../carrito/carrito.html"><img src="../../0. img/carrito.png" alt="carrito" class="header_botones"></a>
+            <a href="../Mi cuenta/miCuenta.html"><img src="../../0. img/login.png" alt="login" class="header_botones"></a>
+        </div>
+        <!-- BOTONES MOBILE -->
+    </header>
+    <div class="container_MenuBotonesMobile">
+            <a href="https://wa.link/2fr9ok"><img src="../../0. img/whats.png" alt="whatsapp" class="menu_mobile_botones"></a>
+            <a href="../carrito/carrito.html"><img src="../../0. img/carrito.png" alt="carrito" class="menu_mobile_botones"></a>
+            <a href="../Mi cuenta/miCuenta.html"><img src="../../0. img/login.png" alt="login" class="menu_mobile_botones"></a>
+        </div>
+    
+        <!-- CONTENIDO DE LA PÁGINA -->
+    <main>
+        <div class="texto">
+            <!-- SECCIÓN DE DATOS DEL USUARIO -->
+            <section class="datos-usuario">
+                <h2 id="nombre-usuario">👤 Nombre: {{nombre_usuario}}</h2>
+                <p id="correo-usuario">📧 Correo: {{mail_usuario}}</p>
+            </section>
+            <!-- FORMULARIO DE CAMBIO DE CONTRASEÑA -->
+            <form id="formUsuario" class="form-usuario">
+                <!-- Contraseña actual -->
+                <div class="campo">
+                    <label for="passActual" class="label-usuario">Contraseña actual:</label>
+                    <input type="password" id="passActual" class="input-usuario" placeholder="Ingresa tu contraseña actual">
+                    <small class="error-text"></small>
+                </div>
+
+                <!-- Nueva contraseña -->
+                <div class="campo">
+                    <label for="passNueva" class="label-usuario">Nueva contraseña:</label>
+                    <input type="password" id="passNueva" class="input-usuario" placeholder="Crea una nueva contraseña">
+                    <small class="error-text"></small>
+                </div>
+
+                <!-- Confirmar nueva contraseña -->
+                <div class="campo">
+                    <label for="passConfirmar" class="label-usuario">Confirmar nueva contraseña:</label>
+                    <input type="password" id="passConfirmar" class="input-usuario" placeholder="Repite la nueva contraseña">
+                    <small class="error-text"></small>
+                </div>
+
+                <!-- Mensaje general -->
+                <p id="mensaje-general" class="mensaje-general"></p>
+
+                <!-- Botón -->
+                <div class="botones">
+                    <input type="submit" value="Actualizar contraseña" class="boton-usuario">
+                </div>
+            </form>
+        </div>
+        <div class="flexbox">
+            <a class="opciones" href="../wishlist/wishlist.html">
+                <h2>Mi Wishlist</h2>
+                <img src="../../0. img/wishlist.png" alt="Wishlist">
+            </a>
+            <a class="opciones" href="../mis pedidos/pedidos.html">
+                <h2>Mis pedidos</h2>
+                <img src="../../0. img/pedidos.png" alt="Pedidos">
+            </a>
+        </div>
+    </main>
+<script src="miCuenta.js"></script>
+</body>
+</html>

@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Estadísticas</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/estadisticas.css') }}">
+  <script src="https://kit.fontawesome.com/56579e118f.js" crossorigin="anonymous"></script>
+</head>
+<body>
+  <div class="flexbox">
+<!-- navbar_admin.html -->
+<!-- Mantengo tu menú lateral admin original -->
+
+    <!-- ASIDE / MENÚ LATERAL-->
+    <aside class="menu_lateral">
+      <nav class="nav">
+        <i class="fa-solid fa-circle-user" id="admin_icono"></i>
+        <h2 id="admin">ADMIN</h2>
+        <!-- checkbox oculto para responsive y label para menu-hamburguesa -->
+        <input type="checkbox" id="boton_abrir_menu">
+        <label for="boton_abrir_menu" class="botonmenu">
+          <i class="fa-solid fa-x" id="boton_x" title="Cerrar Menú"></i>
+          <i class="fa-solid fa-bars" id="boton_hamburguesa" title="Abrir Menú"></i>
+          Menú
+        </label>
+        <!-- links -->
+        <ul class="nav_list">
+            <li><a href="{{ url_for('estadisticas') }}">Estadísticas</a></li>
+            <li><a href="{{ url_for('ver_pedidos_admin') }}">Pedidos</a></li>
+            <li><a href="{{ url_for('add_product') }}">Agregar Producto</a></li>
+        </ul>
+      </nav>
+    </aside>
+
+
+    <main>
+        <h1>Panel de Estadísticas</h1>
+
+        <section class="cards">
+            <div class="card">
+            <h2>Producto más comprado</h2>
+            <p><strong>{{ totemascomprado_nombre }}</strong></p>
+            <span class="badge compra">{{ totemascomprado_cantidaddeventas }}</span>
+            </div>
+        </section>
+
+        <section class="categorias">
+            <h2>Ventas por Categoría</h2>
+            <ul class="lista_categorias">
+                {% for categoria in categorias %}
+                    <li><span>{{ categoria.nombre }}</span><span class="ventas">{{ categoria.ventas }} ventas</span></li>
+                {% endfor %}
+            </ul>
+        </section>
+    </main>
+  </div>
+</body>
+</html>

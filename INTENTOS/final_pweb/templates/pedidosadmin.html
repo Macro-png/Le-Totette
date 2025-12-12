@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Panel de Pedidos</title>
+  <link rel="stylesheet" href="pedidos.css"/>
+</head>
+<body>
+  <div class="flexbox">
+    <!-- ASIDE / MENÚ LATERAL-->
+    <aside class="menu_lateral">
+      <nav class="nav">
+        <i class="fa-solid fa-circle-user" id="admin_icono"></i>
+        <h2 id="admin">ADMIN</h2>
+        <!-- checkbox oculto para responsive y label para menu-hamburguesa -->
+        <input type="checkbox" id="boton_abrir_menu">
+        <label for="boton_abrir_menu" class="botonmenu">
+          <i class="fa-solid fa-x" id="boton_x" title="Cerrar Menú"></i>
+          <i class="fa-solid fa-bars" id="boton_hamburguesa" title="Abrir Menú"></i>
+          Menú
+        </label>
+        <!-- links -->
+        <ul class="nav_list">
+          <li><a href="#" class="nav_link">Estadísticas</a></li>
+          <li><a href="#" class="nav_link">Productos</a></li>
+          <li><a href="#" class="nav_link">Pedidos</a></li>
+        </ul>
+      </nav>
+    </aside>
+
+    <!-- CONTENIDO PRINCIPAL -->
+    <main>
+      <h1>Panel de Pedidos</h1>
+
+
+      <!-- Contenedor de pedidos -->
+        <div class="orders" id="orders">
+          {%for pedido in pedidos%}
+            <div class="order espera" data-order-id="1">
+                <p class="order__title">
+                    <strong>Pedido #<span class="order__number">{{pedido_id}}</span></strong>
+                </p>
+                <span class="badge">Espera</span>
+                <select class="status">
+                    <option value="espera" selected>Espera</option>
+                    <option value="produccion">Producción</option>
+                    <option value="retirar">Para retirar</option>
+                    <option value="cancelado">Cancelado</option>
+                </select>
+            </div>
+          {%endfor%}
+      </div>
+    </main>
+  </div>
+
+  <!-- TEMPLATE para clonar nuevos pedidos -->
+  <template id="order-template">
+    <div class="order espera" data-order-id="">
+      <p class="order__title">
+        <strong>Pedido #<span class="order__number"></span></strong>
+      </p>
+      <span class="badge">Espera</span>
+      <select class="status">
+        <option value="espera" selected>Espera</option>
+        <option value="produccion">Producción</option>
+        <option value="retirar">Para retirar</option>
+        <option value="cancelado">Cancelado</option>
+      </select>
+    </div>
+  </template>
+
+  <!-- Modal de confirmación -->
+  <div id="confirm-cancel" class="modal">
+    <div class="modal__content">
+      <p class="modal__text">¿Seguro que deseas cancelar este pedido?</p>
+      <div class="modal__actions">
+        <button type="button" id="confirm-yes" class="btn btn--danger">Sí, cancelar</button>
+        <button type="button" id="confirm-no" class="btn">No</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Enlace al JS (Paso 3) -->
+  <script src="pedidos.js"></script>
+  <script src="https://kit.fontawesome.com/56579e118f.js" crossorigin="anonymous"></script>
+</body>
+</html>
+

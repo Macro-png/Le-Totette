@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Estadísticas</title>
+  <link rel="stylesheet" href="estadisticas.css">
+  <script src="https://kit.fontawesome.com/56579e118f.js" crossorigin="anonymous"></script>
+</head>
+<body>
+  <div class="flexbox">
+    <!-- ASIDE -->
+        <aside class="menu_lateral">
+            <nav class="nav">
+                <i class="fa-solid fa-circle-user" id="admin_icono"></i>
+                <h2 id="admin">ADMIN</h2>
+                <input type="checkbox" id="boton_abrir_menu">
+                <label for="boton_abrir_menu">
+                    <i class="fa-solid fa-x" id="boton_x" title="Cerrar Menú"></i>
+                    <i class="fa-solid fa-bars" title="Abrir Menú" id="boton_hamburguesa"></i> 
+                    Menú
+                </label>
+                <ul class="nav_list">
+                    <li><a href="" class="nav_link">Estadísticas</a></li>
+                    <li><a href="" class="nav_link">Productos</a></li>
+                    <li><a href="" class="nav_link">Pedidos</a></li>
+                </ul>
+            </nav>
+        </aside>
+
+    <!-- CONTENIDO -->
+    <main>
+        <h1>Panel de Estadísticas</h1>
+
+        <section class="cards">
+            <div class="card">
+            <h2>Producto más visitado</h2>
+            <p><strong>Totebag Floral</strong></p>
+            <span class="badge visita">350 visitas</span>
+            </div>
+
+            <div class="card">
+            <h2>Producto más comprado</h2>
+            <p><strong>Totebag Minimalista</strong></p>
+            <span class="badge compra">180 compras</span>
+            </div>
+        </section>
+
+        <section class="categorias">
+            <h2>Ventas por Categoría</h2>
+            <ul class="lista_categorias">
+                <li><span>Básicas</span><span class="ventas">120 ventas</span></li>
+                <li><span>Personalizadas</span><span class="ventas">95 ventas</span></li>
+                <li><span>Edición Limitada</span><span class="ventas">60 ventas</span></li>
+            </ul>
+        </section>
+    </main>
+  </div>
+</body>
+</html>

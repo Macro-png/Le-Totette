@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Admin — Modificar Producto</title>
+  <link rel="stylesheet" href="mod_product.css" />
+  <script src="https://kit.fontawesome.com/56579e118f.js" crossorigin="anonymous"></script>
+</head>
+<body>
+  <!--  CONTENIDO DE LA PÁGINA  -->
+  <div class="flexbox">
+    <aside class="menu_lateral">
+      <nav class="nav">
+        <i class="fa-solid fa-circle-user" id="admin_icono"></i>
+        <h2 id="admin">ADMIN</h2>
+        <input type="checkbox" id="boton_abrir_menu" />
+        <label for="boton_abrir_menu" class="botonmenu">
+          <i class="fa-solid fa-x" id="boton_x" title="Cerrar Menú"></i>
+          <i class="fa-solid fa-bars" id="boton_hamburguesa" title="Abrir Menú"></i>
+          Menú
+        </label>
+        <ul class="nav_list">
+          <li><a href="#" class="nav_link">Estadísticas</a></li>
+          <li><a href="#" class="nav_link">Productos</a></li>
+          <li><a href="#" class="nav_link">Pedidos</a></li>
+        </ul>
+      </nav>
+    </aside>
+
+    <main>
+      <h1>Modificar Producto</h1>
+
+      <!-- Formulario listo para validaciones JS -->
+      <form class="descr" id="formProducto" novalidate>
+        <!-- Nombre -->
+        <div>
+          <label for="nombre" class="nombre">Nombre del Producto:</label>
+          <input type="text" id="nombre" class="nombre" />
+          <small class="error-text"></small>
+        </div>
+
+        <!-- Características -->
+        <div>
+          <label for="caract" class="caract">Características:</label>
+          <textarea id="caract" class="caract"></textarea>
+          <small class="error-text"></small>
+        </div>
+
+        <!-- Colores (dinámicos, con límite) -->
+        <div class="menucolor">
+          <div id="contenedor-colores">
+            <!-- Bloque base a duplicar con JS -->
+            <div class="colores">
+              <label for="color1">Código hexadecimal del color 1</label>
+              <input type="text" id="color1" class="color" />
+              <small class="error-text"></small>
+            </div>
+          </div>
+          <div>
+            <input
+              type="button" value="+"
+              id="agregarcolor" class="agregarcolor"
+              title="Agregar color"
+            />
+          </div>
+        </div>
+
+        <!-- Archivo -->
+        <div class="archivo">
+          <input type="file" name="archivo" id="archivo" accept=".jpg,.jpeg,.png" />
+          <small class="error-text"></small>
+        </div>
+
+        <!-- Precio -->
+        <div>
+          <label for="precio">Precio</label>
+          <input type="text" id="precio" class="precio" />
+          <small class="error-text"></small>
+        </div>
+        <p id="mensaje-general" class="mensaje-general"></p>
+        <!-- Botones -->
+        <div class="botones">
+          <input type="submit" value="Editar producto" class="bot" />
+          <input type="reset" value="Resetear" class="bot" />
+        </div>
+      </form>
+    </main>
+  </div>
+
+  <!-- En el paso 3 enlazaremos mod_product.js -->
+  <script src="mod_product.js"></script>
+</body>
+</html>

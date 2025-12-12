@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Diseña tu Tote</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/creatote.css') }}">
+  <script src="https://kit.fontawesome.com/56579e118f.js" crossorigin="anonymous"></script>
+</head>
+<body>
+    <!--INICIO CODIGO ALE MENU-->
+    
+    <!-- HEADER -->
+    <header class="header">
+        <div class="containerHeader_logo_Nav">
+            <!-- LOGO -->
+            <img src="{{ url_for('static', filename='img/logominimalista.png') }}" alt="logo_letotte" id="header_logo">
+            <!-- NAV -->
+            <input type="checkbox" id="boton_abrir_menu">
+            <label for="boton_abrir_menu" >
+                <i class="fa-solid fa-x" id="boton_x" title="Cerrar Menú"></i>
+                <i class="fa-solid fa-bars" title="Abrir Menú" id="boton_hamburguesa"></i> 
+                Menú
+            </label>
+            <nav class="header_nav">
+                <ul>
+                    <li class="nav_item"><a href="{{ url_for('home') }}" class="navlink">Home</a></li>
+                    <li class="nav_item"><a href="{{ url_for('catalogo') }}" class="navlink">Catálogo</a></li>
+                    <li class="nav_item"><a href="{{ url_for('creatote') }}" class="navlink">Diseña tu Totebag</a></li>
+                </ul>
+            </nav>
+
+        </div>
+
+        <!-- BUSCADOR -->
+        <div class="container_buscador">
+            <form class="buscador">
+                <input type="text" id="buscador" placeholder="¿Qué estás buscando?">
+                <i class="fa-solid fa-magnifying-glass" id="buscador_lupa"></i>
+            </form>
+        </div>
+
+    <!-- BOTONES DESKTOP -->
+    <div class="container_HeaderBotones">
+        <a href="https://wa.link/2fr9ok">
+            <img src="{{ url_for('static', filename='img/whats.png') }}" class="header_botones">
+        </a>
+
+        <a href="{{ url_for('ver_carrito') }}">
+            <img src="{{ url_for('static', filename='img/carrito.png') }}" class="header_botones">
+        </a>
+
+        <a href="{{ url_for('mi_cuenta') }}">
+            <img src="{{ url_for('static', filename='img/login.png') }}" class="header_botones">
+        </a>
+    </div>
+    <!-- BOTONES MOBILE -->
+    <div class="container_MenuBotonesMobile">
+            <a href="https://wa.link/2fr9ok"><img src="{{ url_for('static', filename='img/whats.png') }}" alt="whatsapp" class="menu_mobile_botones"></a>
+            <a href="{{ url_for('ver_carrito') }}"><img src="{{ url_for('static', filename='img/login.png') }}" class="menu_mobile_botones"></a>
+            <a href="{{ url_for('mi_cuenta') }}"><img src="{{ url_for('static', filename='img/login.png') }}" alt="login" class="menu_mobile_botones"></a>
+        </div>
+
+    <!--FIN CODIGO ALE MENU-->
+    </header>
+
+    <div class="flexbox">
+        <aside class="imagen" id="preview-wrap">
+            <div class="imagenespreview">
+                <img src="{{ url_for('static', filename='img/tote-removebg-preview.png') }}" id="totevacia">
+                <img id="preview">
+            </div>
+        </aside>
+
+        <main class="descr">
+            <h1 class="nombre">Tu tote bag</h1>
+            <p class="caract">En este apartado van las caracteristicas de la tote bag.</p>
+
+            <!-- INICIO NUEVO
+                 Motivo: el template apuntaba a 'crea_tote_route' que no estaba definida en route.py.
+                 La ruta y el handler fueron añadidos; aquí apunto correctamente al endpoint.
+            -->
+            <form action="{{ url_for('crea_tote_route') }}" method="post" enctype="multipart/form-data">
+            <!-- FIN NUEVO -->
+                <div>
+                    <input type="file" name="imagen" id="imagen" accept=".jpeg,.jpg,.png">
+                </div>
+                <div class="botones"> 
+                    <input type="submit" value="Guardar Tote" class="bot">
+                </div>
+            </form>
+        </main>
+    </div>
+    <script src="{{ url_for('static', filename='js/creartote.js') }}"></script>
+</body>
+</html>

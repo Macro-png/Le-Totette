@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="signup.css">
+      <style>
+            body {
+                background-image: url("{{ url_for('static', filename='img/fondo.jpeg') }}");
+                <!--DESDE EL CSS NO SE VE SINO-->
+            }
+        </style>
+</head>
+<body>
+    <div class="flexbox">
+        <aside>
+
+        </aside>
+        <main>
+            <div class="cont">
+                <p class="crearcuenta">Crear cuenta</p>
+                <!-- INICIO NUEVO: ajustar acción del form para enviar al backend Flask (ruta /signup) -->
+                <form action="{{ url_for('signup') }}" method="POST" onsubmit= "return validar()">
+                <!-- FIN NUEVO -->
+                    <label for="nombre">Nombre:</label>
+                    <input type="text" id="nombre" name="nombre" placeholder="" class="">
+                    <label for="email">Email:</label>
+                    <input type="text" id="email" name="email" placeholder ="" class="">
+                    <label for="contrasena">Contrasena minimo seis caracteres:</label>
+                    <input type="password" id="contrasena" placeholder ="" name="contrasena">
+                    <label for="contrasena">Verificar contrasena:</label>
+                    <input type="password" id="verificarcontrasena" placeholder="" name="verificarcontrasena" class="">
+                    <p id="textoerror" class="textoerrorno">Los datos de los campos en rojo son erróneos</p>
+                    <div class="botones"> 
+                        <input type="submit" value="Crear" class="bot" id="submit">
+                    </div>
+                </form>
+                <p class="login">¿Ya tienes una cuenta?</p>
+                <form>
+                    <div class="botones"> 
+                        <input type="button" value="Iniciar sesion" class="bot">
+                    </div>
+                </form>
+            </div>
+        </main>
+    </div>
+    <script src="signup.js"></script>
+</body>
+</html>

@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/login.css') }}">
+      <style>
+            body {
+                background-image: url("{{ url_for('static', filename='img/fondo.jpeg') }}");
+                <!--DESDE EL CSS NO SE VE SINO -->
+            }
+        </style>
+</head>
+<body>
+    <div class="flexbox">
+        <aside>
+
+        </aside>
+        <main>
+            <div class="cont">
+                <p class="login"> Login </p>
+                <!-- INICIO NUEVO: ajustar acción del form para enviar al backend Flask (ruta /login) -->
+
+                <form class="form" action="{{ url_for('login_post') }}" method="POST" onsubmit="return validar()">
+
+                <!-- FIN NUEVO -->
+                    <label for="email">Email:</label>
+                    <input type="text" id="email" name="email" class="">
+                    <label for="contrasena">Contrasena:</label>
+                    <input type="password" id="contrasena" name="contrasena" class="">
+                    <p id="textoerror" class="textoerrorno">El mail o la contrasena son erróneos</p>
+                    <div class="botones">
+                        <input type="submit" value="Enviar" class="bot">
+                        <input type="button" value="Crear cuenta" class="bot" onclick="window.location='{{ url_for('signup') }}'">
+                    </div>
+                </form>
+            </div>
+        </main>
+    </div>
+    <script src="{{ url_for('static', filename='js/login.js') }}"></script>
+</body>
+</html>

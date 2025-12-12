@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="login.css">
+</head>
+<body>
+    <div class="flexbox">
+        <aside>
+
+        </aside>
+        <main>
+            <div class="cont">
+                <p class="login"> Login </p>
+                <form class="form" action="../../home/index.html" onsubmit= "return validar()">
+                    <label for="email">Email:</label>
+                    <input type="text" id="email" name="email" class="">
+                    <label for="contrasena">Contrasena:</label>
+                    <input type="password" id="contrasena" name="contrasena" class="">
+                    <p id="textoerror" class="textoerrorno">El mail o la contrasena son erróneos</p>
+                    <div class="botones">
+                        <input type="submit" value="Enviar" class="bot">
+                        <input type="button" value="Crear cuenta" class="bot">
+                    </div>
+                </form>
+            </div>
+        </main>
+    </div>
+    <script src="login.js"></script>
+</body>
+</html>
