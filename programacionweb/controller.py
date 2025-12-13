@@ -222,7 +222,7 @@ def signup(param): #PARA CREAR CUENTA
     mail = request.form.get('email','').strip()
     contrasena = request.form.get('contrasena','').strip()
     di = {'nombre': nombre, 'mail': mail, 'contrasena': contrasena, 'tipo': 'cliente'}
-    exito = crearCliente(di)
+    exito = model.crearCliente(di)
     if exito:
         return redirect('/login')
     else:
@@ -346,7 +346,7 @@ def ingresoUsuarioValido(param, req):
         email = request.form.get('email','').strip()
         contrasena = request.form.get('contrasena','').strip()
         result = {}
-        ok = validarClientePorMailYContrasena(result, email, contrasena)
+        ok = model.validarClientePorMailYContrasena(result, email, contrasena) 
         if ok:
             session.clear()
             session['usuario'] = {
@@ -401,7 +401,7 @@ def ingresoUsuarioValido(request):
         getRequest(mirequest)
         # CONSULTA A LA BASE DE DATOS. Si usuario es valido => crea session
         dicUsuario={}
-        if obtenerUsuarioXEmailPass(dicUsuario,mirequest.get("username"),mirequest.get("password")):
+        if model.obtenerUsuarioXEmailPass(dicUsuario,mirequest.get("username"),mirequest.get("password")):
             
             # Carga sesion (Usuario validado)
             cargarSesion(dicUsuario)
