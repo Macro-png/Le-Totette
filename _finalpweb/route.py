@@ -186,4 +186,4 @@ def route(app):
           Retorna una pagina indicando el error. 
         '''  
         
-        return paginaNoEncontrada(name)
+        return 'Pagina "{}" no encontrada'.format(name)

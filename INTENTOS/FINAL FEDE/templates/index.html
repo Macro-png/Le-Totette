@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home</title>
+
+    
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/home.css') }}">
+    
+
+    <script src="https://kit.fontawesome.com/56579e118f.js" crossorigin="anonymous"></script>
+</head>
+<body>
+
+    <!--INICIO CODIGO ALE MENU-->
+    
+    <!-- HEADER -->
+    <header class="header">
+        <div class="containerHeader_logo_Nav">
+            <!-- LOGO -->
+            <img src="{{ url_for('static', filename='img/logominimalista.png') }}" alt="logo_letotte   " id="header_logo">
+            <!-- NAV -->
+            <input type="checkbox" id="boton_abrir_menu">
+            <label for="boton_abrir_menu" >
+                <i class="fa-solid fa-x" id="boton_x" title="Cerrar Menú"></i>
+                <i class="fa-solid fa-bars" title="Abrir Menú" id="boton_hamburguesa"></i> 
+                Menú
+            </label>
+            <nav class="header_nav">
+                <ul>
+                    <li class="nav_item"><a href="{{ url_for('index') }}" class="navlink">Home</a></li>
+                    <li class="nav_item"><a href="{{ url_for('catalogo') }}" class="navlink">Catálogo</a></li>
+                    <li class="nav_item"><a href="{{ url_for('creatote') }}" class="navlink">Diseña tu Totebag</a></li>
+                </ul>
+            </nav>
+
+        </div>
+
+        <!-- BUSCADOR 
+        <div class="container_buscador">
+            <form class="buscador">
+                <input type="text" id="buscador" placeholder="¿Qué estás buscando?">
+                <i class="fa-solid fa-magnifying-glass" id="buscador_lupa"></i>
+            </form>
+        </div>-->
+
+    <!-- BOTONES DESKTOP -->
+    <div class="container_HeaderBotones">
+        <a href="https://wa.link/2fr9ok">
+            <img src="{{ url_for('static', filename='img/whats.png') }}" class="header_botones">
+        </a>
+
+        <a href="{{ url_for('ver_carrito') }}">
+            <img src="{{ url_for('static', filename='img/carrito.png') }}" class="header_botones">
+        </a>
+
+        <a href="{{ url_for('mi_cuenta') }}">
+            <img src="{{ url_for('static', filename='img/login.png') }}" class="header_botones">
+        </a>
+    </div>
+    </header>
+
+    
+    
+    <!--FIN CODIGO ALE MENU-->
+    <main>
+
+        <div class="Container_Catalogo_DisTuTotebag">
+
+            <!-- CATÁLOGO -->
+            <!--<a href="{{ url_for('catalogo') }}">-->
+                <div class="container_catalogo">
+                
+                    <div class="h2"><h2>Nuestro Catálogo</h2></div>
+
+                    <div class="container_productos">
+
+                    <!-- PRODUCTO 1 -->
+                        <div class="productos">
+                            <img src="{{ url_for('static', filename='img/IMAGENES HOME/1.png') }}" alt="">
+                        
+                        
+                        
+                        </div>
+
+                    <!-- PRODUCTO 2 -->
+                        <div class="productos">
+                            <img src="{{ url_for('static', filename='img/IMAGENES HOME/2 .png') }}" alt="">
+                        
+                        
+                        
+                        </div>
+
+                    <!-- PRODUCTO 3 -->
+                        <div class="productos">
+                            <img src="{{ url_for('static', filename='img/IMAGENES HOME/3.png') }}" alt="">
+                        
+                        
+                        
+                        </div>
+
+                    </div>
+                
+                </div>
+           <!--</a>-->
+
+            <!-- DISEÑA TU TOTE -->
+            <div class="container_disTuTotebag">
+                
+                <a href="{{ url_for('home') }}">
+                
+
+                    <h2>Diseña tu Totebag</h2>
+                    <img id="disTuTotebag" src="{{ url_for('static', filename='img/disenatutote.png') }}" alt="">
+                    <p>Agrega una imagen y crea tu tote</p>
+                </a>
+            </div>
+
+        </div>
+
+        <!--- CATEGORÍAS 
+        <div class="container_categorias">
+            <div class="categoria">
+                <h3>Categoría 1</h3>
+                <img class="img_categoria" src="{{ url_for('static', filename='img/IMAGENES HOME/1.png') }}">
+            </div>
+
+            <div class="categoria">
+                <h3>Categoría 2</h3>
+                <img class="img_categoria" src="{{ url_for('static', filename='img/IMAGENES HOME/2 .png') }}">
+            </div>
+
+            <div class="categoria">
+                <h3>Categoría 3</h3>
+                <img class="img_categoria" src="{{ url_for('static', filename='img/IMAGENES HOME/3.png') }}">
+            </div>
+        </div>-->
+
+    </main>
+
+    <!-- CARACTERÍSTICAS -->
+    <h3 id="Caracteristicas">CARACTERISTICAS</h3>
+
+    <div class="container_caracteristicas">
+
+        <div class="caracteristicas">
+            <img src="{{ url_for('static', filename='img/iconoseguro.png') }}" class="img_caracteristica">
+            <p>En nuestro ecommerce, la seguridad de tu información personal es una prioridad absoluta. Entendemos que confías en nosotros con datos sensibles, y nos tomamos esa responsabilidad muy en serio. Hemos implementado rigurosas medidas de seguridad, para garantizar que toda la información transmitida entre tu navegador y nuestros servidores viaje de forma segura y cifrada. Además, fomentamos una cultura de contraseñas de más de seis dígitos para proteger aún más el acceso a tu cuenta. Tus datos se almacenan en servidores seguros con controles de acceso estrictos, limitando el personal que puede manejar información sensible a solo aquellos que realmente lo necesitan. Puedes estar tranquilo sabiendo que tu privacidad y seguridad son fundamentales para nuestra operación.</p>
+        </div>
+
+        <div class="caracteristicas">
+            <img src="{{ url_for('static', filename='img/iconoplata.png') }}" class="img_caracteristica">
+            <p>Estamos comprometidos a ofrecerte las totebags de la mejor calidad a los precios más competitivos del mercado. Como negocio pequeño y eficiente, eliminamos los intermediarios y los costos generales inflados de las grandes corporaciones, lo que nos permite transferir esos ahorros directamente a ti. Nuestra estrategia de precios justos no sacrifica la calidad ni el cuidado artesanal; al contrario, optimizamos nuestros procesos de producción conscientes de tu economía. Creemos firmemente que no deberías tener que pagar una fortuna por un accesorio de moda sostenible y duradero. Constantemente revisamos nuestros precios y realizamos análisis de mercado para asegurarnos de que siempre obtengas la mejor oferta posible. Comprar con nosotros significa obtener un excelente valor por tu dinero, permitiéndote disfrutar de diseños únicos y hechos con amor sin que tu bolsillo sufra.</p>
+        </div>
+
+        <div class="caracteristicas">
+            <img src="{{ url_for('static', filename='img/iconocuenta.png') }}" class="img_caracteristica">
+            <p>Somos un equipo pequeño y apasionado, y cada totebag que sale de nuestro taller está hecha con dedicación y cuidado artesanal. A diferencia de las grandes producciones masivas, aquí cada puntada y cada detalle importan. Valoramos la calidad sobre la cantidad y nos enorgullece ofrecerte un producto único, creado con amor y atención personalizada. Nuestro negocio se basa en la creatividad, la sostenibilidad y la conexión humana. Un pilar fundamental de nuestra filosofía es la producción bajo demanda. Esto significa que solo comenzamos a confeccionar tu totebag una vez que has realizado tu pedido. Este enfoque no solo nos permite personalizar el producto a tu gusto, sino que también es una práctica altamente sostenible que ayuda a reducir significativamente el desperdicio de materiales y el exceso de inventario. Cuando compras una de nuestras totebags, no solo adquieres un accesorio, sino que apoyas un sueño local, recibes un artículo que ha sido pensado y diseñado para ti, y contribuyes a un consumo más consciente. Gracias por elegirnos y por permitirnos ser parte de tu día a día con nuestras creaciones hechas con mucho amor.</p>
+        </div>
+
+    </div>
+
+    <!--- BOTONES MOBILE -->
+    <div class="container_MenuBotonesMobile">
+        <a href=""><img src="{{ url_for('static', filename='img/whats.png') }}" class="menu_mobile_botones"></a>
+
+       
+        <a href="{{ url_for('ver_carrito') }}"><img src="{{ url_for('static', filename='img/carrito.png') }}" class="menu_mobile_botones"></a>
+        
+
+        
+        <a href="{{ url_for('mi_cuenta') }}"><img src="{{ url_for('static', filename='img/login.png') }}" class="menu_mobile_botones"></a>
+        
+    </div>
+
+</body>
+</html>

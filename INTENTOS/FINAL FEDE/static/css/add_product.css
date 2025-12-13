@@ -1,0 +1,407 @@
+* {
+    margin: 0;
+    box-sizing: border-box;
+    padding: 0;
+}
+
+/* ------------ CONTENIDO DE LA PAGINA -------------- */
+/* Config. Generales */
+body {
+    background-color: antiquewhite;
+    color: #333;
+}
+
+.flexbox {
+    display: flex;
+    width: 100%;
+    flex-direction: row;
+    height: 100vh;
+}
+
+aside, main {
+    /* height: 100%; */
+    background-color: antiquewhite;
+}
+
+main {
+    width: 90%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 10px 15px;
+    margin: auto;
+}
+
+aside {
+    border: 1px solid gray;
+    background-color: beige;
+    padding: 10% 0;
+    width: 10%;
+    min-width: 120px;
+}
+
+/* NAV ASIDE */
+.nav {
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+    justify-content: center;
+    align-items: center ;
+    padding: 20px 10px;
+}
+
+#admin_icono {
+    font-size: 40px;
+}
+
+.nav_list {
+    display: flex;
+    flex-direction: column;
+    gap: 34px;
+    margin-top: 50px;
+    list-style: none;
+}
+
+.nav_link {
+    text-decoration: none;
+    color: #333;
+    font-size: 20px;
+    padding: 8px;
+    transition: background-color 0.5s;
+    border-radius: 10px;
+}
+
+.nav_link:hover {
+    background-color: rgba(201, 127, 127, 0.534);
+}
+
+aside input[type="checkbox"], aside label {
+    display: none;
+}
+
+/* Primer cambio de disposicion (menu de vertical a horizontal) */
+@media screen and (max-width:700px) {
+    .flexbox {
+        /* antes solo cambiabas la dirección */
+        flex-direction: column;
+        height: auto;        /* <-- permitir que crezca */
+        min-height: 100dvh;  /* <-- alternativa moderna a 100vh en móviles */
+    }
+    aside, main {
+        width: 100%;
+    }
+    aside {
+        /* height: 10vh;  <-- generaba superposicion vertical */
+        height: auto;       /* <-- que su altura la determine el contenido */
+        min-height: 10vh;   /* <-- opcional: un mínimo, pero no lo limita */
+        justify-content: center;
+        align-items: center;
+        padding: 10px;
+}
+    .nav {
+    flex-direction: row;
+    gap: 5px;
+    text-wrap: balance;
+    justify-content: space-evenly;
+    padding: 10px;
+}
+    .nav_list {
+    flex-direction: row;
+    margin-top: 0;
+    gap: 10px;
+}
+    }
+
+/* 2do cambio (direccion row a direccion column) */
+@media screen and (max-width:500px) {
+    .nav {
+        flex-direction: column;
+        margin: 0;
+        padding: 0;
+    }
+    .nav_list {
+        padding: 0;
+        margin: 0;
+        justify-content: space-evenly;
+        gap: 0;
+    }
+    aside {
+        height: auto;
+        margin: 0;
+        padding: 0;
+    }
+}
+/* MENU DE HAMBURGUESA PARA PANTALLAS MUY CHIQUITAS */
+@media screen and (max-width:291px) {
+    label {
+        display: flex;
+        flex-direction: row;
+    }
+    #boton_x {
+        display: none;
+    }
+
+    .botonmenu{
+        display: flex;
+        flex-direction: row;
+    }
+
+    .nav ul {
+        background-color: rgba(199, 91, 91, 0.829);
+        position: absolute;
+        margin-top: 35vh;
+        flex-direction: column;
+        gap: 20px;
+        width: 100%;
+        border-radius: 10px;
+        justify-content: center;
+        align-items: center;
+        left: -150%;
+        transition: left 0.5s;
+    }
+    /* cuando se chequea, se despliega el menu */
+    aside input:checked ~ ul {
+        left: 0;
+    }
+    aside input:checked ~ label>#boton_hamburguesa {
+        display: none;
+    }
+    aside input:checked ~ label>#boton_x {
+        display: block;
+    }
+}
+/* BOTONES DEL FORMULARIO */
+input[type="submit"]{
+    border-radius: 10px;
+    border: 1.5px solid #c3a78a;
+    padding: 10px;
+    background-color:#fad6b1;
+    color: black;
+    transition: all 0.5s;
+    cursor: pointer;
+}
+
+input[type="reset"]{
+    border-radius: 10px;
+    border: 1.5px solid #c3a78a;
+    padding: 10px;
+    background-color:#fad6b1;
+    color: black;
+    transition: all 0.5s;
+    cursor: pointer;
+}
+
+.botones{
+    display: flex;
+    justify-content: center;
+    padding: 10px 5px;
+    margin: 10px 0;
+    gap:5px;
+}
+
+#caract{
+    width: 100%;
+    min-height: fit-content;
+    resize: vertical;
+    background-color: #fad6b1;
+    border-color: #c3a78a;
+    margin-bottom: 10px;
+}
+
+input[type="text"].color, input[type="text"].precio{
+    background-color: #fad6b1;
+    border-color: #c3a78a;
+    width: 150px;
+    height: 20px;
+    border-radius: 5px;
+
+}
+.bot:hover{
+    background-color: #d6786a;
+    
+}
+
+.nombre{
+    font-size: xx-large;
+    text-align: center;
+    font-weight: bold;
+    display: flex;
+    justify-content: center;
+}
+
+input[type="text"].nombre{
+  background-color: #fad6b1;
+  border-color: #c3a78a;
+  width: 80%;
+  /* antes tenía display:flex; y justify-content:center; */
+  display: block;            /*← importante*/
+  margin: 10px auto 20px;    /* centra el input y mantiene márgenes */
+  border-radius: 5px;        
+}
+/* Hace que el <small> del nombre se alinee con el input */
+#nombre + .error-text{
+  display: block;        /* se mostrará cuando JS le agregue .mensaje-error */
+  width: 80%;            /* igual que el input */
+  margin: 4px auto 0;    /* centrado, pegado al input */
+  text-align: left;      /* el texto comienza alineado a la izquierda */
+}
+
+.caract{
+    text-align: justify;
+    font-size: x-large;
+}
+#caract + .error-text{
+  display: block;
+  width: 100%;
+  margin-top: 4px;
+  text-align: left;
+}
+
+form{
+    text-align: left;
+    margin-bottom: 1vh;
+}
+
+
+.descr{
+    display: flex;
+    flex-direction: column;
+}
+
+.archivo{
+    display: flex;
+    flex-direction: column;   /* coloca el input y el texto en columna */
+    align-items: flex-start;  /* alinea el texto de error a la izquierda */
+    overflow: hidden;
+    margin-top: 10px;
+    margin-bottom: 15px;
+}
+
+input[type="file"]{
+    margin:20px 0px;
+    /* Asegura que el bloque del input file y su mensaje se apilen verticalmente */
+    display: block;
+    margin-bottom: 5px; /* deja un pequeño espacio para el mensaje */
+}
+
+input[type="file"]::file-selector-button {
+    border-radius: 5px;
+    border: 1.5px solid #c3a78a;
+    padding: 10px;
+    background-color:#fad6b1;
+    color: black;
+    transition: all 0.5s;
+    cursor: pointer;
+}
+
+input[type="file"]::file-selector-button:hover{
+    background-color: #d6786a;
+}
+
+.menucolor{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.agregarcolor{
+        background-color: #d2fab1;
+        border:1px solid black;
+        border-radius: 50%;
+        font-size: 20px;
+        margin: auto;
+        margin-left: 15px;
+        width:30px;
+        height:30px;
+        cursor: pointer;
+}
+
+.colores{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap:10px;
+    text-align: center;
+}
+
+@media screen and (max-width:500px) {
+    .colores{
+        display: flex;
+        flex-direction: column;
+    }
+}
+
+@media screen and (max-width:260px) {
+    .menucolor{
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 10px;
+    }
+    .botones{
+        display: flex;
+        flex-direction: column;
+    }
+}
+
+/* -------- VALIDACIONES -------- */
+.input-error {
+    border: 2px solid red !important;
+    background-color: #ffdddd !important;
+}
+
+.input-ok {
+    border: 2px solid green !important;
+    background-color: #ddffdd !important;
+}
+
+.error-text {
+    display: none;
+    color: red;
+    font-size: 13px;
+    margin-top: 4px;
+}
+
+.mensaje-error {
+    display: block !important;
+}
+
+/* Agregar colores dinamicamente */
+#contenedor-colores {
+    display: flex;
+    flex-direction: column;
+    gap: 10px; /* separa cada input de color nuevo */
+}
+
+.colores label {
+    font-size: 16px;
+}
+
+.colores .error-text {
+    align-self: flex-start;
+}
+
+/* Cuando el boton agregar color llego a su maximo */
+#agregarcolor:disabled { opacity: 0.6; cursor: not-allowed; }
+
+/* -------- MENSAJE GENERAL ANTES DE ENVIAR EL FORMULARIO -------- */
+.mensaje-general {
+    text-align: center;
+    font-size: 1rem;
+    font-weight: 500;
+    margin-bottom: 10px;
+    display: none; /* Oculto por defecto */
+    transition: opacity 0.3s ease;
+}
+
+.mensaje-general.ok {
+    display: block !important; 
+    color: green;
+    opacity: 1;
+}
+
+.mensaje-general.error {
+    display: block;
+    color: red;
+    opacity: 1;
+}
