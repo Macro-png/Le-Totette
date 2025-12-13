@@ -24,21 +24,93 @@ def crearCliente(di):
 
 
 def obtenerClientePorMail(param, mail, clave='usuario'):
+    '''### Información:
+       Obtiene todos los campos de la tabla usuario a partir de la clave 'email'.
+       Carga la información obtenida de la BD en el dict 'param'
+       Recibe 'param' in diccionario
+       Recibe 'email' que es el mail si se utiliza como clave en la búsqueda
+       Recibe 'clave' que es a clave que se le colocará al dict 'param'
+       
+    '''
     '''Carga en param[clave] la información del cliente con el mail dado.'''
     sSql = """SELECT id, nombre, tipo, mail, contrasena FROM clientes WHERE mail=%s;"""
     val = (mail,)
     fila = selectDB(BASE, sSql, val)
+    param[clave]={}
+    param[clave]['id']=fila[0][0]
+    param[clave]['nombre']=fila[0][1]
+    param[clave]['tipo']=fila[0][2]
+    param[clave]['mail']=fila[0][3]
+    param[clave]['contrasena']=fila[0][4]
 
-    if fila and len(fila) > 0:
-        param[clave] = {
-            'id': fila[0][0],
-            'nombre': fila[0][1],
-            'tipo': fila[0][2],
-            'mail': fila[0][3],
-            'contrasena': fila[0][4]
-        } 
-    else:
-        param[clave] = {}
+
+def obtenerUsuarioXEmailPass(result,email,password):
+    '''### Información:
+       Obtiene todos los campos de la tabla usuario a partir de la clave 'email'
+         y del 'password'.
+       Carga la información obtenida de la BD en el dict 'result'
+       Recibe 'result' in diccionario donde se almacena la respuesta de la consulta
+       Recibe 'email' que es el mail si se utiliza como clave en la búsqueda
+       Recibe 'password' que se utiliza en la consulta. (Para validadar al usuario)
+       Retorna:
+        True cuando se obtiene un registro de u usuario a partir del 'email' y el 'pass.
+        False caso contrario.
+    '''
+    res=False
+    sSql="""SELECT id, nombre,apellido,email,pass 
+    FROM  usuario WHERE  email=%s and pass=%s;"""
+    val=(email,password)
+    fila=selectDB(BASE,sSql,val)
+    if fila!=[]:
+        res=True
+        result['id']=fila[0][0]
+        result['nombre']=fila[0][1]
+        result['tipo']=fila[0][2]
+        result['mail']=fila[0][3] # es el mail
+        result['contraseña']=fila[0][4]
+    return res    
+        
+
+def actualizarUsuario(di,email):
+    '''### Información:
+        Actualiza el registro de la tabla usuario para la clave 'email'
+        Recibe 'di' un dict con los campos que se requiere modificar.
+        Recibe 'email' que es la clave para identificar el regsitro a actualizar.
+        Retorna True si realiza la actualización correctamente.
+                False caso contrario.
+
+    '''
+    sQuery="""update usuario 
+        SET nombre=%s, 
+        apellido=%s,
+        pass=%s 
+        WHERE email=%s;
+        """
+    val=(di.get('nombre'), 
+         di.get('apellido'), 
+         di.get('password'), 
+         email )
+    
+    resul_update=updateDB(BASE,sQuery,val=val)
+    return resul_update==1
+
+def validarUsuario(email,password):
+#     '''### Información:
+#           Se consulta a la BD un usuario 'email' y un 'password'
+#           retorna True si 'email' y  'password' son válido
+#           retorna False caso contrario
+#     '''
+     sSql='''
+         SELECT * FROM  usuario
+             WHERE 
+             email=%s
+             AND 
+             pass=%s;
+     '''
+     val=(email,password)
+     fila=selectDB(BASE,sSql,val=val)
+     return fila!=[]
+
 
 
 def obtenerClientePorId(param, cliente_id, clave='usuario'):
