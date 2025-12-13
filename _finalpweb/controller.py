@@ -1,455 +1,515 @@
-'''### info:
-     CONTROL 
-
-    Dependencias:
-        pip install uuid
-
-    Referencias:
-        https://pypi.org/project/uuid/
-        https://docs.python.org/3/library/uuid.html
-    
 '''
-
-from flask import request, session, redirect, render_template, url_for, jsonify
-from model import *
-from werkzeug.utils import secure_filename
-import os
-from datetime import datetime
-from flask import request, session,redirect,render_template
-from uuid import uuid4
-from appConfig import config
-
+from flask import request, session, redirect, render_template
+import model
 
 ##########################################################################
-#               FUNCIONES PRINCIPALES (las páginas)
+# SESIÓN
+##########################################################################
+
+def requiere_login():
+    return session.get('usuario') is not None
+
+def es_admin():
+    return session.get('usuario', {}).get('tipo') == 'admin'
+
+def cerrarSesion():
+    session.clear()
+    return redirect('/login')
+
+##########################################################################
+# PÁGINAS CLIENTE
 ##########################################################################
 
 def home_pagina(param):
-    '''Carga la pagina del home con listado de productos'''
-    param = param or {}
-    ##### (solo accessible con sesión) #####
-    usuario = session.get('usuario')
-    if not usuario:
-        return redirect('/login') #SI NO ESTA LOGUEADO NO PERMITE ACCEDER
-    else:
-        return render_template("index.html")
+    if not requiere_login():
+        return redirect('/login')
+    if es_admin():
+        return redirect('/admin/estadisticas')
+    return render_template("index.html")
 
 def catalogo_pagina(param):
-    param = param or {}
-    ##### (solo accessible con sesión) #####
-    usuario = session.get('usuario')
-    if not usuario:
-        return redirect('/login') #SI NO ESTA LOGUEADO NO PERMITE ACCEDER
-    elif tipo_usuario():
-        productos = obtenerTodosLosProductos()
-        lista_productos = []
-        for p in productos:
-            lista_productos.append({
-                'id': p[0],
-                'nombre': p[1],
-                'precio_unidad': p[2],
-                'img': p[3],
-                'descripcion': p[4] if len(p) > 4 else '', #if len(p)>4 va p[4] si no cumple el if va ''
-                'ventas': p[5] if len(p) > 5 else 0
-            }) 
-        #recibe lista de tuplas y crea lista de 
-        #diccionarios con keys repetidas
-        param['productos'] = lista_productos
-        return render_template("catalogo.html", param=param)
+    if not requiere_login():
+        return redirect('/login')
+    if es_admin():
+        return redirect('/admin/estadisticas')
+    return render_template("catalogo.html", productos=[])
 
+def producto_pagina(param, pid):
+    if not requiere_login():
+        return redirect('/login')
+    if es_admin():
+        return redirect('/admin/estadisticas')
+    return render_template("producto.html", producto={})
+
+##########################################################################
+# LOGIN / SIGNUP
+##########################################################################
 
 def login_pagina(param):
     param = param or {}
     return render_template("login.html", param=param)
 
-
 def signup_pagina(param):
     param = param or {}
     return render_template("signup.html", param=param)
 
-
-def producto_pagina(param, pid):
-    '''Muestra la página de producto individual'''
-    param = param or {}
-    fila = obtenerProductoPorId(pid)
-    producto_dict = None
-    if fila:
-        if isinstance(fila, (list,tuple)):
-            producto_dict = {
-                'id': fila[0],
-                'nombre': fila[1],
-                'precio_unidad': fila[2] if len(fila) > 2 else None,
-                'img': fila[3] if len(fila) > 3 else '',
-                'descripcion': fila[4] if len(fila) > 4 else ''
-            }
-        elif isinstance(fila, dict):
-            producto_dict = fila
-    param['producto'] = producto_dict
-    return render_template("producto.html", param=param)
-
-def ValidarFormularioRegistro(di):
-    res=True
-    res= res and di.get('nombre')!=""
-    res= res and di.get('apellido')!=""
-    res= res and di.get('email')!=""
-    res= res and di.get('password')!=""
-    return res
-
 def signup(param):
-    '''Procesa registro (POST)'''
-    param = param 
-    nombre = request.form.get('nombre','').strip()
-    mail = request.form.get('email','').strip()
-    contrasena = request.form.get('contrasena','').strip()
-    di = {'nombre': nombre, 'mail': mail, 'contrasena': contrasena, 'tipo': 'cliente'}
-    exito = crearCliente(di)
-    if exito:
+    di = {
+        'nombre': request.form.get('nombre'),
+        'mail': request.form.get('email'),
+        'contrasena': request.form.get('contrasena'),
+        'tipo': 'cliente'
+    }
+    if crearCliente(di):
         return redirect('/login')
-    else:
-        param['error'] = "No se pudo crear el usuario. Verifique los datos."
-        return render_template("signup.html", param=param)
 
+    param['error'] = "No se pudo crear el usuario"
+    return render_template("signup.html", param=param)
 
-def ingresoUsuarioValido(param, req):
-    '''Procesa login (POST)'''
-    param = param or {}
-    if request.method == 'POST':
-        email = request.form.get('email','').strip()
-        contrasena = request.form.get('contrasena','').strip()
-        result = {}
-        ok = validarClientePorMailYContrasena(result, email, contrasena)
-        if ok:
-            session.clear()
-            session['usuario'] = {
-                'id': result['id'],
-                'nombre': result['nombre'],
-                'tipo': result['tipo'],
-                'mail': result['mail']
-            }
-            if result.get('tipo') == 'admin':
-                return redirect('/estadisticas')
-            else:
-                return redirect('/home')
-        else:
-            param['error'] = "Mail o contraseña incorrectos"
-            return render_template("login.html", param=param)
-    else:
-        return render_template("login.html", param=param)
-##### FIN NUEVO
+def ingresoUsuarioValido(param):
+    email = request.form.get('email')
+    contrasena = request.form.get('contrasena')
 
-def getRequest(diResult):
-    if request.method=='POST':
-        for name in request.form.to_dict().keys():
-            li=request.form.getlist(name)
-            if len(li)>1:
-                diResult[name]=request.form.getlist(name)
-            elif len(li)==1:
-                diResult[name]=li[0]
-            else:
-                diResult[name]=""
-    elif request.method=='GET':  
-        for name in request.args.to_dict().keys():
-            li=request.args.getlist(name)
-            if len(li)>1:
-                diResult[name]=request.args.getlist(name)
-            elif len(li)==1:
-                diResult[name]=li[0]
-            else:
-                diResult[name]="" 
+    result = {}
+    if validarClientePorMailYContrasena(result, email, contrasena):
+        session['usuario'] = {
+            'id': result['id'],
+            'nombre': result['nombre'],
+            'tipo': result['tipo'],
+            'mail': result['mail']
+        }
 
-def ingresoUsuarioValido(request):
-    '''info:
-        Crea una sesion. Consulta si los datos recibidos son validos.
-        Si son validos carga una sesion con los datos del usuario
-        recibe 'request' una solicitud htpp con los datos 'email' y 'pass' de 
-        un usuario.
-        retorna True si se logra un session, False caso contrario
-    '''
-    sesionValida=False
-    mirequest={}
-    try: 
-        #Carga los datos recibidos del form cliente en el dict 'mirequest'.          
-        getRequest(mirequest)
-        # CONSULTA A LA BASE DE DATOS. Si usuario es valido => crea session
-        dicUsuario={}
-        if obtenerUsuarioXEmailPass(dicUsuario,mirequest.get("username"),mirequest.get("password")):
-            
-            # Carga sesion (Usuario validado)
-            cargarSesion(dicUsuario)
-            sesionValida = True
-    except ValueError:                              
-        pass
-    return sesionValida
+        if result['tipo'] == 'admin':
+            return redirect('/admin/estadisticas')
+        return redirect('/cliente/home')
 
-def registrarUsuario(param,request):
-    '''info:
-      Realiza el registro de un usuario en el sistema, es decir crea un nuevo usuario
-      y lo registra en la base de datos.
-      recibe 'param' el diccionario de parámetros.
-      recibe request es la solicitud (post o get) proveniente del cliente
-      retorna la pagina del login, para forzar a que el usuario realice el login con
-      el usuario creado.
-    '''
-    mirequest={}
-    getRequest(mirequest)
-    
-    if ValidarFormularioRegistro(mirequest):
-        # CONSULTA A LA BASE DE DATOS: Realiza el insert en la tabla usuario
-        if crearUsuario(mirequest):
-            param['succes_msg_login']="Se ha creado el usuario con exito"
-            cerrarSesion()           # Cierra sesion existente(si la hubiere)
-            res=login_pagina(param)  # Envia al login para que vuelva a loguearse el usuario
-        else:
-            param['error_msg_register']="Error: No se ha podido crear el usuario"
-            res=signup_pagina(param)
-    else:
-        param['error_msg_register']="Error: Problema en la validacion de los campos"
-        res=signup_pagina(param)
+    param['error'] = "Mail o contraseña incorrectos"
+    return render_template("login.html", param=param)
 
-    return res 
+##########################################################################
+# ADMIN
+##########################################################################
 
-
-def cargarSesion(dicUsuario):
-    '''info:
-        Realiza la carga de datos del usuario
-        en la variable global dict 'session'.
-        recibe 'dicUsuario' que es un diccionario con datos
-               de un usuario.
-        Comentario: Usted puede agregar en 'session' las claves que necesite
-    '''
-
-    session['id_usuario'] = dicUsuario['id']
-    session['nombre']     = dicUsuario['nombre']
-    session['username']   = dicUsuario['username'] # es el mail
-    session['tipo']        = dicUsuario['tipo']
-    
-def crearSesion(request):
-    '''info:
-        Crea una sesion. Consulta si los datos recibidos son validos.
-        Si son validos carga una sesion con los datos del usuario
-        recibe 'request' una solicitud htpp con los datos 'email' y 'pass' de 
-        un usuario.
-        retorna True si se logra un session, False caso contrario
-    '''
-    sesionValida=False
-    mirequest={}
-    try: 
-        #Carga los datos recibidos del form cliente en el dict 'mirequest'.          
-        getRequest(mirequest)
-        # CONSULTA A LA BASE DE DATOS. Si usuario es valido => crea session
-        dicUsuario={}
-        if obtenerUsuarioXEmailPass(dicUsuario,mirequest.get("username"),mirequest.get("password")):
-            
-            # Carga sesion (Usuario validado)
-            cargarSesion(dicUsuario)
-            sesionValida = True
-    except ValueError:                              
-        pass
-    return sesionValida
-
-
-def cerrarSesion():
-    '''Cierra la sesion del usuario'''
-    session.clear()
-    return redirect('/login')
-
-
-def login_get(param):
-    return login_pagina(param)
-
-
-def signup_get(param):
-    return signup_pagina(param)
-
-
-def editarUsuario_pagina(param):
-    param = param or {}
-    usuario = session.get('usuario')
-    if not usuario or usuario.get('tipo') != 'cliente':
+def estadisticas_pagina(param):
+    if not requiere_login() or not es_admin():
         return redirect('/login')
-    obtenerClientePorId(param, usuario['id'], clave='usuario')
-    return render_template("miCuenta.html", param=param)
+    return render_template("estadisticas.html")
 
+##########################################################################
+# CREATOTE
+##########################################################################
 
+def creatote_pagina(param):
+    if not requiere_login():
+        return redirect('/login')
+    return render_template("creatote.html")
+
+def creatote_formulario(param):
+    return redirect('/cliente/carrito')
 
 
 ##########################################################################
-#                            WISHLIST (cliente)
+# CARRITO
 ##########################################################################
+
+def agregar_producto_carrito(param, request, producto_id):
+    if not requiere_login():
+        return redirect('/login')
+
+    cliente_id = session['usuario']['id']
+    # función del MODEL
+    agregar_producto_carrito(cliente_id, producto_id)
+    return redirect('/cliente/carrito')
+
+def view_carrito(param):
+    if not requiere_login():
+        return redirect('/login')
+
+    cliente_id = session['usuario']['id']
+    productos = obtener_carrito(cliente_id)
+    return render_template("carrito.html", productos=productos)
+
+def carrito_modificar_cantidad(param, request):
+    # La tabla carrito no tiene cantidad
+    return redirect('/cliente/carrito')
+
+def carrito_eliminar_producto(param, request):
+    if not requiere_login():
+        return redirect('/login')
+
+    cliente_id = session['usuario']['id']
+    producto_id = request.form.get('producto_id')
+    eliminar_producto_carrito(cliente_id, producto_id)
+    return redirect('/cliente/carrito')
+
+def carrito_vaciar(param):
+    if not requiere_login():
+        return redirect('/login')
+
+    cliente_id = session['usuario']['id']
+    vaciar_carrito(cliente_id)
+    return redirect('/cliente/carrito')
+
+
+##########################################################################
+# WISHLIST
+##########################################################################
+
+def agregar_producto_wishlist(param, request, producto_id):
+    if not requiere_login():
+        return redirect('/login')
+
+    cliente_id = session['usuario']['id']
+    agregar_wishlist(cliente_id, producto_id)
+    return redirect('/cliente/wishlist')
 
 def view_wishlist(param):
-    '''Muestra la wishlist del usuario'''
-    param = param or {}
-    ##### solo clientes pueden acceder a wishlist #####
-    usuario = session.get('usuario')
-    if not usuario or usuario.get('tipo') != 'cliente':
+    if not requiere_login():
         return redirect('/login')
-    else:
-        cliente_id = usuario['id']
-        filas = obtenerWishlistPorCliente(cliente_id)
-        param['productos'] = filas
-        return render_template("wishlist.html", param=param)
 
+    cliente_id = session['usuario']['id']
+    productos = obtener_wishlist(cliente_id)
+    return render_template("wishlist.html", productos=productos)
 
-def add_to_wishlist_ajax():
-    '''Agregar producto a wishlist vía AJAX'''
-    try:
-        cliente_id = request.form.get('cliente_id')
-        producto_id = request.form.get('producto_id')
-        if not cliente_id:
-            usuario = session.get('usuario')
-            if not usuario:
-                return jsonify({'ok': False, 'msg': 'No hay sesión iniciada'})
-            cliente_id = usuario['id']
-        if not producto_id:
-            return jsonify({'ok': False, 'msg': 'Falta producto_id'})
-        exito = agregarWishlist(int(cliente_id), int(producto_id))
-        if exito:
-            return jsonify({'ok': True, 'msg': 'Producto agregado a wishlist'})
-        else:
-            return jsonify({'ok': False, 'msg': 'Producto ya en wishlist o error al agregar'})
-    except Exception as e:
-        return jsonify({'ok': False, 'msg': 'Error interno: ' + str(e)})
+def eliminar_wishlist(param):
+    if not requiere_login():
+        return redirect('/login')
 
-
-def remove_from_wishlist_ajax():
-    '''Quitar producto de wishlist vía AJAX'''
-    try:
-        cliente_id = request.form.get('cliente_id')
-        producto_id = request.form.get('producto_id')
-        if not cliente_id:
-            usuario = session.get('usuario')
-            if not usuario:
-                return jsonify({'ok': False, 'msg': 'No hay sesión iniciada'})
-            cliente_id = usuario['id']
-        if not producto_id:
-            return jsonify({'ok': False, 'msg': 'Falta producto_id'})
-        res = quitarWishlist(int(cliente_id), int(producto_id))
-        if res:
-            return jsonify({'ok': True, 'msg': 'Producto removido de wishlist'})
-        else:
-            return jsonify({'ok': False, 'msg': 'No se pudo remover el producto'})
-    except Exception as e:
-        return jsonify({'ok': False, 'msg': 'Error interno: ' + str(e)})
+    cliente_id = session['usuario']['id']
+    producto_id = request.form.get('producto_id')
+    eliminar_wishlist(cliente_id, producto_id)
+    return redirect('/cliente/wishlist')
 
 
 ##########################################################################
-# PEDIDOS (CLIENTE y ADMIN)
+# PEDIDOS
 ##########################################################################
-
-def crear_pedido_desde_carrito(param):
-    '''Crea pedido a partir del carrito del usuario.
-       (Nota: mantuve tu idea original; puedes añadir lógica interna luego)
-    '''
-    # (tu implementación original aquí — no la modifiqué)
-    return redirect('/pedidosusuario')
-
 
 def pedidos_usuario(param):
-    param = param or {}
-    usuario = session.get('usuario')
-    if not usuario:
+    if not requiere_login():
         return redirect('/login')
-    cliente_id = usuario['id']
-    filas = obtenerPedidosPorCliente(cliente_id)
-    param['pedidos'] = filas
-    return render_template("pedidosusuario.html", param=param)
 
+    cliente_id = session['usuario']['id']
+    pedidos = obtener_pedidos_cliente(cliente_id)
+    return render_template("pedidosusuario.html", pedidos=pedidos)
 
-def pedidos_admin(param):
-    param = param or {}
-    usuario = session.get('usuario')
-    if not usuario or usuario.get('tipo') != 'admin':
+def pedidos_admin_pagina(param):
+    if not es_admin():
         return redirect('/login')
-    filas = obtenerPedidosParaAdmin()
-    param['pedidos'] = filas
-    return render_template("pedidosadmin.html", param=param)
 
+    pedidos = obtener_pedidos_admin()
+    return render_template("pedidosadmin.html", pedidos=pedidos)
 
-##### INICIO NUEVO (motivo: normalizar/aceptar nombres de campos del AJAX y actualizar estado) #####
-def actualizar_estado_pedido_ajax():
-    '''Recibe POST AJAX con pedido_id y estado -> actualiza el pedido en la BD'''
-    try:
-        pedido_id = request.form.get('pedido_id') or request.form.get('pedidoId') or request.form.get('id')
-        estado = request.form.get('estado')
-        if not pedido_id or not estado:
-            return jsonify({'ok': False, 'msg': 'Faltan parametros'})
+def pedidos_admin_modificarestado(param):
+    if not es_admin():
+        return redirect('/login')
 
-        if estado == 'retirar':
-            estado_db = 'para retirar'
-        else:
-            estado_db = estado
-
-        estados_validos = ['espera', 'produccion', 'retirar', 'para retirar', 'cancelado']
-        if estado not in estados_validos and estado_db not in estados_validos:
-            return jsonify({'ok': False, 'msg': 'Estado inválido'})
-
-        ok = actualizarEstadoPedido(int(pedido_id), estado_db)
-        if ok:
-            return jsonify({'ok': True, 'msg': 'Estado actualizado'})
-        else:
-            return jsonify({'ok': False, 'msg': 'No se pudo actualizar'})
-    except Exception as e:
-        return jsonify({'ok': False, 'msg': 'Error interno: ' + str(e)})
-##### FIN NUEVO
+    pedido_id = request.form.get('pedido_id')
+    estado = request.form.get('estado')
+    actualizar_estado_pedido(pedido_id, estado)
+    return redirect('/admin/pedidosadmin')
 
 
 ##########################################################################
-# CARRITO (cliente)
+# ADMIN - PRODUCTOS
+##########################################################################
+
+def add_product_pagina(param):
+    if not es_admin():
+        return redirect('/login')
+    return render_template("add_product.html")
+
+def guardar_producto(param):
+    return redirect('/admin/estadisticas')
+
+
+##########################################################################
+# MI CUENTA
+##########################################################################
+
+def miCuenta_pagina(param):
+    if not requiere_login():
+        return redirect('/login')
+    return render_template("miCuenta.html")
+
+##########################################################################
+# FUNCIONES EXTRA 
 ##########################################################################
 
 def view_carrito(param):
-    param = param or {}
-    usuario = session.get('usuario')
-    if not usuario or usuario.get('tipo') != 'cliente':
-        return redirect('/login')
-    cliente_id = usuario['id']
-    filas = obtenerCarritoPorCliente(cliente_id)
-    param['carrito'] = filas
-    return render_template("carrito.html", param=param)
+    return render_template("carrito.html")
 
+def carrito_modificar_cantidad(param):
+    return redirect('/cliente/carrito')
 
-def add_to_cart_ajax():
-    try:
-        cliente_id = request.form.get('cliente_id')
-        producto_id = request.form.get('producto_id')
-        if not cliente_id:
-            usuario = session.get('usuario')
-            if not usuario:
-                return jsonify({'ok': False, 'msg': 'No hay sesión iniciada'})
-            cliente_id = usuario['id']
-        if not producto_id:
-            return jsonify({'ok': False, 'msg': 'Falta producto_id'})
-        exito = agregarAlCarrito(int(cliente_id), int(producto_id))
-        if exito:
-            return jsonify({'ok': True, 'msg': 'Producto agregado al carrito'})
-        else:
-            return jsonify({'ok': False, 'msg': 'Producto ya en carrito o error al agregar'})
-    except Exception as e:
-        return jsonify({'ok': False, 'msg': 'Error interno: ' + str(e)})
+def carrito_eliminar_producto(param):
+    return redirect('/cliente/carrito')
 
+def carrito_vaciar(param):
+    return redirect('/cliente/carrito')
 
-def remove_from_cart_ajax():
-    try:
-        cliente_id = request.form.get('cliente_id')
-        producto_id = request.form.get('producto_id')
-        if not cliente_id:
-            usuario = session.get('usuario')
-            if not usuario:
-                return jsonify({'ok': False, 'msg': 'No hay sesión iniciada'})
-            cliente_id = usuario['id']
-        if not producto_id:
-            return jsonify({'ok': False, 'msg': 'Falta producto_id'})
-        res = quitarDelCarrito(int(cliente_id), int(producto_id))
-        if res:
-            return jsonify({'ok': True, 'msg': 'Producto removido del carrito'})
-        else:
-            return jsonify({'ok': False, 'msg': 'No se pudo remover el producto'})
-    except Exception as e:
-        return jsonify({'ok': False, 'msg': 'Error interno: ' + str(e)})
+def view_wishlist(param):
+    return render_template("wishlist.html")
+
+def pedidos_usuario(param):
+    return render_template("pedidosusuario.html")
+
+def pedidos_admin_pagina(param):
+    return render_template("pedidosadmin.html")
+
+def pedidos_admin_modificarestado(param):
+    return redirect('/admin/pedidosadmin')
+
+def add_product_pagina(param):
+    return render_template("add_product.html")
+
+def guardar_producto(param):
+    return redirect('/admin/add_product')
+
+def paginaNoEncontrada(name):
+    
+    res='Pagina "{}" no encontrada<br>'.format(name)
+    if not requiere_login():
+        res+='<a href="{}">{}</a>'.format("/login","Login")
+    elif es_admin():
+        res+='<a href="{}">{}</a>'.format("/admin","Home")
+    else:
+        res+='<a href="{}">{}</a>'.format("/cliente","Home")
+    return res
+'''
+
+from flask import request, session, redirect, render_template, url_for
+import model
+from werkzeug.utils import secure_filename
+import os
+from uuid import uuid4
+from appConfig import config
 
 ##########################################################################
-#                               CREA TU TOTE
+# CONTROL DE SESIÓN Y ROLES
+##########################################################################
+
+def requiere_login():
+    return session.get('usuario') is not None
+
+def es_admin():
+    usuario = session.get('usuario')
+    if not usuario:
+        return False
+    return usuario.get('tipo') == 'admin'
+
+def cerrarSesion():
+    session.clear()
+    return redirect('/login')
+
+##########################################################################
+# PÁGINAS PRINCIPALES
+##########################################################################
+
+def home_pagina(param):
+    if not requiere_login():
+        return redirect('/login')
+
+    if es_admin():
+        return redirect('/admin/estadisticas')
+
+    return render_template("index.html")
+
+def catalogo_pagina(param):
+    if not requiere_login():
+        return redirect('/login')
+
+    if es_admin():
+        return redirect('/admin/estadisticas')
+
+    productos = model.obtenerTodosLosProductos()
+    lista_productos = []
+
+    for p in productos:
+        lista_productos.append({
+            'id': p[0],
+            'nombre': p[1],
+            'precio_unidad': p[2],
+            'img': p[3],
+            'descripcion': p[4],
+            'ventas': p[5]
+        })
+
+    return render_template("catalogo.html", productos=lista_productos)
+
+def producto_pagina(param, pid):
+    if not requiere_login():
+        return redirect('/login')
+
+    if es_admin():
+        return redirect('/admin/estadisticas')
+
+    fila = model.obtenerProductoPorId(pid)
+    producto = None
+
+    if fila:
+        producto = {
+            'id': fila[0],
+            'nombre': fila[1],
+            'precio_unidad': fila[2],
+            'img': fila[3],
+            'descripcion': fila[4]
+        }
+
+    return render_template("producto.html", producto=producto)
+
+##########################################################################
+# LOGIN / SIGNUP
+##########################################################################
+
+def login_pagina(param):
+    return render_template("login.html")
+
+def signup_pagina(param):
+    return render_template("signup.html")
+
+def signup(param):
+    nombre = request.form.get('nombre', '').strip()
+    mail = request.form.get('email', '').strip()
+    contrasena = request.form.get('contrasena', '').strip()
+
+    di = {
+        'nombre': nombre,
+        'mail': mail,
+        'contrasena': contrasena,
+        'tipo': 'cliente'
+    }
+
+    if model.crearCliente(di):
+        return redirect('/login')
+
+    param['error'] = "No se pudo crear el usuario"
+    return render_template("signup.html", param=param)
+
+# ================= INICIO NUEVO (alineación con route.py) =================
+def ingresoUsuarioValido(param):
+    email = request.form.get('email', '').strip()
+    contrasena = request.form.get('contrasena', '').strip()
+
+    result = {}
+    if model.validarClientePorMailYContrasena(result, email, contrasena):
+        session.clear()
+        session['usuario'] = {
+            'id': result['id'],
+            'nombre': result['nombre'],
+            'tipo': result['tipo'],
+            'mail': result['mail']
+        }
+
+        if result['tipo'] == 'admin':
+            return redirect('/admin/estadisticas')
+
+        return redirect('/cliente/home')
+
+    param['error'] = "Mail o contraseña incorrectos"
+    return render_template("login.html", param=param)
+# ================== FIN NUEVO =============================================
+
+##########################################################################
+# CREATOTE
+##########################################################################
+
+def creatote_pagina(param):
+    if not requiere_login():
+        return redirect('/login')
+    return render_template("creatote.html")
+
+def creatote_formulario(param):
+    return redirect('/cliente/carrito')
+
+##########################################################################
+# CARRITO
+##########################################################################
+
+def agregar_producto_carrito(param, request, producto_id):
+    cliente_id = session['usuario']['id']
+    model.agregar_producto_carrito(cliente_id, producto_id)
+    return redirect('/cliente/carrito')
+
+def view_carrito(param):
+    cliente_id = session['usuario']['id']
+    productos = model.obtener_carrito(cliente_id)
+    return render_template("carrito.html", productos=productos)
+
+def carrito_modificar_cantidad(param, request):
+    return redirect('/cliente/carrito')
+
+def carrito_eliminar_producto(param, request):
+    cliente_id = session['usuario']['id']
+    producto_id = request.form.get('producto_id')
+    model.eliminar_producto_carrito(cliente_id, producto_id)
+    return redirect('/cliente/carrito')
+
+def carrito_vaciar(param):
+    cliente_id = session['usuario']['id']
+    model.vaciar_carrito(cliente_id)
+    return redirect('/cliente/carrito')
+
+##########################################################################
+# WISHLIST
+##########################################################################
+
+def agregar_producto_wishlist(param, request, producto_id):
+    cliente_id = session['usuario']['id']
+    model.agregar_wishlist(cliente_id, producto_id)
+    return redirect('/cliente/wishlist')
+
+def view_wishlist(param):
+    cliente_id = session['usuario']['id']
+    productos = model.obtener_wishlist(cliente_id)
+    return render_template("wishlist.html", productos=productos)
+
+def eliminar_wishlist(param):
+    cliente_id = session['usuario']['id']
+    producto_id = request.form.get('producto_id')
+    model.eliminar_wishlist(cliente_id, producto_id)
+    return redirect('/cliente/wishlist')
+
+##########################################################################
+# PEDIDOS
+##########################################################################
+
+def pedidos_usuario(param):
+    cliente_id = session['usuario']['id']
+    pedidos = model.obtener_pedidos_cliente(cliente_id)
+    return render_template("pedidosusuario.html", pedidos=pedidos)
+
+def pedidos_admin_pagina(param):
+    pedidos = model.obtener_pedidos_admin()
+    return render_template("pedidosadmin.html", pedidos=pedidos)
+
+def pedidos_admin_modificarestado(param):
+    pedido_id = request.form.get('pedido_id')
+    estado = request.form.get('estado')
+    model.actualizar_estado_pedido(pedido_id, estado)
+    return redirect('/admin/pedidosadmin')
+
+##########################################################################
+# ADMIN - PRODUCTOS
+##########################################################################
+
+def add_product_pagina(param):
+    if not es_admin():
+        return redirect('/login')
+    return render_template("add_product.html")
+
+def guardar_producto(param):
+    return redirect('/admin/estadisticas')
+
+##########################################################################
+# MI CUENTA
+##########################################################################
+
+def miCuenta_pagina(param):
+    return render_template("miCuenta.html")
+
+##########################################################################
+#UPLOAD (EL DE MARIANO)
 ##########################################################################
 
 def upload_file (diResult) :
@@ -489,90 +549,3 @@ def upload_file (diResult) :
                         pass
             else:
                 diResult[key]={} # viene vacio el input del file upload
-
-
-##########################################################################
-# ADMIN: ESTADISTICAS y GESTION
-##########################################################################
-
-def estadisticas_pagina(param):
-    param = param or {}
-    if not session.get('usuario') or session.get('usuario').get('tipo') != 'admin':
-        return redirect('/login')
-    # Usar la función del model que devuelve el producto más vendido
-    totem = productoMasVendido()
-    # productoMasVendido() en model devuelve filas; adaptamos
-    if totem:
-        # si devuelve listado de filas -> tomamos primer registro
-        if isinstance(totem, (list,tuple)) and len(totem) > 0 and isinstance(totem[0], (list,tuple)):
-            fila = totem[0]
-            nombre = fila[1] if len(fila) > 1 else fila[0]
-            cantidad = fila[2] if len(fila) > 2 else 0
-        else:
-            # si devuelve tupla (nombre, cantidad) o similar
-            try:
-                nombre = totem[0]
-                cantidad = totem[1]
-            except Exception:
-                nombre = ''
-                cantidad = 0
-    else:
-        nombre = ''
-        cantidad = 0
-    param['totemascomprado_nombre'] = nombre
-    param['totemascomprado_cantidaddeventas'] = cantidad
-
-    categorias = ventasPorCategoria()
-    # convertir a lista de dicts {'nombre','ventas'} para coincidir con template
-    lista_cat = []
-    for c in categorias or []:
-        if isinstance(c, (list,tuple)):
-            lista_cat.append({'nombre': c[0], 'ventas': c[1]})
-        elif isinstance(c, dict):
-            lista_cat.append(c)
-        else:
-            lista_cat.append({'nombre': str(c), 'ventas': 0})
-    param['categorias'] = lista_cat
-    return render_template("estadisticas.html", param=param)
-
-
-def add_product_pagina(param):
-    param = param or {}
-    if not session.get('usuario') or session.get('usuario').get('tipo') != 'admin':
-        return redirect('/login')
-    return render_template("add_product.html", param=param)
-
-
-def guardar_producto(req):
-    # (tu implementación original; no modificado)
-    # mantengo firma para route.py
-    pass
-
-
-##########################################################################
-# UTILIDADES / HELPERS
-##########################################################################
-
-def requiere_login():
-    return session.get('usuario') is not None
-
-def tipo_usuario():
-    result={}
-    session['usuario'] = {
-        'id': result['id'],
-        'nombre': result['nombre'],
-        'tipo': result['tipo'],
-        'mail': result['mail']
-    }
-    if result.get('tipo') == 'admin':
-        return "admin"
-    else:
-        return "cliente"
-
-
-##### INICIO NUEVO (motivo: función de ayuda para páginas no encontradas) #####
-def paginaNoEncontrada(name):
-    res = 'Pagina "{}" no encontrada<br>'.format(name)
-    res += '<a href="{}">{}</a>'.format("/", "Home")
-    return res
-##### FIN NUEVO

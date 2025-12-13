@@ -1,259 +1,62 @@
-# model.py
-# (Archivo completo — modificado ligeramente en dos funciones del bloque CARRITO / WISHLIST)
+
 from _mysql_db import *
 
 # ---------------------------------------------------------------------------
-#                                 CLIENTES
+# CLIENTES
 # ---------------------------------------------------------------------------
 
 def crearCliente(di):
-    ''' Inserta un nuevo cliente en la tabla 'clientes'.
-        Recibe 'di' con claves: nombre, mail, contrasena, tipo ('cliente' por default)
-        Retorna True si se inserteo (1 fila afectada)
-    '''
     sQuery = """
-    INSERT INTO clientes
-    (id, nombre, tipo, mail, contrasena)
-    VALUES
-    (NULL, %s, %s, %s, %s);
+    INSERT INTO clientes (id, nombre, tipo, mail, contrasena)
+    VALUES (NULL, %s, %s, %s, %s);
     """
-    tipo = di.get('tipo', 'cliente')
-    val = (di.get('nombre'), tipo, di.get('mail'), di.get('contrasena'))
-    res = insertDB(BASE, sQuery, val)
-    return res == 1
-
-
-def obtenerClientePorMail(param, mail, clave='usuario'):
-    '''### Información:
-       Obtiene todos los campos de la tabla usuario a partir de la clave 'email'.
-       Carga la información obtenida de la BD en el dict 'param'
-       Recibe 'param' in diccionario
-       Recibe 'email' que es el mail si se utiliza como clave en la búsqueda
-       Recibe 'clave' que es a clave que se le colocará al dict 'param'
-       
-    '''
-    '''Carga en param[clave] la información del cliente con el mail dado.'''
-    sSql = """SELECT id, nombre, tipo, mail, contrasena FROM clientes WHERE mail=%s;"""
-    val = (mail,)
-    fila = selectDB(BASE, sSql, val)
-    param[clave]={}
-    param[clave]['id']=fila[0][0]
-    param[clave]['nombre']=fila[0][1]
-    param[clave]['tipo']=fila[0][2]
-    param[clave]['mail']=fila[0][3]
-    param[clave]['contrasena']=fila[0][4]
-
-
-def obtenerUsuarioXEmailPass(result,email,password):
-    '''### Información:
-       Obtiene todos los campos de la tabla usuario a partir de la clave 'email'
-         y del 'password'.
-       Carga la información obtenida de la BD en el dict 'result'
-       Recibe 'result' in diccionario donde se almacena la respuesta de la consulta
-       Recibe 'email' que es el mail si se utiliza como clave en la búsqueda
-       Recibe 'password' que se utiliza en la consulta. (Para validadar al usuario)
-       Retorna:
-        True cuando se obtiene un registro de u usuario a partir del 'email' y el 'pass.
-        False caso contrario.
-    '''
-    res=False
-    sSql="""SELECT id, nombre,apellido,email,pass 
-    FROM  usuario WHERE  email=%s and pass=%s;"""
-    val=(email,password)
-    fila=selectDB(BASE,sSql,val)
-    if fila!=[]:
-        res=True
-        result['id']=fila[0][0]
-        result['nombre']=fila[0][1]
-        result['tipo']=fila[0][2]
-        result['mail']=fila[0][3] # es el mail
-        result['contraseña']=fila[0][4]
-    return res    
-        
-
-def actualizarUsuario(di,email):
-    '''### Información:
-        Actualiza el registro de la tabla usuario para la clave 'email'
-        Recibe 'di' un dict con los campos que se requiere modificar.
-        Recibe 'email' que es la clave para identificar el regsitro a actualizar.
-        Retorna True si realiza la actualización correctamente.
-                False caso contrario.
-
-    '''
-    sQuery="""update usuario 
-        SET nombre=%s, 
-        apellido=%s,
-        pass=%s 
-        WHERE email=%s;
-        """
-    val=(di.get('nombre'), 
-         di.get('apellido'), 
-         di.get('password'), 
-         email )
-    
-    resul_update=updateDB(BASE,sQuery,val=val)
-    return resul_update==1
-
-def validarUsuario(email,password):
-#     '''### Información:
-#           Se consulta a la BD un usuario 'email' y un 'password'
-#           retorna True si 'email' y  'password' son válido
-#           retorna False caso contrario
-#     '''
-     sSql='''
-         SELECT * FROM  usuario
-             WHERE 
-             email=%s
-             AND 
-             pass=%s;
-     '''
-     val=(email,password)
-     fila=selectDB(BASE,sSql,val=val)
-     return fila!=[]
-
-
-
-def obtenerClientePorId(param, cliente_id, clave='usuario'):
-    '''Carga en param[clave] la info del cliente por id'''
-    sSql = """SELECT id, nombre, tipo, mail, contrasena FROM clientes WHERE id=%s;"""
-    val = (cliente_id,)
-    fila = selectDB(BASE, sSql, val)
-
-    if fila and len(fila) > 0:
-        param[clave] = {
-            'id': fila[0][0],
-            'nombre': fila[0][1],
-            'tipo': fila[0][2],
-            'mail': fila[0][3],
-            'contrasena': fila[0][4]
-        }
-    else:
-        param[clave] = {}
+    val = (
+        di.get('nombre'),
+        di.get('tipo', 'cliente'),
+        di.get('mail'),
+        di.get('contrasena')
+    )
+    return insertDB(BASE, sQuery, val) == 1
 
 
 def validarClientePorMailYContrasena(result, mail, contrasena):
-    '''Verifica si existe un cliente con mail y contrasena.
-       Si existe llena 'result' y retorna True, sino False.
-    '''
-    sSql = """SELECT id, nombre, tipo, mail, contrasena 
-              FROM clientes WHERE mail=%s AND contrasena=%s;"""
+    sSql = """
+    SELECT id, nombre, tipo, mail, contrasena
+    FROM clientes
+    WHERE mail=%s AND contrasena=%s;
+    """
     val = (mail, contrasena)
     fila = selectDB(BASE, sSql, val)
 
     if fila and len(fila) > 0:
-        result['id'] = fila[0][0]
-        result['nombre'] = fila[0][1]
-        result['tipo'] = fila[0][2]
-        result['mail'] = fila[0][3]
-        result['contrasena'] = fila[0][4]
+        fila = fila[0]
+        result['id'] = fila[0]
+        result['nombre'] = fila[1]
+        result['tipo'] = fila[2]
+        result['mail'] = fila[3]
+        result['contrasena'] = fila[4]
         return True
     return False
-
-
-def actualizarCliente(di, mail):
-    '''Actualiza nombre y contrasena para el cliente identificado por mail'''
-    sQuery = """UPDATE clientes SET nombre=%s, contrasena=%s WHERE mail=%s;"""
-    val = (di.get('nombre'), di.get('contrasena'), mail)
-    res = updateDB(BASE, sQuery, val)
-    return res == 1
-
 
 # ---------------------------------------------------------------------------
 # PRODUCTOS
 # ---------------------------------------------------------------------------
 
-def crearProducto(di):
-    '''Inserta un producto en tabla productos.
-    di es un diccionario cuyas claves son nombre, precio_unidad, img y descripcion'''
-    sQuery = """
-    INSERT INTO productos
-    (id, nombre, precio_unidad, img, descripcion, ventas)
-    VALUES
-    (NULL, %s, %s, %s, %s, 0);
-    """
-    val = (
-        di.get('nombre'),
-        di.get('precio_unidad'),
-        di.get('img'),
-        di.get('descripcion')
-    )
-    res = insertDB(BASE, sQuery, val)
-    return res == 1 #TRUE SI SE AGREGO, FALSE SI HUBO ERROR
-
-
 def obtenerTodosLosProductos():
-    '''Retorna lista completa de productos.'''
-    sSql = "SELECT id, nombre, precio_unidad, img, descripcion, ventas FROM productos;"
-    filas = selectDB(BASE, sSql)
-    if filas:
-        return filas
-    else:
-        return []
-
-
-def obtenerProductoPorId(producto_id):
-    '''Retorna una tupla del producto solicitado o None.'''
-    sSql = "SELECT id, nombre, precio_unidad, img, descripcion, ventas FROM productos WHERE id=%s;"
-    fila = selectDB(BASE, sSql, (producto_id,))
-    if fila:
-        return fila[0]
-    # Si se encontró una fila, esta línea accede al primer (y único)
-    # elemento de la lista fila, que es la tupla que contiene los datos del producto
-    else:
-        return None
-
-
-
-def actualizarProducto(di, producto_id):
-    '''Actualiza un producto por id.'''
-    sQuery = """
-    UPDATE productos
-    SET nombre=%s, precio_unidad=%s, img=%s, descripcion=%s
-    WHERE id=%s;
+    sSql = """
+    SELECT id, nombre, precio_unidad, img, descripcion, ventas
+    FROM productos;
     """
-    val = (
-        di.get('nombre'),
-        di.get('precio_unidad'),
-        di.get('img'),
-        di.get('descripcion'),
-        producto_id
-    )
-    res = updateDB(BASE, sQuery, val)
-    return res == 1
+    return selectDB(BASE, sSql)
 
-
-def incrementarVentasProducto(producto_id, cantidad):
-    '''Incrementa el campo ventas.'''
-    sQuery = "UPDATE productos SET ventas = ventas + %s WHERE id=%s;"
-    val = (cantidad, producto_id)
-    res = updateDB(BASE, sQuery, val)
-    return res ==1
-
-
-# ---------------------------------------------------------------------------
-# COLORES y FILTROS
-# ---------------------------------------------------------------------------
-
-def agregarColorProducto(producto_id, codigo_hexa):
-    sQuery = "INSERT INTO colores (id, productos_id, codigo_hexa) VALUES (NULL, %s, %s);"
-    return insertDB(BASE, sQuery, (producto_id, codigo_hexa)) == 1
-
-
-def obtenerColoresPorProducto(producto_id):
-    sSql = "SELECT codigo_hexa FROM colores WHERE productos_id=%s;"
-    filas = selectDB(BASE, sSql, (producto_id,))
-    return [f[0] for f in filas] if filas else []
-
-
-def agregarFiltroProducto(producto_id, filtro):
-    sQuery = "INSERT INTO filtros (id, productos_id, filtro) VALUES (NULL, %s, %s);"
-    return insertDB(BASE, sQuery, (producto_id, filtro)) == 1
-
-
-def obtenerFiltrosPorProducto(producto_id):
-    sSql = "SELECT filtro FROM filtros WHERE productos_id=%s;"
-    filas = selectDB(BASE, sSql, (producto_id,))
-    return [f[0] for f in filas] if filas else []
+def obtenerProductoPorId(pid):
+    sSql = """
+    SELECT id, nombre, precio_unidad, img, descripcion
+    FROM productos
+    WHERE id = %s;
+    """
+    fila = selectDB(BASE, sSql, (pid,))
+    return fila[0] if fila else None
 
 def obtenerProductosporFiltros(filtro):
     sSql = """
@@ -267,233 +70,122 @@ def obtenerProductosporFiltros(filtro):
             filtros.filtro=%$ ;"""
     filas = selectDB(BASE, sSql, (filtro,))
     return [f[0] for f in filas] if filas else []
-    
-    
-    
 
 
 # ---------------------------------------------------------------------------
 # CARRITO
 # ---------------------------------------------------------------------------
 
-def agregarAlCarrito(cliente_id, producto_id):
-    sCheck = "SELECT id FROM carrito WHERE clientes_id=%s AND productos_id=%s;"
-    filas = selectDB(BASE, sCheck, (cliente_id, producto_id))
-
-    if filas not in (None, []):
-        return False
-
-    sQuery = "INSERT INTO carrito (id, clientes_id, productos_id) VALUES (NULL, %s, %s);"
-    return insertDB(BASE, sQuery, (cliente_id, producto_id)) == 1
-
-
-def quitarDelCarrito(cliente_id, producto_id):
-    sQuery = "DELETE FROM carrito WHERE clientes_id=%s AND productos_id=%s;"
-    return updateDB(BASE, sQuery, (cliente_id, producto_id)) >= 0
-
-
-# INICIO NUEVO
-# Justificación: carrito.html utiliza producto['descripcion'], así que la consulta debe traer la columna descripcion.
-# Se añade p.descripcion al SELECT para que controller pueda mapearlo a los diccionarios que las templates esperan.
-def obtenerCarritoPorCliente(cliente_id):
+def agregar_producto_carrito(cliente_id, producto_id):
     sSql = """
-    SELECT c.id, p.id, p.nombre, p.precio_unidad, p.img, p.descripcion
+    INSERT INTO carrito (clientes_id, productos_id)
+    VALUES (%s, %s);
+    """
+    return insertDB(BASE, sSql, (cliente_id, producto_id)) == 1
+
+def obtener_carrito(cliente_id):
+    sSql = """
+    SELECT p.id, p.nombre, p.precio_unidad, p.img
     FROM carrito c
-    JOIN productos p ON c.productos_id = p.id
+    JOIN productos p ON p.id = c.productos_id
     WHERE c.clientes_id = %s;
     """
-    filas = selectDB(BASE, sSql, (cliente_id,))
-    return filas or []
-# FIN NUEVO
+    return selectDB(BASE, sSql, (cliente_id,))
+
+def eliminar_producto_carrito(cliente_id, producto_id):
+    sSql = """
+    DELETE FROM carrito
+    WHERE clientes_id = %s AND productos_id = %s;
+    """
+    return deleteDB(BASE, sSql, (cliente_id, producto_id)) >= 0
+
+def vaciar_carrito(cliente_id):
+    sSql = """
+    DELETE FROM carrito
+    WHERE clientes_id = %s;
+    """
+    return deleteDB(BASE, sSql, (cliente_id,)) >= 0
 
 
 # ---------------------------------------------------------------------------
 # WISHLIST
 # ---------------------------------------------------------------------------
 
-def agregarWishlist(cliente_id, producto_id):
-    sCheck = "SELECT id FROM wishlist WHERE cliente_id=%s AND producto_id=%s;"
-    filas = selectDB(BASE, sCheck, (cliente_id, producto_id))
-
-    if filas not in (None, []):
-        return False
-
-    sQuery = "INSERT INTO wishlist (id, cliente_id, producto_id) VALUES (NULL, %s, %s);"
-    return insertDB(BASE, sQuery, (cliente_id, producto_id)) == 1
-
-
-def quitarWishlist(cliente_id, producto_id):
-    sQuery = "DELETE FROM wishlist WHERE cliente_id=%s AND producto_id=%s;"
-    return updateDB(BASE, sQuery, (cliente_id, producto_id)) >= 0
-
-
-# INICIO NUEVO
-# Justificación: wishlist.html muestra precio, img y podría necesitar descripcion en otros lugares; agrego descripcion al SELECT.
-def obtenerWishlistPorCliente(cliente_id):
+def agregar_wishlist(cliente_id, producto_id):
     sSql = """
-    SELECT w.id, p.id, p.nombre, p.precio_unidad, p.img, p.descripcion
+    INSERT INTO wishlist (cliente_id, producto_id)
+    VALUES (%s, %s);
+    """
+    return insertDB(BASE, sSql, (cliente_id, producto_id)) == 1
+
+def obtener_wishlist(cliente_id):
+    sSql = """
+    SELECT p.id, p.nombre, p.precio_unidad, p.img
     FROM wishlist w
-    JOIN productos p ON w.producto_id = p.id
+    JOIN productos p ON p.id = w.producto_id
     WHERE w.cliente_id = %s;
     """
-    filas = selectDB(BASE, sSql, (cliente_id,))
-    return filas or []
-# FIN NUEVO
+    return selectDB(BASE, sSql, (cliente_id,))
 
-
-# ---------------------------------------------------------------------------
-# PEDIDOS y DETALLE
-# ---------------------------------------------------------------------------
-
-def crearPedido(cliente_id, precio_total, fecha=None, estado='espera'):
-    if fecha:
-        sQuery = """INSERT INTO pedidos (id, cliente_id, fecha, precio_total, estado)
-                    VALUES (NULL, %s, %s, %s, %s);"""
-        val = (cliente_id, fecha, precio_total, estado)
-    else:
-        sQuery = """INSERT INTO pedidos (id, cliente_id, fecha, precio_total, estado)
-                    VALUES (NULL, %s, CURDATE(), %s, %s);"""
-        val = (cliente_id, precio_total, estado)
-
-    res = insertDB(BASE, sQuery, val)
-
-    if res == 1:
-        fila = selectDB(BASE, "SELECT MAX(id) FROM pedidos WHERE cliente_id=%s;", (cliente_id,))
-        if fila and fila[0][0] is not None:
-            return fila[0][0]
-    return None
-
-
-def agregarDetallePedido(pedido_id, producto_id, cantidad, precio_unidad):
-    sQuery = """
-    INSERT INTO detalle_pedido 
-    (id, pedidos_id, productos_id, cantidad, precio_unidad)
-    VALUES (NULL, %s, %s, %s, %s);
-    """
-    return insertDB(BASE, sQuery, (pedido_id, producto_id, cantidad, precio_unidad)) == 1
-
-
-def obtenerPedidosPorCliente(cliente_id):
-    sSql = """SELECT id, cliente_id, fecha, precio_total, estado 
-              FROM pedidos WHERE cliente_id=%s ORDER BY fecha DESC;"""
-    filas = selectDB(BASE, sSql, (cliente_id,))
-    return filas or []
-
-
-def obtenerPedidoPorId(pedido_id):
-    sSql = """SELECT id, cliente_id, fecha, precio_total, estado 
-              FROM pedidos WHERE id=%s;"""
-    fila = selectDB(BASE, sSql, (pedido_id,))
-    return fila[0] if fila else None
-
-
-def obtenerDetallePedido(pedido_id):
+def eliminar_wishlist(cliente_id, producto_id):
     sSql = """
-    SELECT dp.id, p.id, p.nombre, dp.cantidad, dp.precio_unidad
-    FROM detalle_pedido dp
-    JOIN productos p ON dp.productos_id = p.id
-    WHERE dp.pedidos_id = %s;
+    DELETE FROM wishlist
+    WHERE cliente_id = %s AND producto_id = %s;
     """
-    filas = selectDB(BASE, sSql, (pedido_id,))
-    return filas or []
-
-
-def actualizarEstadoPedido(pedido_id, nuevo_estado):
-    sQuery = "UPDATE pedidos SET estado=%s WHERE id=%s;"
-    return updateDB(BASE, sQuery, (nuevo_estado, pedido_id)) >= 0
+    return deleteDB(BASE, sSql, (cliente_id, producto_id)) >= 0
 
 
 # ---------------------------------------------------------------------------
-# DETALLES PERSONALIZADOS
+# PEDIDOS
 # ---------------------------------------------------------------------------
 
-def agregarDetallePersonalizado(detalle_pedido_id, img):
-    sQuery = "INSERT INTO detalle_personalizados (id, detalle_pedido_id, img) VALUES (NULL, %s, %s);"
-    return insertDB(BASE, sQuery, (detalle_pedido_id, img)) == 1
-
-
-def obtenerPersonalizadosPorDetalle(detalle_pedido_id):
-    sSql = "SELECT id, detalle_pedido_id, img FROM detalle_personalizados WHERE detalle_pedido_id=%s;"
-    filas = selectDB(BASE, sSql, (detalle_pedido_id,))
-    return filas or []
-
-
-# ---------------------------------------------------------------------------
-# ESTADISTICAS
-# ---------------------------------------------------------------------------
-
-def productoMasComprado():
+def obtener_pedidos_cliente(cliente_id):
     sSql = """
-    SELECT p.nombre, COALESCE(SUM(dp.cantidad),0) as total
-    FROM detalle_pedido dp
-    JOIN productos p ON dp.productos_id = p.id
-    GROUP BY p.id
-    ORDER BY total DESC
+    SELECT id, fecha, precio_total, estado
+    FROM pedidos
+    WHERE cliente_id = %s;
+    """
+    return selectDB(BASE, sSql, (cliente_id,))
+
+def obtener_pedidos_admin():
+    sSql = """
+    SELECT p.id, c.nombre, p.fecha, p.precio_total, p.estado
+    FROM pedidos p
+    JOIN clientes c ON c.id = p.cliente_id;
+    """
+    return selectDB(BASE, sSql)
+
+def actualizar_estado_pedido(pedido_id, estado):
+    sSql = """
+    UPDATE pedidos
+    SET estado = %s
+    WHERE id = %s;
+    """
+    return updateDB(BASE, sSql, (estado, pedido_id)) == 1
+
+
+# ---------------------------------------------------------------------------
+# ESTADÍSTICAS
+# ---------------------------------------------------------------------------
+
+def obtenerEstadisticas():
+    data = {}
+
+    sSql = """
+    SELECT nombre, ventas
+    FROM productos
+    ORDER BY ventas DESC
     LIMIT 1;
     """
     fila = selectDB(BASE, sSql)
-    return (fila[0][0], fila[0][1]) if fila else (None, 0)
+    data['nombre'] = fila[0][0] if fila else ""
+    data['ventas'] = fila[0][1] if fila else 0
 
-
-def ventasPorCategoria():
     sSql = """
-    SELECT f.filtro, COALESCE(SUM(dp.cantidad),0) as total
-    FROM filtros f
-    LEFT JOIN productos p ON f.productos_id = p.id
-    LEFT JOIN detalle_pedido dp ON dp.productos_id = p.id
-    GROUP BY f.filtro
-    ORDER BY total DESC;
+    SELECT filtro, COUNT(*) 
+    FROM filtros
+    GROUP BY filtro;
     """
-    filas = selectDB(BASE, sSql)
-    return filas or []
+    data['categorias'] = selectDB(BASE, sSql)
 
-
-# ---------------------------------------------------------------------------
-# UTILIDADES VARIAS
-# ---------------------------------------------------------------------------
-
-def contarProductos():
-    fila = selectDB(BASE, "SELECT COUNT(*) FROM productos;")
-    return fila[0][0] if fila else 0
-
-
-def buscarProductosPorNombre(q):
-    sSql = """SELECT id, nombre, precio_unidad, img, descripcion, ventas
-              FROM productos WHERE nombre LIKE %s;"""
-    val = ('%' + q + '%',)
-    filas = selectDB(BASE, sSql, val)
-    return filas or []
-
-
-##### INICIO NUEVO (faltaban funciones llamadas por controller)
-
-def obtenerPedidosParaAdmin():
-    '''
-        Devuelve lista de pedidos (JOIN con clientes) para el panel admin.
-        Columnas devueltas:
-            pedidos.id, clientes.nombre, pedidos.fecha, pedidos.estado, pedidos.total
-    '''
-    sQuery = """
-        SELECT p.id, c.nombre, p.fecha, p.estado, p.total
-        FROM pedidos p
-        INNER JOIN clientes c ON p.clientes_id = c.id
-        ORDER BY p.fecha DESC;
-    """
-    return selectDB(BASE, sQuery)
-
-
-def productoMasVendido():
-    '''
-        Devuelve el producto con mayor cantidad de ventas.
-        Columnas devueltas:
-            id, nombre, ventas, precio, categoria, img
-    '''
-    sQuery = """
-        SELECT id, nombre, ventas, precio, categoria, img
-        FROM productos
-        ORDER BY ventas DESC
-        LIMIT 1;
-    """
-    return selectDB(BASE, sQuery)
-
-##### FIN NUEVO
+    return data

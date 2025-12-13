@@ -20,9 +20,9 @@
         <main>
             <div class="cont">
                 <p class="crearcuenta">Crear cuenta</p>
-                <!-- INICIO NUEVO: ajustar acción del form para enviar al backend Flask (ruta /signup) -->
-                <form action="{{ url_for('signup') }}" method="POST" onsubmit= "return validar()">
-                <!-- FIN NUEVO -->
+  
+                <form action="{{ url_for('signup') }}" method="POST">
+           
                     <label for="nombre">Nombre:</label>
                     <input type="text" id="nombre" name="nombre" placeholder="" class="">
                     <label for="email">Email:</label>

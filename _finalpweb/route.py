@@ -20,7 +20,7 @@ def route(app):
         if request.method == "GET":
             return login_pagina(param)
         else:
-            return ingresoUsuarioValido(param , request)
+            return ingresoUsuarioValido(param)
         
         #GET ES PARA OBTENER INFO DEL SERVIDOR, POST PARA SUBIR INFO
     
@@ -34,7 +34,7 @@ def route(app):
         if request.method == "GET":
             return signup_pagina(param)
         else:
-            return registrarUsuario(param , request)
+            return signup(param)
   
 
     # -----------------------------------------------------------------
@@ -93,7 +93,7 @@ def route(app):
     # -----------------------------------------------------------------
     # CARRITO
     # -----------------------------------------------------------------
-    @app.route("/cliente/carrito", methods=["GET", "POST"])
+    @app.route("/cliente/carrito", methods=["GET", "POST"], endpoint="ver_carrito")
     def carrito():
         param = {}
     
@@ -116,7 +116,6 @@ def route(app):
             # acción no reconocida
             return view_carrito(param)
 
-            
 
     # -----------------------------------------------------------------
     # WISHLIST
@@ -141,7 +140,7 @@ def route(app):
     @app.route("/admin/pedidosadmin", methods=["GET", "POST"])
     def pedidos_admin():
         param = {}
-        if request.method == "GET"
+        if request.method == "GET":
             return pedidos_admin_pagina(param)
         else:
             return pedidos_admin_modificarestado(param)
@@ -171,10 +170,7 @@ def route(app):
     @app.route("/cliente/miCuenta", methods=["GET"], endpoint="mi_cuenta")
     def miCuenta():
         param = {}
-        if request.method == "GET":
-            return miCuenta_pagina(param)
-        else:
-            return editarUsuario(param)
+        return miCuenta_pagina(param)
 
 
 
