@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="es">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Carrito de Compras</title>
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/carrito.css') }}">
+        <script src="https://kit.fontawesome.com/56579e118f.js" crossorigin="anonymous"></script>
+    </head>
+<body>
+        <!--INICIO CODIGO ALE MENU-->
+    
+    <!-- HEADER -->
+    <header class="header">
+        <div class="containerHeader_logo_Nav">
+            <!-- LOGO -->
+            <img src="{{ url_for('static', filename='img/logominimalista.png') }}" alt="logo_letotte   " id="header_logo">
+            <!-- NAV -->
+            <input type="checkbox" id="boton_abrir_menu">
+            <label for="boton_abrir_menu" >
+                <i class="fa-solid fa-x" id="boton_x" title="Cerrar Menú"></i>
+                <i class="fa-solid fa-bars" title="Abrir Menú" id="boton_hamburguesa"></i> 
+                Menú
+            </label>
+            <nav class="header_nav">
+                <ul>
+                    <li class="nav_item"><a href="{{ url_for('home') }}" class="navlink">Home</a></li>
+                    <li class="nav_item"><a href="{{ url_for('catalogo') }}" class="navlink">Catálogo</a></li>
+                    <li class="nav_item"><a href="{{ url_for('creatote') }}" class="navlink">Diseña tu Totebag</a></li>
+                </ul>
+            </nav>
+
+        </div>
+
+        <!-- BUSCADOR 
+        <div class="container_buscador">
+            <form class="buscador">
+                <input type="text" id="buscador" placeholder="¿Qué estás buscando?">
+                <i class="fa-solid fa-magnifying-glass" id="buscador_lupa"></i>
+            </form>
+        </div>-->
+
+    <!-- BOTONES DESKTOP -->
+    <div class="container_HeaderBotones">
+        <a href="https://wa.link/2fr9ok">
+            <img src="{{ url_for('static', filename='img/whats.png') }}" class="header_botones">
+        </a>
+
+        <a href="{{ url_for('ver_carrito') }}">
+            <img src="{{ url_for('static', filename='img/carrito.png') }}" class="header_botones">
+        </a>
+
+        <a href="{{ url_for('mi_cuenta') }}">
+            <img src="{{ url_for('static', filename='img/login.png') }}" class="header_botones">
+        </a>
+    </div>
+    </header>
+
+        <!--- BOTONES MOBILE -->
+    <div class="container_MenuBotonesMobile">
+        <a href=""><img src="{{ url_for('static', filename='img/whats.png') }}" class="menu_mobile_botones"></a>
+
+       
+        <a href="{{ url_for('ver_carrito') }}"><img src="{{ url_for('static', filename='img/carrito.png') }}" class="menu_mobile_botones"></a>
+        
+
+        
+        <a href="{{ url_for('mi_cuenta') }}"><img src="{{ url_for('static', filename='img/login.png') }}" class="menu_mobile_botones"></a>
+        
+    </div>
+    
+    <!--FIN CODIGO ALE MENU-->
+
+    <main>
+      <h1>Mi Carrito</h1>
+      <section class="products">
+        {% for producto in productos %}
+          <div class="product cart-item">
+            <img src="{{ url_for('static', filename='uploads/' + (producto['img'] or '')) }}" alt="{{ producto['nombre'] }}">
+            <div class="item-info">
+              <h4>{{ producto['nombre'] }}</h4>
+              <p>{{ producto['descripcion'] }}</p>
+            </div>
+
+            <div class="item-quantity">
+              <input type="number" value="1" min="1">
+             </div>
+
+            <div class="item-price">
+              <p>{{ producto['precio_unidad'] }}</p>
+            </div>
+
+            
+            <form action="{{ url_for('remove_from_cart') }}" method="post">
+               <button class="btn-remove">
+                  <i class="fa-solid fa-trash"></i>
+                </button>
+            </form>
+          </div>
+        {% endfor %}
+      </section>
+    </main>
+</body>
+</html>
