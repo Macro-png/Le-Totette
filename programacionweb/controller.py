@@ -213,34 +213,46 @@ def estadisticas_pagina(param):
 ##########################################################################
 
 def ingresoUsuarioValido(param): #PARA LOGGUEARSE
-          
+     return
     
 def signup(param): #PARA CREAR CUENTA
+    '''Procesa registro (POST)'''
+    param = param 
+    nombre = request.form.get('nombre','').strip()
+    mail = request.form.get('email','').strip()
+    contrasena = request.form.get('contrasena','').strip()
+    di = {'nombre': nombre, 'mail': mail, 'contrasena': contrasena, 'tipo': 'cliente'}
+    exito = crearCliente(di)
+    if exito:
+        return redirect('/login')
+    else:
+        param['error'] = "No se pudo crear el usuario. Verifique los datos."
+        return render_template("signup.html", param=param)
     
 
 def creatote_formulario(param): #cliente crea su propia tote
-
+    return
 
 def agregar_producto_carrito(param, request, producto_id): #desde la pagina producto
-
+    return
 
 def agregar_producto_wishlist(param, request, producto_id): #desde la pagina producto
-
+    return
  
 def carrito_modificar_cantidad(param, request): #el cosito que hay para aumentar los numeritos
-
+    return
 
 def carrito_eliminar_producto(param, request): #el tacho
-
+    return
 
 def eliminar_wishlist(param): #el tacho
-            
+    return            
 
 def pedidos_admin_modificarestado(param) #MODIFICAR ESTADO DEL PEDIDO
-
+    return
 
 def guardar_producto(param) #cuando admin agrega un producto con exito
-
+    return
 
 
 ##########################################################################
@@ -324,19 +336,7 @@ def ValidarFormularioRegistro(di):
     res= res and di.get('password')!=""
     return res
 
-def signup(param):
-    '''Procesa registro (POST)'''
-    param = param 
-    nombre = request.form.get('nombre','').strip()
-    mail = request.form.get('email','').strip()
-    contrasena = request.form.get('contrasena','').strip()
-    di = {'nombre': nombre, 'mail': mail, 'contrasena': contrasena, 'tipo': 'cliente'}
-    exito = crearCliente(di)
-    if exito:
-        return redirect('/login')
-    else:
-        param['error'] = "No se pudo crear el usuario. Verifique los datos."
-        return render_template("signup.html", param=param)
+
 
 
 def ingresoUsuarioValido(param, req):
