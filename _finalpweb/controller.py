@@ -19,19 +19,6 @@ from flask import request, session,redirect,render_template
 from uuid import uuid4
 from appConfig import config
 
-'''
-##### (motivo: compatibilidad con templates que pasan 'param' como dict)
-_original_render_template = render_template
-def render_template(template_name, *args, **kwargs):
-    # Si el caller pasó 'param' como dict, lo desempaquetamos en el contexto de Jinja.
-    param = kwargs.pop('param', None)
-    if isinstance(param, dict):
-        new_kwargs = {}
-        new_kwargs.update(param)
-        new_kwargs.update(kwargs)
-        return _original_render_template(template_name, *args, **new_kwargs)
-    return _original_render_template(template_name, *args, **kwargs)
-'''
 
 ##########################################################################
 #               FUNCIONES PRINCIPALES (las páginas)
@@ -284,23 +271,6 @@ def editarUsuario_pagina(param):
     return render_template("miCuenta.html", param=param)
 
 
-def actualizarDatosDeUsuarios(param, req):
-    param = param or {}
-    usuario = session.get('usuario')
-    if not usuario or usuario.get('tipo') != 'cliente':
-        return redirect('/login')
-    if req.method == 'POST':
-        nombre = req.form.get('nombre','').strip()
-        contrasena = req.form.get('contrasena','').strip()
-        di = {'nombre': nombre, 'contrasena': contrasena}
-        exito = actualizarCliente(di, usuario['mail'])
-        if exito:
-            session['usuario']['nombre'] = nombre
-            param['msg'] = "Datos actualizados correctamente."
-        else:
-            param['error'] = "No se pudieron actualizar los datos."
-    obtenerClientePorId(param, usuario['id'], clave='usuario')
-    return render_template("miCuenta.html", param=param)
 
 
 ##########################################################################

@@ -77,23 +77,16 @@
                 <h2 id="nombre-usuario">👤 Nombre: {{ nombre_usuario }}</h2>
                 <p id="correo-usuario">📧 Correo: {{ mail_usuario }}</p>
             </section>
-
-            <form id="formUsuario" class="form-usuario">
-                <div class="campo">
-                    <label for="passActual" class="label-usuario">Contraseña actual:</label>
-                    <input type="password" id="passActual" class="input-usuario" placeholder="Ingresa tu contraseña actual" name="passActual">
-                    <small class="error-text"></small>
-                </div>
-                <div class="campo">
-                    <label for="passNueva" class="label-usuario">Nueva contraseña:</label>
-                    <input type="password" id="passNueva" class="input-usuario" placeholder="Crea una nueva contraseña" name="passNueva">
-                    <small class="error-text"></small>
-                </div>
-                <p id="mensaje-general" class="mensaje-general"></p>
-                <div class="botones">
-                    <input type="submit" value="Actualizar" class="bot boton-usuario">
-                </div>
-            </form>
+        </div>
+                <div class="flexbox">
+            <a class="opciones" href="{{ url_for('templates', filename='wishlist.html') }}">
+                <h2>Mi Wishlist</h2>
+                <img src="{{ url_for('static', filename='img/wishlist.png') }}" alt="Wishlist">
+            </a>
+            <a class="opciones" href="{{ url_for('templates', filename='pedidosusuario.html') }}">
+                <h2>Mis pedidos</h2>
+                <img src="{{ url_for('static', filename='img/pedidos.png') }}" alt="Pedidos">
+            </a>
         </div>
     </main>
 
