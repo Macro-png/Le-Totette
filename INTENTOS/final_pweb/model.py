@@ -141,7 +141,7 @@ def guardarTotePersonalizado(clientes_id, img_name, color=None, estampa=None):
 
 
 
-OTROS INTENTOS
+# OTROS INTENTOS
 # model.py
 # (Archivo completo — modificado ligeramente en dos funciones del bloque CARRITO / WISHLIST)
 from _mysql_db import *

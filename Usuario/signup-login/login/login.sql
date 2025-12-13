@@ -7,5 +7,5 @@ show tables;
 describe clientes;
 
 --CONSULTAS (solo las importantes )
-select mail, contrasena from clientes;
+select mail, contrasena from  clientes where mail = "vicky@gmail.com";
 
