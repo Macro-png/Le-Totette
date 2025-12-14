@@ -61,34 +61,54 @@
     <!--FIN CODIGO ALE MENU-->
 
     <main>
-      <h1>Mi Carrito</h1>
-      <section class="products">
+      
+        
 
-
-        {% for producto in productos %}
-        <div class="product cart-item">
-            <!-- Usa [4] para la imagen, [1] para nombre, etc. -->
-        <img src="{{ url_for('static', filename='uploads/' + (producto[4] or '')) }}" alt="{{ producto[1] }}">
+            <div class="cart-items">
+                <h1>Mi Carrito</h1>
+                {% for producto in productos %}
+                <div class="cart-item">
+                <!--  producto = (id, nombre, precio, img)  -->
+                <img src="{{ url_for('static', filename='uploads/' + (producto[3])) }}" alt="{{ producto[1] }}">
     
-        <div class="item-info">
-            <h4>{{ producto[1] }}</h4>
-            <p>{{ producto[2] }}</p>
-        </div>
+                <div class="item-info">
+                <h4>{{ producto[1] }}</h4>
+                <!--<p>{{ producto[2] }}</p>-->
+                </div>
 
-        <div class="item-price">
-            <p>{{ producto[3] }}</p>
-        </div>
+                <div class="item-price">
+                    <p>{{ producto[2] }}</p>
+                </div>
 
-        <!-- AQUÍ ESTABA EL ERROR: Cambia producto['id'] por producto[0] -->
-        <form action="{{ url_for('carrito_eliminar', producto_id=producto[0]) }}" method="post">
-            <button type="submit" class="btn-remove">
-                <i class="fa-solid fa-trash"></i>
-            </button>
-        </form>
-        </div>
-        {% endfor %}
+            <!-- AQUÍ ESTABA EL ERROR: Cambia producto['id'] por producto[0] -->
+                <form action="{{ url_for('carrito_eliminar', producto_id=producto[0]) }}" method="post">
+                    <button type="submit" class="btn-remove">
+                        <i class="fa-solid fa-trash"></i>
+                    </button>
+                </form>
+                </div>
+                {% endfor %}
+            </div>
+        
+        <div class="cart-summary">
+            <h3>Resumen de compra</h3>
 
-      </section>
+            <div class="summary-line">
+                <span>Subtotal</span>
+                <span>$ {{ total }}</span>
+            </div>
+
+            <div class="summary-line total">
+                <span>Total</span>
+                <span>$ {{ total }}</span>
+            </div>
+
+            <form action="{{ url_for('carrito') }}" method="post">
+                <button type="submit" class="btn-checkout">
+                    Finalizar Compra
+                </button>
+            </form>
+        </div>
     </main>
         <!--- BOTONES MOBILE -->
     <div class="container_MenuBotonesMobile">
