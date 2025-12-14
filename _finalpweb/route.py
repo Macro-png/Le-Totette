@@ -35,18 +35,6 @@ def route(app):
             return signup_pagina(param)
         else:
             return signup(param)
-  
-
-    # -----------------------------------------------------------------
-    # LOGOUT (estructura comentada para futura activación)
-    # -----------------------------------------------------------------
-    ##### INICIO NUEVO (motivo: dejar estructura preparada para logout, comentada)
-    # @app.route("/logout", methods=["GET"], endpoint="logout")
-    # def logout_route():
-    #     # FUTURO: implementar logout definitivo
-    #     # return controller.cerrarSesion()
-    #     pass
-    ##### FIN NUEVO #####
 
     # -----------------------------------------------------------------
     # HOME / CATALOGO / CREATOTE
