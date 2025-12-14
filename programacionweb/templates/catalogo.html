@@ -8,7 +8,7 @@
   <script src="https://kit.fontawesome.com/56579e118f.js" crossorigin="anonymous"></script>
 </head>
 <body>
-        <!--INICIO CODIGO ALE MENU-->
+    <!--INICIO CODIGO ALE MENU-->
     
     <!-- HEADER -->
     <header class="header">
@@ -46,31 +46,20 @@
             <img src="{{ url_for('static', filename='img/whats.png') }}" class="header_botones">
         </a>
 
-        <a href="{{ url_for('ver_carrito') }}">
+        <a href="{{ url_for('carrito') }}">
             <img src="{{ url_for('static', filename='img/carrito.png') }}" class="header_botones">
         </a>
 
-        <a href="{{ url_for('mi_cuenta') }}">
+        <a href="{{ url_for('miCuenta') }}">
             <img src="{{ url_for('static', filename='img/login.png') }}" class="header_botones">
         </a>
     </div>
     </header>
 
-        <!--- BOTONES MOBILE -->
-    <div class="container_MenuBotonesMobile">
-        <a href=""><img src="{{ url_for('static', filename='img/whats.png') }}" class="menu_mobile_botones"></a>
-
-       
-        <a href="{{ url_for('ver_carrito') }}"><img src="{{ url_for('static', filename='img/carrito.png') }}" class="menu_mobile_botones"></a>
-        
-
-        
-        <a href="{{ url_for('mi_cuenta') }}"><img src="{{ url_for('static', filename='img/login.png') }}" class="menu_mobile_botones"></a>
-        
-    </div>
+    
     
     <!--FIN CODIGO ALE MENU-->
-    </header>
+
   <main>
     <aside>
       <div class="filters">
@@ -88,7 +77,7 @@
           <h4>{{ producto['nombre'] }}</h4>
           <p>{{ producto['precio_unidad'] }}</p>
           <button>
-            <a href="{{ url_for('producto_route', pid=producto['id']) }}">
+            <a href="{{ url_for('producto_detalle', pid=producto['id']) }}">
               Más Información
             </a>
           </button>
@@ -104,5 +93,17 @@
       {% endfor %}
     </section>
   </main>
+      <!--- BOTONES MOBILE -->
+    <div class="container_MenuBotonesMobile">
+        <a href=""><img src="{{ url_for('static', filename='img/whats.png') }}" class="menu_mobile_botones"></a>
+
+       
+        <a href="{{ url_for('carrito') }}"><img src="{{ url_for('static', filename='img/carrito.png') }}" class="menu_mobile_botones"></a>
+        
+
+        
+        <a href="{{ url_for('miCuenta') }}"><img src="{{ url_for('static', filename='img/login.png') }}" class="menu_mobile_botones"></a>
+        
+    </div>
 </body>
 </html>
