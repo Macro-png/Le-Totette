@@ -49,7 +49,7 @@ def route(app):
         accion = request.form.get("accion")
 
         if accion == "carrito":
-            return agregar_producto_carrito(param, producto_id)
+            return model.agregar_producto_carrito(param, producto_id)
 
         elif accion == "wishlist":
             return agregar_producto_wishlist(param, producto_id)
