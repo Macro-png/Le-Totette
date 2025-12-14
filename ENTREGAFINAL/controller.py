@@ -201,7 +201,7 @@ def miCuenta_pagina(param):
     if not requiere_login() or es_admin():
         return redirect('/login')
 
-    return render_template('micuenta.html', param=param)
+    return render_template('miCuenta.html', param=param)
 
 
 # ---------------------------------------------------------------------------

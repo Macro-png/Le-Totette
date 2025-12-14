@@ -101,7 +101,7 @@ def route(app):
     @app.route("/cliente/miCuenta", methods=["GET"])
     def miCuenta():
         param = {}
-        return mi_cuenta_pagina(param)
+        return miCuenta_pagina(param)
 
     # -----------------------------------------------------------------
     # ADMIN
