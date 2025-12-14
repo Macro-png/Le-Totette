@@ -40,10 +40,22 @@ def route(app):
         param = {}
         return catalogo_pagina(param)
 
-    @app.route("/cliente/producto/<int:producto_id>", methods=["GET"])
+    @app.route("/cliente/producto/<int:producto_id>", methods=["GET", "POST"])
     def producto(producto_id):
         param = {}
-        return producto_pagina(param, producto_id)
+        if request.method == "GET":
+            return producto_pagina(param, producto_id)
+
+        accion = request.form.get("accion")
+
+        if accion == "carrito":
+            return agregar_producto_carrito(param, producto_id)
+
+        elif accion == "wishlist":
+            return agregar_producto_wishlist(param, producto_id)
+
+        return redirect("/cliente/home")
+
 
     @app.route("/cliente/creatote", methods=["GET", "POST"])
     def creatote():
@@ -59,10 +71,20 @@ def route(app):
         param = {}
         return ver_carrito(param)
 
+    from flask import session, redirect, url_for, abort
+
     @app.route("/cliente/carrito/agregar/<int:producto_id>", methods=["POST"])
     def carrito_agregar(producto_id):
-        param = {}
-        return agregar_producto_carrito(param, producto_id)
+
+        if "cliente_id" not in session:
+            return redirect(url_for("login"))
+
+        cliente_id = session["cliente_id"]
+
+        agregar_producto_carrito(cliente_id, producto_id)
+
+        return redirect(url_for("carrito"))
+
 
     @app.route("/cliente/carrito/eliminar/<int:producto_id>", methods=["POST"])
     def carrito_eliminar(producto_id):

@@ -68,7 +68,7 @@
         <main class="descr">
             <h1 class="nombre">{{ producto['nombre'] }}</h1>
             <p class="caract">{{ producto['descripcion'] }}</p>
-<form>
+            <form>
                 <div class="opciones">
                     <input type="radio" id="color1" name="color">
                     <label for="color1">
@@ -80,10 +80,22 @@
                     </label>
                 </div>
                 
-                <div class="botones"> 
-                    <input type="button" value="Carrito" class="bot">
-                    <input type="button" value="Wishlist" class="bot">
-                </div>
+                <form method="POST" action="{{ url_for('carrito_agregar', producto_id=producto['id']) }}">
+                    <div class="botones"> 
+                        <button type="submit" class="bot">
+                            Carrito
+                        </button>
+                    </div>
+                </form>
+
+                <form method="POST" action="{{ url_for('wishlist_agregar', producto_id=producto['id']) }}">
+                    <div class="botones"> 
+                        <button type="submit" class="bot">
+                            Wishlist
+                        </button>
+                    </div>
+                </form>
+
             </form>
         </main>
     </div>

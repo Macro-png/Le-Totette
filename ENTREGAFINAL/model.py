@@ -123,12 +123,13 @@ def obtenerProductosporFiltros(filtro):
 # CARRITO
 # ---------------------------------------------------------------------------
 
-def agregar_producto_carrito(cliente_id, producto_id):
+def agregar_producto_carrito(cliente_id, producto_id, cantidad=1):
     sSql = """
-    INSERT INTO carrito (clientes_id, productos_id)
-    VALUES (%s, %s);
+    INSERT INTO carrito (clientes_id, productos_id, cantidad)
+    VALUES (%s, %s, %s);
     """
-    return insertDB(BASE, sSql, (cliente_id, producto_id)) == 1
+    return insertDB(BASE, sSql, (cliente_id, producto_id, cantidad)) == 1
+
 
 def obtener_carrito(cliente_id):
     sSql = """

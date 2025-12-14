@@ -283,12 +283,18 @@ def ver_carrito(param):
 
 
 def agregar_producto_carrito(param, producto_id):
+    print("PRODUCTO ID:", producto_id)
+    print("SESSION:", session)
+
     if not requiere_login() or es_admin():
         return redirect('/login')
 
     cliente_id = session['usuario']['id']
+    print("CLIENTE ID:", cliente_id)
+
     model.agregar_producto_carrito(cliente_id, producto_id)
     return redirect('/cliente/carrito')
+
 
 
 def eliminar_producto_carrito(param, producto_id):
