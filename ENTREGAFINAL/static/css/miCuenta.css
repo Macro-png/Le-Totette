@@ -205,6 +205,14 @@ input[id="buscador"] {
     }
 }
 
+
+@media screen and (max-width: 450px) {
+  .logout{
+    margin-bottom: 50px;
+  }
+}
+
+
 /* ------------ CONTENIDO DE LA PÁGINA ------------ */
 body {
     background-color: #FAD6B1;
@@ -270,6 +278,8 @@ h2 {
     color: inherit;  
 
 }
+
+
 
 .opciones img {
     max-width: 100%;
