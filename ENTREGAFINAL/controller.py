@@ -194,7 +194,7 @@ def pedidos_usuario(param):
 
     cliente_id = session['usuario']['id']
     param['pedidos'] = model.obtener_pedidos_cliente(cliente_id)
-    return render_template('pedidos.html', param=param)
+    return render_template('pedidosusuario.html', param=param)
 
 
 def miCuenta_pagina(param):
@@ -213,7 +213,7 @@ def admin_estadisticas_pagina(param):
         return redirect('/login')
 
     param['estadisticas'] = model.obtenerEstadisticas()
-    return render_template('admin_estadisticas.html', param=param)
+    return render_template('estadisticas.html', param=param)
 
 
 def pedidos_admin_pagina(param):
@@ -221,7 +221,7 @@ def pedidos_admin_pagina(param):
         return redirect('/login')
 
     param['pedidos'] = model.obtener_pedidos_admin()
-    return render_template('admin_pedidos.html', param=param)
+    return render_template('pedidosadmin.html', param=param)
 
 
 def pedidos_admin_modificar_estado(param, pedido_id):
@@ -237,7 +237,7 @@ def add_product_pagina(param):
     if not es_admin():
         return redirect('/login')
 
-    return render_template('admin_add_product.html', param=param)
+    return render_template('add_product.html', param=param)
 
 
 def guardar_producto(param):
