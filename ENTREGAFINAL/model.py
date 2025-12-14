@@ -240,6 +240,8 @@ def obtenerEstadisticas():
 #-----------------------------------------
 #              CREA TU TOTE
 #-----------------------------------------
+
+
 def creatutote(nombre, precio, img, descripcion):
 
 

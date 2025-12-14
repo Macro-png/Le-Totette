@@ -147,21 +147,125 @@ def creatote_pagina(param):
     return render_template('creatote.html', param=param)
 
 
+# ---------------------------------------------------------------------------
+# CREA TU TOTE - resolviendo problemas de la base de datos
+# ---------------------------------------------------------------------------
+
+
 def creatote_formulario(param):
-    if not requiere_login() or es_admin():
+    if not requiere_login():
         return redirect('/login', param=param)
-    diRequest={}
-    filename= upload_file(diRequest)
-    model.creatutote(
-   
-   
-   
-   
-   
-   
-    )
-    # Acá después podés guardar archivo / diseño
+    if es_admin():
+        return redirect('/admin', param=param)
+    diRequest = {}
+    filename = upload_file(diRequest)
+
+    # si no se subió archivo, no seguimos
+    if not filename:
+        param['error'] = 'No se subió ninguna imagen'
+        return redirect('/cliente/creatote')
+
+    if 'totes_temp' not in session:
+        session['totes_temp'] = []
+
+    session['totes_temp'].append({
+        'producto_id': int(request.form.get('producto_id')),
+        'img': filename,
+        'cantidad': 1
+    })
+
+    session.modified = True
     return redirect('/cliente/carrito')
+
+
+def confirmar_pedido(param):
+    if not requiere_login():
+        return redirect('/login')
+
+    cliente_id = session['usuario']['id']
+    
+    BASE = { "host":"localhost",
+        "user":"root",
+        "pass":"",
+        "dbname":"base_le_totette"}
+
+    # -------------------------
+    #  Crear pedido
+    # -------------------------
+    sSql = """
+    INSERT INTO pedidos (cliente_id, fecha, precio_total, estado)
+    VALUES (%s, CURDATE(), 0, 'espera');
+    """
+    model.insertDB(BASE, sSql, (cliente_id,))
+
+    # obtener id del pedido recién creado
+    pedido_id = model.selectDB(BASE, "SELECT LAST_INSERT_ID();")[0][0]
+
+    total = 0
+
+    # -------------------------
+    #  Productos normales del carrito
+    # -------------------------
+    carrito = model.obtener_carrito(cliente_id)
+
+    for prod in carrito:
+        producto_id = prod[0]
+        precio = prod[2]
+
+        total += precio
+
+        model.insertDB(BASE, """
+            INSERT INTO detalle_pedido
+            (pedidos_id, productos_id, cantidad, precio_unidad)
+            VALUES (%s, %s, 1, %s);
+        """, (pedido_id, producto_id, precio))
+
+    # -------------------------
+    #  Totes personalizados (session)
+    # -------------------------
+    for item in session.get('totes_temp', []):
+
+        producto_id = item['producto_id']
+
+        precio = model.selectDB(
+            BASE,
+            "SELECT precio_unidad FROM productos WHERE id=%s;",
+            (producto_id,)
+        )[0][0]
+
+        total += precio
+
+        model.insertDB(BASE, """
+            INSERT INTO detalle_pedido
+            (pedidos_id, productos_id, cantidad, precio_unidad)
+            VALUES (%s, %s, 1, %s);
+        """, (pedido_id, producto_id, precio))
+
+        detalle_id = model.selectDB(BASE, "SELECT LAST_INSERT_ID();")[0][0]
+
+        model.insertDB(BASE, """
+            INSERT INTO detalle_personalizados
+            (detalle_pedido_id, img)
+            VALUES (%s, %s);
+        """, (detalle_id, item['img']))
+
+    # -------------------------
+    # Actualizar total
+    # -------------------------
+    model.updateDB(BASE, """
+        UPDATE pedidos
+        SET precio_total=%s
+        WHERE id=%s;
+    """, (total, pedido_id))
+
+    # -------------------------
+    # Limpiar carrito y sesión
+    # -------------------------
+    model.vaciar_carrito(cliente_id)
+    session.pop('totes_temp', None)
+
+    return redirect('/cliente/pedidos')
+
 
 
 # ---------------------------------------------------------------------------
