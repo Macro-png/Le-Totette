@@ -5,6 +5,7 @@ from datetime import datetime
 from werkzeug.utils import secure_filename
 from uuid import uuid4
 from appConfig import config
+import _mysql_db
 
 # ---------------------------------------------------------------------------
 # HELPERS
@@ -151,6 +152,22 @@ def creatote_pagina(param):
 # CREA TU TOTE - resolviendo problemas de la base de datos
 # ---------------------------------------------------------------------------
 
+
+def tote_creatote():
+    BASE = { "host":"localhost",
+        "user":"root",
+        "pass":"",
+        "dbname":"base_le_totette"}
+
+    # -------------------------
+    #  Crear pedido
+    # -------------------------
+    sSql = """
+    SELECT id
+    FROM productos
+    WHERE nombre = 'disena';
+    """
+    return _mysql_db.selectDB(BASE, sSql, ())
 
 def creatote_formulario(param):
     if not requiere_login():

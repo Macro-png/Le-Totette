@@ -191,3 +191,19 @@ def route(app):
         if 'usuario' in session and session['usuario']['tipo'] == 'admin':
             return redirect('/admin/estadisticas')
         return redirect('/cliente/home')
+    
+    #=============================
+    # EXTRA PARA EL CREA TU TOTE
+    #====================-==========
+    
+    def extracreatote():
+        
+    
+    @app.route{{ url_for('producto', producto_id=producto['id']) }}
+    
+     @app.route("/cliente/creatote", methods=["GET", "POST"])
+    def creatote():
+        param = {}
+        if request.method == "GET":
+            return creatote_pagina(param)
+        return creatote_formulario(param)
