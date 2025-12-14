@@ -226,7 +226,12 @@ def miCuenta_pagina(param):
     if not requiere_login() or es_admin():
         return redirect('/login')
 
-    return render_template('miCuenta.html', param=param)
+    # datos desde la sesión
+    param['nombre_usuario'] = session['usuario']['nombre']
+    param['mail_usuario'] = session['usuario']['mail']
+
+    return render_template('miCuenta.html', **param)
+
 
 
 # ---------------------------------------------------------------------------
