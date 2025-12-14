@@ -47,7 +47,7 @@ def ingreso_usuario_valido(param):
         if result['tipo'] == 'admin':
             return redirect('/admin/estadisticas')
 
-        return redirect('/cliente/index')
+        return redirect('/cliente/home')
 
     param['error'] = 'Mail o contraseña incorrectos'
     return render_template('login.html', param=param)
@@ -65,12 +65,12 @@ def signup(param):
 # CLIENTE
 # ---------------------------------------------------------------------------
 
-def index_pagina(param):
+def home_pagina(param):
     if not requiere_login() or es_admin():
         return redirect('/login')
 
     param['productos'] = model.obtenerTodosLosProductos()
-    return render_template('index.html', param=param)
+    return render_template('home.html', param=param)
 
 
 def catalogo_pagina(param):
@@ -87,7 +87,7 @@ def producto_pagina(param, producto_id):
 
     producto = model.obtenerProductoPorId(producto_id)
     if not producto:
-        return redirect('/cliente/index')
+        return redirect('/cliente/home')
 
     param['producto'] = producto
     return render_template('producto.html', param=param)

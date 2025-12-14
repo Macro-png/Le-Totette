@@ -30,10 +30,10 @@ def route(app):
     # CLIENTE
     # -----------------------------------------------------------------
 
-    @app.route("/cliente/index", methods=["GET"])
-    def index():
+    @app.route("/cliente/home", methods=["GET"])
+    def home():
         param = {}
-        return index_pagina(param)
+        return home_pagina(param)
 
     @app.route("/cliente/catalogo", methods=["GET"])
     def catalogo():
@@ -137,4 +137,4 @@ def route(app):
     def not_found(e):
         if 'usuario' in session and session['usuario']['tipo'] == 'admin':
             return redirect('/admin/estadisticas')
-        return redirect('/cliente/index')
+        return redirect('/cliente/home')
