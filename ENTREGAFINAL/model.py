@@ -241,9 +241,8 @@ def obtenerEstadisticas():
 #              CREA TU TOTE
 #-----------------------------------------
 def creatutote(nombre, precio, img, descripcion):
-
-
-
-
-
-    return insertDB(BASE, sSql, (nombre, precio, img, descripcion))
+    sSql = """
+    INSERT INTO productos (img)
+    VALUES (%s)
+    """
+    return insertDB(BASE, sSql, (img))
