@@ -248,10 +248,10 @@ def carrito_eliminar_producto(param, request): #el tacho
 def eliminar_wishlist(param): #el tacho
     return            
 
-def pedidos_admin_modificarestado(param) #MODIFICAR ESTADO DEL PEDIDO
+def pedidos_admin_modificarestado(param): #MODIFICAR ESTADO DEL PEDIDO
     return
 
-def guardar_producto(param) #cuando admin agrega un producto con exito
+def guardar_producto(param): #cuando admin agrega un producto con exito
     return
 
 
@@ -307,9 +307,9 @@ def paginaNoEncontrada(name):
     '''
     res='Pagina "{}" no encontrada<br>'.format(name)
     if not requiere_login():
-        return res+='<a href="{}">{}</a>'.format("/","login")
+        return res + '<a href="{}">{}</a>'.format("/","login")
     if es_admin():
-        return res+='<a href="{}">{}</a>'.format("/","admin")
+        return res +'<a href="{}">{}</a>'.format("/","admin")
     res+='<a href="{}">{}</a>'.format("/","cliente")
 
 
