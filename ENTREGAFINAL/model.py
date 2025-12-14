@@ -44,10 +44,15 @@ def validarClientePorMailYContrasena(result, mail, contrasena):
 
 def crear_producto(nombre, precio, img, descripcion):
     sSql = """
-    INSERT INTO productos (id, nombre, precio_unidad, img, descripcion, ventas)
-    VALUES (NULL, %s, %s, %s, %s, 0);
+    INSERT INTO productos (nombre, precio_unidad, img, descripcion, ventas)
+    VALUES (%s, %s, %s, %s, 0)
+    ON DUPLICATE KEY UPDATE
+        precio_unidad = VALUES(precio_unidad),
+        img = VALUES(img),
+        descripcion = VALUES(descripcion);
     """
-    return insertDB(BASE, sSql, (nombre, precio, img, descripcion))
+    return insertDB(BASE, sSql, (nombre, precio, img, descripcion)) >= 1
+
 
 def actualizar_producto(pid, nombre, precio, img, descripcion):
     sSql = """
