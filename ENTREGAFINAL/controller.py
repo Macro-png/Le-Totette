@@ -384,15 +384,17 @@ def eliminar_wishlist(param, producto_id):
 # ---------------------------------------------------------------------------
 
 def pedidos_usuario(param):
-    if not requiere_login():
+
+    if 'usuario' not in session:
         return redirect('/login')
-    if es_admin:
+
+    if session['usuario'].get('tipo') == 'admin':
         return redirect('/admin')
     
     cliente_id = session['usuario']['id']
-    #diccionario
     pedidos = model.obtener_pedidos_cliente(cliente_id)
     return render_template('pedidosusuario.html', pedidos=pedidos, param=param)
+
     
 
 
