@@ -207,41 +207,45 @@ def confirmar_pedido(param):
         "dbname":"base_le_totette"}
 
     # -------------------------
-    #  Crear pedido
+    # Crear pedido
     # -------------------------
     sSql = """
     INSERT INTO pedidos (cliente_id, fecha, precio_total, estado)
-    VALUES (%s, CURDATE(), 0, 'espera');
+    VALUES (%s, CURDATE(), %s, 'espera');
     """
-    model.insertDB(BASE, sSql, (cliente_id,))
-
-    # obtener id del pedido recién creado
+    precio_total = model.obtener_total_carrito(cliente_id) or 0
+    
+    model.insertDB(BASE, sSql, (cliente_id, precio_total))
     pedido_id = model.selectDB(BASE, "SELECT LAST_INSERT_ID();")[0][0]
 
     total = 0
 
     # -------------------------
-    #  Productos normales del carrito
+    # Productos del carrito
     # -------------------------
-    carrito = model.obtener_carrito(cliente_id)
+    carrito = model.obtener_carrito(cliente_id) or []
 
     for prod in carrito:
         producto_id = prod[0]
         precio = prod[2]
+        cantidad = prod[4]
 
-        total += precio
+        subtotal = precio * cantidad
+        total += subtotal
 
         model.insertDB(BASE, """
             INSERT INTO detalle_pedido
             (pedidos_id, productos_id, cantidad, precio_unidad)
-            VALUES (%s, %s, 1, %s);
-        """, (pedido_id, producto_id, precio))
+            VALUES (%s, %s, %s, %s);
+        """, (pedido_id, producto_id, cantidad, precio))
+
+        # 🔥 AUMENTAR VENTAS CORRECTAMENTE
+        model.aumentar_ventas_producto(producto_id, cantidad)
 
     # -------------------------
-    #  Totes personalizados (session)
+    # Totes personalizados
     # -------------------------
     for item in session.get('totes_temp', []):
-
         producto_id = item['producto_id']
 
         precio = model.selectDB(
@@ -266,13 +270,16 @@ def confirmar_pedido(param):
             VALUES (%s, %s);
         """, (detalle_id, item['img']))
 
+        # 🔥 sumar venta del tote
+        model.aumentar_ventas_producto(producto_id, 1)
+
     # -------------------------
     # Actualizar total
     # -------------------------
     model.updateDB(BASE, """
         UPDATE pedidos
-        SET precio_total=%s
-        WHERE id=%s;
+        SET precio_total = %s
+        WHERE id = %s;
     """, (total, pedido_id))
 
     # -------------------------
@@ -281,7 +288,7 @@ def confirmar_pedido(param):
     model.vaciar_carrito(cliente_id)
     session.pop('totes_temp', None)
 
-    return redirect('/cliente/pedidos')
+    return redirect('/cliente/pedido')
 
 
 
@@ -339,8 +346,16 @@ def pedidos_cliente():
 
     if not pedido_id:
         return "Error al crear el pedido"
+    
+    # 3. Aumentar ventas de productos
+    productos_carrito = model.obtener_carrito(cliente_id) or []
+    for prod in productos_carrito:
+        producto_id = prod[0]
+        cantidad = prod[4]  # cantidad del carrito
+        model.aumentar_ventas_producto(producto_id, cantidad)
 
-    # 3. Vaciar carrito
+
+    # 4. Vaciar carrito
     model.vaciar_carrito(cliente_id)
 
     return redirect("/cliente/pedidos")
@@ -418,16 +433,30 @@ def admin_estadisticas_pagina(param):
     if not es_admin():
         return redirect('/login')
 
-    param['estadisticas'] = model.obtenerEstadisticas()
-    return render_template('estadisticas.html', param=param)
+    producto = model.obtener_producto_mas_vendido()
+    categorias_db = model.obtener_ventas_por_categoria()
+
+    return render_template(
+        'estadisticas.html',
+        totemascomprado_nombre=producto[0] if producto else "—",
+        totemascomprado_cantidaddeventas=producto[1] if producto else 0,
+        categorias=[
+            {"nombre": c[0], "ventas": c[1]} for c in categorias_db
+        ]
+    )
 
 
 def pedidos_admin_pagina(param):
     if not es_admin():
         return redirect('/login')
 
-    param['pedidos'] = model.obtener_pedidos_admin()
-    return render_template('pedidosadmin.html', param=param)
+    pedidos = model.obtener_pedidos_admin()
+
+    return render_template(
+        'pedidosadmin.html',
+        pedidos=pedidos,
+        param=param
+    )
 
 
 def pedidos_admin_modificar_estado(param, pedido_id):

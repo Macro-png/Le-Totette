@@ -9,6 +9,8 @@ SELECT * FROM carrito;
 
 DESCRIBE carrito;
 
+DESCRIBE productos;
+
 -- evitar duplicados:
 ALTER TABLE carrito ADD UNIQUE KEY uq_cliente_producto (clientes_id, productos_id);
 

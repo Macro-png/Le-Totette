@@ -40,17 +40,19 @@
         {% for pedido in pedidos %}
           <article class="order" data-id="{{ pedido[0] }}">
             <h3>Pedido #{{ pedido[0] }}</h3>
-            <p>Cliente ID: {{ pedido[1] }}</p>
+            <p>Cliente: {{ pedido[1] }}</p>
             <p>Fecha: {{ pedido[2] }}</p>
             <p>Total: {{ pedido[3] }}</p>
             <p>Estado: <span class="estado-texto">{{ pedido[4] }}</span></p>
             <div>
-              <select class="select-estado" data-pedido="{{ pedido[0] }}">
-                <option value="espera" {% if pedido[4]=='espera' %}selected{% endif %}>Espera</option>
-                <option value="produccion" {% if pedido[4]=='produccion' %}selected{% endif %}>Producción</option>
-                <option value="retirar" {% if pedido[4]=='retirar' %}selected{% endif %}>Para retirar</option>
-                <option value="cancelado" {% if pedido[4]=='cancelado' %}selected{% endif %}>Cancelado</option>
-              </select>
+              <form method="POST" action="{{ url_for('pedidos_admin_estado', pedido_id=pedido[0]) }}">
+                <select name="estado" onchange="this.form.submit()">
+                  <option value="espera" {% if pedido[4]=='espera' %}selected{% endif %}>Espera</option>
+                  <option value="produccion" {% if pedido[4]=='produccion' %}selected{% endif %}>Producción</option>
+                  <option value="para retirar" {% if pedido[4]=='para retirar' %}selected{% endif %}>Para retirar</option>
+                  <option value="cancelado" {% if pedido[4]=='cancelado' %}selected{% endif %}>Cancelado</option>
+                </select>
+              </form>
             </div>
           </article>
         {% endfor %}

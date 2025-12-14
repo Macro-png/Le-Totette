@@ -264,14 +264,19 @@ def actualizar_estado_pedido(pedido_id, estado):
     """
     return updateDB(BASE, sSql, (estado, pedido_id)) == 1
 
+def aumentar_ventas_producto(producto_id, cantidad):
+    sSql = """
+    UPDATE productos
+    SET ventas = ventas + %s
+    WHERE id = %s;
+    """
+    return updateDB(BASE, sSql, (cantidad, producto_id)) == 1
 
 # ---------------------------------------------------------------------------
 # ESTADÍSTICAS
 # ---------------------------------------------------------------------------
 
-def obtenerEstadisticas():
-    data = {}
-
+def obtener_producto_mas_vendido():
     sSql = """
     SELECT nombre, ventas
     FROM productos
@@ -279,17 +284,17 @@ def obtenerEstadisticas():
     LIMIT 1;
     """
     fila = selectDB(BASE, sSql)
-    data['nombre'] = fila[0][0] if fila else ""
-    data['ventas'] = fila[0][1] if fila else 0
+    return fila[0] if fila else None
 
+def obtener_ventas_por_categoria():
     sSql = """
-    SELECT filtro, COUNT(*) 
-    FROM filtros
-    GROUP BY filtro;
+    SELECT c.nombre, COALESCE(SUM(p.ventas), 0)
+    FROM categorias c
+    LEFT JOIN productos p ON p.categoria_id = c.id
+    GROUP BY c.id;
     """
-    data['categorias'] = selectDB(BASE, sSql)
+    return selectDB(BASE, sSql) or []
 
-    return data
 
 #-----------------------------------------
 #              CREA TU TOTE
