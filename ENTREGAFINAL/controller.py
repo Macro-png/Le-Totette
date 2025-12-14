@@ -107,8 +107,21 @@ def catalogo_pagina(param):
     if not requiere_login() or es_admin():
         return redirect('/login')
 
-    param['productos'] = model.obtenerTodosLosProductos()
-    return render_template('catalogo.html', param=param)
+    productos_db = model.obtenerTodosLosProductos()
+
+    productos = []
+    for p in productos_db:
+        productos.append({
+            'id': p[0],
+            'nombre': p[1],
+            'precio_unidad': p[2],
+            'img': p[3],
+            'descripcion': p[4],
+        })
+
+    param['productos'] = productos
+    return render_template('catalogo.html', **param)
+
 
 
 def producto_pagina(param, producto_id):
