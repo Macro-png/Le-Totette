@@ -322,6 +322,29 @@ def vaciar_carrito(param):
     model.vaciar_carrito(cliente_id)
     return redirect('/cliente/carrito')
 
+def pedidos_cliente():
+    if not requiere_login() or es_admin():
+        return redirect("/login")
+
+    cliente_id = session['usuario']['id']
+
+    # 1. Obtener total
+    total_compra = model.obtener_total_carrito(cliente_id) or 0
+
+    if total_compra <= 0:
+        return redirect("/cliente/carrito")
+
+    # 2. Crear pedido
+    pedido_id = model.crear_pedido(cliente_id, total_compra)
+
+    if not pedido_id:
+        return "Error al crear el pedido"
+
+    # 3. Vaciar carrito
+    model.vaciar_carrito(cliente_id)
+
+    return redirect("/cliente/pedidos")
+
 
 # ---------------------------------------------------------------------------
 # WISHLIST

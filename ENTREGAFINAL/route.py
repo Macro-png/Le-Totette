@@ -144,10 +144,12 @@ def route(app):
 
     # -------------------- PEDIDOS CLIENTE --------------------
 
-    @app.route("/cliente/pedidos", methods=["GET"])
-    def pedidos_cliente():
+    
+    @app.route("/cliente/pedido/confirmar", methods=["POST"])
+    def pedido_confirmar():
         param = {}
-        return pedidos_usuario(param)
+        return confirmar_pedido(param)
+
 
     @app.route("/cliente/miCuenta", methods=["GET"])
     def miCuenta():
@@ -196,14 +198,13 @@ def route(app):
     # EXTRA PARA EL CREA TU TOTE
     #====================-==========
     
-    def extracreatote():
+    #def extracreatote():
         
     
-    @app.route{{ url_for('producto', producto_id=producto['id']) }}
-    
-     @app.route("/cliente/creatote", methods=["GET", "POST"])
-    def creatote():
-        param = {}
-        if request.method == "GET":
-            return creatote_pagina(param)
-        return creatote_formulario(param)
+    #@app.route{{ url_for('producto', producto_id=producto['id']) }}
+    #@app.route("/cliente/creatote", methods=["GET", "POST"])
+    #def creatote():
+    #    param = {}
+    #    if request.method == "GET":
+    #        return creatote_pagina(param)
+    #    return creatote_formulario(param)

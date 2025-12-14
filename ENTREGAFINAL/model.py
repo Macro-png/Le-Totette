@@ -195,7 +195,7 @@ def obtener_total_carrito(cliente_id):
 def crear_pedido(cliente_id, total):
     sSql = """
     INSERT INTO pedidos (cliente_id, fecha, precio_total, estado)
-    VALUES (%s, CURDATE(), %s, 'espera');
+    VALUES (%s, CURDATE(), %d, 'espera');
     """
     return insertDB(BASE, sSql, (cliente_id, total))
 
