@@ -277,6 +277,22 @@ def ver_carrito(param):
         return redirect('/login')
 
     cliente_id = session['usuario']['id']
+    
+    # Obtenemos los datos del modelo
+    productos_carrito = model.obtener_carrito(cliente_id)
+    total_compra = model.obtener_total_carrito(cliente_id)
+    
+    # Pasamos 'productos' para que el HTML lo encuentre en el for
+    return render_template('carrito.html', 
+                           productos=productos_carrito, 
+                           total=total_compra, 
+                           param=param)
+
+#def ver_carrito(param):
+    if not requiere_login() or es_admin():
+        return redirect('/login')
+
+    cliente_id = session['usuario']['id']
     param['carrito'] = model.obtener_carrito(cliente_id)
     param['total'] = model.obtener_total_carrito(cliente_id)
     return render_template('carrito.html', param=param)

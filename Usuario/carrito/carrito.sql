@@ -17,7 +17,7 @@ ALTER TABLE carrito ADD UNIQUE KEY uq_cliente_producto (clientes_id, productos_i
 -- ==============================================
 -- Un cliente puede agregar varios productos a su carrito. --> Ejemplo: el cliente con id = 1 agrega el producto con id = 3.
 INSERT INTO carrito (clientes_id, productos_id) 
-VALUES (1, 1);
+VALUES (25, 18);
 
 -- Si el cliente agrega otro producto:
 INSERT INTO carrito (clientes_id, productos_id)
@@ -96,3 +96,10 @@ FROM carrito c
 JOIN clientes cl ON cl.id = c.clientes_id
 JOIN productos p ON p.id = c.productos_id
 WHERE c.clientes_id = 1;
+
+
+    SELECT p.id, p.nombre, p.precio_unidad, p.img
+    FROM carrito c
+    JOIN productos p ON p.id = c.productos_id
+    WHERE c.clientes_id = 25;
+ 

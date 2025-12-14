@@ -63,34 +63,31 @@
     <main>
       <h1>Mi Carrito</h1>
       <section class="products">
+
+
         {% for producto in productos %}
-          <div class="product cart-item">
-            <img src="{{ url_for('static', filename='uploads/' + (producto['img'] or '')) }}" alt="{{ producto['nombre'] }}">
-            <div class="item-info">
-              <h4>{{ producto['nombre'] }}</h4>
-              <p>{{ producto['descripcion'] }}</p>
-            </div>
-
-            <div class="item-quantity">
-              <input type="number" value="1" min="1">
-             </div>
-
-            <div class="item-price">
-              <p>{{ producto['precio_unidad'] }}</p>
-            </div>
-
-            
-            <form action="{{ url_for('remove_from_cart') }}" method="post">
-      
-                <input type="hidden" name="producto_id" value="{{ producto['id'] }}"> 
+        <div class="product cart-item">
+            <!-- Usa [4] para la imagen, [1] para nombre, etc. -->
+        <img src="{{ url_for('static', filename='uploads/' + (producto[4] or '')) }}" alt="{{ producto[1] }}">
     
-                <button type="submit" class="btn-remove">
-                    <i class="fa-solid fa-trash"></i>
-                </button>
-            </form>
+        <div class="item-info">
+            <h4>{{ producto[1] }}</h4>
+            <p>{{ producto[2] }}</p>
+        </div>
 
-          </div>
+        <div class="item-price">
+            <p>{{ producto[3] }}</p>
+        </div>
+
+        <!-- AQUÍ ESTABA EL ERROR: Cambia producto['id'] por producto[0] -->
+        <form action="{{ url_for('carrito_eliminar', producto_id=producto[0]) }}" method="post">
+            <button type="submit" class="btn-remove">
+                <i class="fa-solid fa-trash"></i>
+            </button>
+        </form>
+        </div>
         {% endfor %}
+
       </section>
     </main>
         <!--- BOTONES MOBILE -->
