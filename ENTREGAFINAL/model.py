@@ -153,7 +153,8 @@ def obtener_carrito(cliente_id):
 def eliminar_producto_carrito(cliente_id, producto_id):
     sSql = """
     DELETE FROM carrito
-    WHERE clientes_id = %s AND productos_id = %s;
+    WHERE clientes_id = %s AND productos_id = %s
+    LIMIT 1;
     """
     return deleteDB(BASE, sSql, (cliente_id, producto_id)) > 0
 
