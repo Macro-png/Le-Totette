@@ -215,7 +215,7 @@ body{
 }
 
 aside>img{
-    max-width: 100%;
+    max-width: 500px;
 }
 
 .flexbox{
@@ -307,7 +307,7 @@ input[type="radio"]:checked + label .circle {
     padding: 10px 0;
 }
 
-input[type="button"] {
+.bot {
     display: inline-block;
     margin: auto;
     border-radius: 5px;
