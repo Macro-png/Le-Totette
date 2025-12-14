@@ -278,8 +278,8 @@ def ver_carrito(param):
 
     cliente_id = session['usuario']['id']
 
-    productos_carrito = model.obtener_carrito(cliente_id)
-    total_compra = model.obtener_total_carrito(cliente_id)
+    productos_carrito = model.obtener_carrito(cliente_id) or []
+    total_compra = model.obtener_total_carrito(cliente_id) or 0
 
     return render_template(
         'carrito.html',
