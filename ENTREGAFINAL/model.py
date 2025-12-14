@@ -125,9 +125,8 @@ def obtenerProductosporFiltros(filtro):
 
 def agregar_producto_carrito(cliente_id, producto_id):
     sSql = """
-    INSERT INTO carrito (clientes_id, productos_id, cantidad)
-    VALUES (%s, %s, 1)
-    ON DUPLICATE KEY UPDATE cantidad = cantidad + 1;
+    INSERT INTO carrito (clientes_id, productos_id)
+    VALUES (%s, %s)
     """
     return insertDB(BASE, sSql, (cliente_id, producto_id)) >= 1
 
