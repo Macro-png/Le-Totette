@@ -235,6 +235,13 @@ section {
     margin-top: 5%;
 }
 
+h1 {
+  margin: auto;
+  padding: 40px 10px 0 10px;
+  text-align: center;
+  margin-top: 100px;
+}
+
 .product_img {
     width: 60px;
     max-width: 100%;

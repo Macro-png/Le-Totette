@@ -233,11 +233,7 @@ def confirmar_pedido(param):
         subtotal = precio * cantidad
         total += subtotal
 
-        model.insertDB(BASE, """
-            INSERT INTO detalle_pedido
-            (pedidos_id, productos_id, cantidad, precio_unidad)
-            VALUES (%s, %s, %s, %s);
-        """, (pedido_id, producto_id, cantidad, precio))
+        model.agregar_detalle_pedido(pedido_id, producto_id, cantidad, precio)
 
         # 🔥 AUMENTAR VENTAS CORRECTAMENTE
         model.aumentar_ventas_producto(producto_id, cantidad)
@@ -329,36 +325,8 @@ def vaciar_carrito(param):
     model.vaciar_carrito(cliente_id)
     return redirect('/cliente/carrito')
 
-def pedidos_cliente():
-    if not requiere_login() or es_admin():
-        return redirect("/login")
-
-    cliente_id = session['usuario']['id']
-
-    # 1. Obtener total
-    total_compra = model.obtener_total_carrito(cliente_id) or 0
-
-    if total_compra <= 0:
-        return redirect("/cliente/carrito")
-
-    # 2. Crear pedido
-    pedido_id = model.crear_pedido(cliente_id, total_compra)
-
-    if not pedido_id:
-        return "Error al crear el pedido"
-    
-    # 3. Aumentar ventas de productos
-    productos_carrito = model.obtener_carrito(cliente_id) or []
-    for prod in productos_carrito:
-        producto_id = prod[0]
-        cantidad = prod[4]  # cantidad del carrito
-        model.aumentar_ventas_producto(producto_id, cantidad)
 
 
-    # 4. Vaciar carrito
-    model.vaciar_carrito(cliente_id)
-
-    return redirect("/cliente/pedidos")
 
 
 # ---------------------------------------------------------------------------

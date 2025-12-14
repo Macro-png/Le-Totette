@@ -55,116 +55,41 @@
         </a>
     </div>
     </header>
-
-    
-    
     <!--FIN CODIGO ALE MENU-->
     <main>
+    <h1>Mis Pedidos</h1>
 
+    {% for pedido in pedidos %}
+    <section>
 
+        <div class="pedidos">
+            <h2>Pedido #{{ pedido.id }}</h2>
 
-{% for pedido in pedidos %}
-<section>
+            <ul class="producto">
+            {% for producto in pedido.productos %}
+                <li>
+                    <i class="fa-solid fa-arrow-right"></i>
+                    {{ producto.nombre }} (x{{ producto.cantidad }})
 
-    <div class="pedidos">
-        <ul class="producto">
-            <h2>Pedido #{{ pedido["id"] }}</h2>
-
-            {% for producto in pedido["productos"] %}
-            <li>
-                <i class="fa-solid fa-arrow-right"></i>
-
-                <img
-                    class="product_img"
-                    src="{{ url_for('static', filename='img/' ~ producto["img"]) }}"
-                    alt="{{ producto["nombre"] }}"
-                >
-
-                {{ producto["nombre"] }}
-
-                
-                <!--<button>
-                    <a href="{{ url_for('producto', producto_id=producto["id"]) }}">
+                    <a href="{{ url_for('producto', producto_id=producto.id) }}">
                         Detalles
                     </a>
-                </button>-->
-            
-            </li>
+                </li>
             {% endfor %}
+            </ul>
 
-        </ul>
-    </div>
+            <p><strong>Total:</strong> ${{ pedido.precio_total }}</p>
+        </div>
 
-    <div class="estado">
-        <h2>Estado</h2>
-        <p class="espera">{{ pedido["estado"] }}</p>
-    </div>
+        <div class="estado">
+            <h2>Estado</h2>
+            <p class="espera">{{ pedido.estado }}</p>
+        </div>
 
-</section>
-{% endfor %}
-
-
-
-        <!--{% for pedido in pedidos %}
-            <section>
-
-                <div class="pedidos">
-                    <ul class="producto">
-                        <h2>Pedido #{{ pedido["id"] }}</h2>
-
-                        {% for producto in pedido["productos"] %}
-                            <li>
-                                <i class="fa-solid fa-arrow-right"></i>
-
-                                <img 
-                                class="product_img"
-                                src="{{ url_for('static', filename='img/' ~ producto["img"]) }}"
-                                alt="{{ producto["nombre"] }}"
-                                >
-
-                            {{ producto["nombre"] }}
-
-                                <button>
-                                    <a href="{{ url_for('producto', id=producto["id"]) }}">
-                                        Detalles
-                                    </a>
-                                </button>
-                            </li>
-                        {% endfor %}
-
-                    </ul>
-                </div>
-
-                 <div class="estado">
-                    <h2>Estado</h2>
-                    <p class="espera">{{ pedido["estado"] }}</p>
-                </div>
-
-            </section>
-            {% endfor %}-->
-
-
-<!--      {% for pedido in pedidos %}
-            <section>
-                <div class="pedidos">
-                    <ul class="producto">
-                        <h2>Pedido #{{ pedido[0] }}</h2>
-                        
-                            <li>
-                                <i class="fa-solid fa-arrow-right"></i>
-                                Pedido realizado el {{ pedido[2] }} - Total: {{ pedido[3] }}
-                            </li>
-                        
-                    </ul>
-                </div>
-                <div class="estado">
-                    <h2>Estado</h2>
-                    <p class="espera">{{ pedido[4] }}</p>
-                </div>
-            </section>
-        {% endfor %}-->  
+    </section>
+    {% endfor %}
     </main>
-        <!--- BOTONES MOBILE -->
+    <!--- BOTONES MOBILE -->
     <div class="container_MenuBotonesMobile">
         <a href=""><img src="{{ url_for('static', filename='img/whats.png') }}" class="menu_mobile_botones"></a>
 

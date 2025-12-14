@@ -200,10 +200,16 @@ def obtener_total_carrito(cliente_id):
 def crear_pedido(cliente_id, total):
     sSql = """
     INSERT INTO pedidos (cliente_id, fecha, precio_total, estado)
-    VALUES (%s, CURDATE(), %d, 'espera');
+    VALUES (%s, CURDATE(), %s, 'espera');
     """
     return insertDB(BASE, sSql, (cliente_id, total))
 
+def agregar_detalle_pedido(pedido_id, producto_id, cantidad, precio):
+    sSql = """
+    INSERT INTO detalle_pedido (pedidos_id, productos_id, cantidad, precio_unidad)
+    VALUES (%s, %s, %s, %s);
+    """
+    return insertDB(BASE, sSql, (pedido_id, producto_id, cantidad, precio)) == 1
 
 
 # ---------------------------------------------------------------------------
@@ -251,50 +257,44 @@ def obtener_pedidos_cliente(cliente_id):
 
 def obtener_pedidos_cliente_con_productos(cliente_id):
     sSql = """
-    SELECT
-        p.id,
-        p.fecha,
-        p.estado,
-        pr.id,
-        pr.nombre,
-        pr.img
-    FROM pedidos p
-    LEFT JOIN detalle_pedido dp ON dp.pedidos_id = p.id
-    LEFT JOIN productos pr ON pr.id = dp.productos_id
-    WHERE p.cliente_id = %s
-    ORDER BY p.id;
-    """
-    return selectDB(BASE, sSql, (cliente_id,))
-
-
-
-#def obtener_pedidos_cliente_con_productos(cliente_id):
-    sSql = """
-    SELECT
+    SELECT 
         p.id AS pedido_id,
         p.fecha,
+        p.precio_total,
         p.estado,
         pr.id AS producto_id,
         pr.nombre,
-        pr.img
+        pr.img,
+        dp.cantidad
     FROM pedidos p
     JOIN detalle_pedido dp ON dp.pedidos_id = p.id
     JOIN productos pr ON pr.id = dp.productos_id
     WHERE p.cliente_id = %s
-    ORDER BY p.id;
+    ORDER BY p.id DESC;
     """
-    return selectDB(BASE, sSql, (cliente_id,))
+    rows = selectDB(BASE, sSql, (cliente_id,))
 
+    pedidos = {}
+    for r in rows:
+        pedido_id = r[0]
 
+        if pedido_id not in pedidos:
+            pedidos[pedido_id] = {
+                "id": pedido_id,
+                "fecha": r[1],
+                "precio_total": r[2],
+                "estado": r[3],
+                "productos": []
+            }
 
+        pedidos[pedido_id]["productos"].append({
+            "id": r[4],
+            "nombre": r[5],
+            "img": r[6],
+            "cantidad": r[7]
+        })
 
-def obtener_pedidos_admin():
-    sSql = """
-    SELECT p.id, c.nombre, p.fecha, p.precio_total, p.estado
-    FROM pedidos p
-    JOIN clientes c ON c.id = p.cliente_id;
-    """
-    return selectDB(BASE, sSql)
+    return list(pedidos.values())
 
 def actualizar_estado_pedido(pedido_id, estado):
     sSql = """

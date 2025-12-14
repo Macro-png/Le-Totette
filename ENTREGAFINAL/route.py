@@ -143,131 +143,29 @@ def route(app):
 
 
     # -------------------- PEDIDOS CLIENTE --------------------
-
-    #     param = {}
-    #    return pedidos_usuario(param)
-    
-    
     
     @app.route("/cliente/pedido", methods=["GET"])
     def pedidosusuario_pagina():
         if 'usuario' not in session:
             return redirect('/login')
 
-        cliente_id = session['usuario']['id']
-        resultados = model.obtener_pedidos_cliente_con_productos(cliente_id)
+        if session['usuario']['tipo'] == 'admin':
+            return redirect('/admin')
 
-        pedidos = {}
-
-        for fila in resultados:
-            pedido_id, fecha, estado, producto_id, nombre, img = fila
-
-            if pedido_id not in pedidos:
-                pedidos[pedido_id] = {
-                    "id": pedido_id,
-                    "fecha": fecha,
-                    "estado": estado,
-                    "productos": []
-                }
-
-            pedidos[pedido_id]["productos"].append({
-                "id": producto_id,
-                "nombre": nombre,
-                "img": img
-            })
-
-        return render_template(
-            "pedidosusuario.html",
-            pedidos=list(pedidos.values())
-        )
-    
-    
-    #@app.route("/cliente/pedido", methods=["GET", "POST"])
-    #def pedidosusuario_pagina():
         cliente_id = session['usuario']['id']
 
-        resultados = model.obtener_pedidos_cliente_con_productos(cliente_id)
+        pedidos = model.obtener_pedidos_cliente_con_productos(cliente_id)
 
-        pedidos = {}
-
-        for fila in resultados:
-            pedido_id = fila[0]     
-            fecha = fila[1]
-            estado = fila[2]
-            producto_id = fila[3]
-            nombre = fila[4]
-            img = fila[5]
-
-            if pedido_id not in pedidos:
-                pedidos[pedido_id] = {
-                    "id": pedido_id,
-                    "fecha": fecha,
-                    "estado": estado,
-                    "productos": []
-                }
-
-            pedidos[pedido_id]["productos"].append({
-                "id": producto_id,
-                "nombre": nombre,
-                "img": img
-            })
-            
-        return render_template(
-                "pedidosusuario.html",
-                pedidos=list(pedidos.values())
-                    )
         return render_template(
             "pedidosusuario.html",
-            pedidos=pedidos.values()
+            pedidos=pedidos
         )
-    
-    
-    #@app.route("/cliente/pedidos")
-    #def mis_pedidos():
-        cliente_id = session["cliente_id"]
 
-        resultados = model.obtener_pedidos_cliente_con_productos(cliente_id)
-
-        pedidos = {}
-
-        for fila in resultados:
-            pedido_id = fila[0]     
-            fecha = fila[1]
-            estado = fila[2]
-            producto_id = fila[3]
-            nombre = fila[4]
-            img = fila[5]
-
-            if pedido_id not in pedidos:
-                pedidos[pedido_id] = {
-                    "id": pedido_id,
-                    "fecha": fecha,
-                    "estado": estado,
-                    "productos": []
-                }
-
-            pedidos[pedido_id]["productos"].append({
-                "id": producto_id,
-                "nombre": nombre,
-                "img": img
-            })
-            
-        return render_template(
-                "pedidosusuario.html",
-                pedidos=list(pedidos.values())
-                    )
-        return render_template(
-            "pedidosusuario.html",
-            pedidos=pedidos.values()
-        )
-    
-    
-    
     @app.route("/cliente/pedido/confirmar", methods=["POST"])
     def pedido_confirmar():
         param = {}
         return confirmar_pedido(param)
-    
+
 
     @app.route("/cliente/miCuenta", methods=["GET"])
     def miCuenta():

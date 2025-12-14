@@ -10,6 +10,7 @@ SELECT * FROM detalle_pedido;
 SELECT * FROM pedidos;
 
 DESCRIBE pedidos;
+DESCRIBE detalle_pedido;
 -- alter table pedidos auto_increment = 1;
 -- delete from pedidos;
 -- delete from pedidos where id = 2;
