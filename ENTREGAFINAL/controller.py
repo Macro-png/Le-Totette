@@ -1,5 +1,10 @@
 from flask import render_template, redirect, request, session, url_for
+import os
 import model
+from datetime import datetime
+from werkzeug.utils import secure_filename
+from uuid import uuid4
+from appConfig import config
 
 # ---------------------------------------------------------------------------
 # HELPERS
@@ -298,3 +303,45 @@ def guardar_producto(param):
         return render_template('add_product.html', param=param)
 
     return redirect('/admin/add_product')
+
+##########################################################################
+#                MANEJO DE  SUBIDA DE ARCHIVOS  
+##########################################################################
+
+def upload_file (diResult) :
+    UPLOAD_EXTENSIONS = ['.jpg', '.png', '.gif']
+    MAX_CONTENT_LENGTH = 1024 * 1024     
+    if request.method == 'POST' :         
+        for key in request.files.keys():  
+            diResult[key]={} 
+            diResult[key]['file_error']=False            
+            
+            f = request.files[key] 
+            if f.filename!="":     
+                #filename_secure = secure_filename(f.filename)
+                file_extension=str(os.path.splitext(f.filename)[1])
+                filename_unique = uuid4().__str__() + file_extension
+                path_filename=os.path.join( config['upload_folder'] , filename_unique)
+                # Validaciones
+                if file_extension not in UPLOAD_EXTENSIONS:
+                    diResult[key]['file_error']=True
+                    diResult[key]['file_msg']='Error: No se admite subir archivos con extension '+file_extension
+                if os.path.exists(path_filename):
+                    diResult[key]['file_error']=True
+                    diResult[key]['file_msg']='Error: el archivo ya existe.'
+                    diResult[key]['file_name']=f.filename
+                try:
+                    if not diResult[key]['file_error']:
+                        diResult[key]['file_error']=True
+                        diResult[key]['file_msg']='Se ha producido un error.'
+
+                        f.save(path_filename)   
+                        diResult[key]['file_error']=False
+                        diResult[key]['file_name_new']=filename_unique
+                        diResult[key]['file_name']=f.filename
+                        diResult[key]['file_msg']='OK. Archivo cargado exitosamente'
+ 
+                except:
+                        pass
+            else:
+                diResult[key]={} # viene vacio el input del file upload
