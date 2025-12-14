@@ -70,7 +70,7 @@ def home_pagina(param):
         return redirect('/login')
 
     param['productos'] = model.obtenerTodosLosProductos()
-    return render_template('home.html', param=param)
+    return render_template('index.html', param=param)
 
 
 def catalogo_pagina(param):
