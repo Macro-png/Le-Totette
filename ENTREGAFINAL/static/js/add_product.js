@@ -1,8 +1,5 @@
 // ------------------ SELECCIÓN DE ELEMENTOS ------------------
 var form = document.getElementById("formProducto");
-var btnAgregarColor = document.getElementById("agregarcolor");
-var contenedorColores = document.getElementById("contenedor-colores");
-const MAX_COLORES = 3;
 
 // ------------------ FUNCIONES DE APOYO ------------------
 function mostrarError(input, mensaje) {
@@ -22,21 +19,7 @@ function limpiarError(input) {
   errorText.textContent = "";
   errorText.classList.remove("mensaje-error");
 }
-// Contar colores actuales
-function getCantidadColores() {
-  return contenedorColores.querySelectorAll(".colores").length;
-}
-// Habilitar/Deshabilitar botón "+" según tope
-function actualizarEstadoBotonAgregar() {
-  var cantidad = getCantidadColores();
-  var alMaximo = cantidad >= MAX_COLORES;
 
-  btnAgregarColor.disabled = alMaximo;
-  btnAgregarColor.title = alMaximo 
-    ? "Ya alcanzaste el máximo de " + MAX_COLORES + " colores."
-    : "Agregar un nuevo color";
-    // Operador ternario -> manera corta de if-else -> ? si es true, : si es false
-}
 
 // ------------------ VALIDACIONES INDIVIDUALES ------------------
 
@@ -110,66 +93,9 @@ function validarArchivo() {
   }
 }
 
-function validarColor(input) {
-  var valor = input.value.trim();
-  var regexHex = /^#?([A-Fa-f0-9]{3}|[A-Fa-f0-9]{6})$/; /*Corrobora el formato del hexadecimal*/
-
-  if (valor === "") {
-    mostrarError(input, "El color es obligatorio.");
-    return false;
-  } else if (!regexHex.test(valor)) {
-    mostrarError(input, "Formato inválido. Use código hexadecimal (ej: #FAD6B1).");
-    return false;
-  } else {
-    limpiarError(input);
-    return true;
-  }
-}
-
-// ------------------ AGREGAR NUEVO COLOR ------------------
-function agregarColor() {
-  if (getCantidadColores() >= MAX_COLORES) {
-    // Defensa adicional por si el botón no estuviera deshabilitado
-    alert("Solo puedes tener " + MAX_COLORES + " colores en total.");
-    actualizarEstadoBotonAgregar();
-    return;
-  }
-  var cantidadActual = contenedorColores.querySelectorAll(".colores").length;
-  var nuevoNumero = cantidadActual + 1;
-
-  // Crear nuevo bloque .colores
-  var nuevoDiv = document.createElement("div");
-  nuevoDiv.className = "colores";
-
-  // Label
-  var nuevoLabel = document.createElement("label");
-  nuevoLabel.setAttribute("for", "color" + nuevoNumero);
-  nuevoLabel.textContent = "Código hexadecimal del color " + nuevoNumero;
-
-  // Input
-  var nuevoInput = document.createElement("input");
-  nuevoInput.type = "text";
-  nuevoInput.id = "color" + nuevoNumero;
-  nuevoInput.className = "color";
-  nuevoInput.name = "colores[]";
 
 
-  // Small de error
-  var nuevoSmall = document.createElement("small");
-  nuevoSmall.className = "error-text";
 
-  // Ensamblar
-  nuevoDiv.appendChild(nuevoLabel);
-  nuevoDiv.appendChild(nuevoInput);
-  nuevoDiv.appendChild(nuevoSmall);
-  contenedorColores.appendChild(nuevoDiv);
-
-  // Agregar validación en tiempo real  
-  nuevoInput.addEventListener("input", function() {
-    validarColor(nuevoInput);
-  });
-  actualizarEstadoBotonAgregar();
-}
 
 // ------------------ VALIDACIÓN EN TIEMPO REAL ------------------
 function activarValidaciones() {
@@ -178,11 +104,6 @@ function activarValidaciones() {
   document.getElementById("precio").addEventListener("input", validarPrecio);
   document.getElementById("archivo").addEventListener("change", validarArchivo);
 
-  // Validación para color inicial
-  var primerColor = document.getElementById("color1");
-  primerColor.addEventListener("input", function() {
-    validarColor(primerColor);
-  });
 }
 
 // ------------------ VALIDACIÓN GENERAL DEL FORMULARIO ------------------
@@ -197,13 +118,7 @@ function validarFormulario() {
   if (!validarPrecio()) valido = false;
   if (!validarArchivo()) valido = false;
 
-  // Validar todos los colores
-  var colores = contenedorColores.querySelectorAll("input.color");
-  for (var i = 0; i < colores.length; i++) {
-    if (!validarColor(colores[i])) {
-      valido = false;
-    }
-  }
+  
   var mensaje = document.getElementById("mensaje-general");
 
   if (valido) {
@@ -218,8 +133,6 @@ function validarFormulario() {
 
   
 // ------------------ EVENTOS PRINCIPALES ------------------
-btnAgregarColor.addEventListener("click", agregarColor);
+
 form.addEventListener("submit", validarFormulario);
 activarValidaciones();
-// Ajusta el estado inicial del botón según la cantidad de colores ya presentes en el HTML
-actualizarEstadoBotonAgregar();
