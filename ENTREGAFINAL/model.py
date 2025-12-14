@@ -236,3 +236,14 @@ def obtenerEstadisticas():
     data['categorias'] = selectDB(BASE, sSql)
 
     return data
+
+#-----------------------------------------
+#              CREA TU TOTE
+#-----------------------------------------
+def creatutote(nombre, precio, img, descripcion):
+
+
+
+
+
+    return insertDB(BASE, sSql, (nombre, precio, img, descripcion))

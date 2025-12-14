@@ -149,8 +149,17 @@ def creatote_pagina(param):
 
 def creatote_formulario(param):
     if not requiere_login() or es_admin():
-        return redirect('/login')
-
+        return redirect('/login', param=param)
+    diRequest={}
+    filename= upload_file(diRequest)
+    model.creatutote(
+   
+   
+   
+   
+   
+   
+    )
     # Acá después podés guardar archivo / diseño
     return redirect('/cliente/carrito')
 
