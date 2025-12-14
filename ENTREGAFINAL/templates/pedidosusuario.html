@@ -61,7 +61,51 @@
     <!--FIN CODIGO ALE MENU-->
     <main>
 
-        {% for pedido in pedidos %}
+
+
+{% for pedido in pedidos %}
+<section>
+
+    <div class="pedidos">
+        <ul class="producto">
+            <h2>Pedido #{{ pedido["id"] }}</h2>
+
+            {% for producto in pedido["productos"] %}
+            <li>
+                <i class="fa-solid fa-arrow-right"></i>
+
+                <img
+                    class="product_img"
+                    src="{{ url_for('static', filename='img/' ~ producto["img"]) }}"
+                    alt="{{ producto["nombre"] }}"
+                >
+
+                {{ producto["nombre"] }}
+
+                
+                <!--<button>
+                    <a href="{{ url_for('producto', producto_id=producto["id"]) }}">
+                        Detalles
+                    </a>
+                </button>-->
+            
+            </li>
+            {% endfor %}
+
+        </ul>
+    </div>
+
+    <div class="estado">
+        <h2>Estado</h2>
+        <p class="espera">{{ pedido["estado"] }}</p>
+    </div>
+
+</section>
+{% endfor %}
+
+
+
+        <!--{% for pedido in pedidos %}
             <section>
 
                 <div class="pedidos">
@@ -97,7 +141,7 @@
                 </div>
 
             </section>
-            {% endfor %}
+            {% endfor %}-->
 
 
 <!--      {% for pedido in pedidos %}
