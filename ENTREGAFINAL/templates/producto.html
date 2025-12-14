@@ -82,7 +82,7 @@
                 
 
 
-                    <form action="{{ url_for('carrito_agregar', producto_id=producto.id) }}" method="post">
+                    <form action="{{ url_for('carrito_agregar', cliente_id= session.get(cliente.id), producto_id=producto.id) }}" method="post">
 
                         <button type="submit" class="bot" >
                              Carrito
