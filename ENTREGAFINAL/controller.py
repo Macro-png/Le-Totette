@@ -316,7 +316,7 @@ def guardar_producto(param, diRequest):
 ##########################################################################
 
 def upload_file (diResult) :
-    UPLOAD_EXTENSIONS = ['.jpg', '.png', '.gif']
+    UPLOAD_EXTENSIONS = ['.jpg', '.png', '.jpeg']
     MAX_CONTENT_LENGTH = 1024 * 1024     
     if request.method == 'POST' :         
         for key in request.files.keys():  
