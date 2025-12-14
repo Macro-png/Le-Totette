@@ -54,8 +54,10 @@ def catalogo_pagina(param):
             'descripcion': p[4],
             'ventas': p[5]
         })
+        
+    productos=lista_productos
 
-    return render_template("catalogo.html", productos=lista_productos)    
+    return render_template("catalogo.html", productos)    
 
 
 def home_pagina(param):
