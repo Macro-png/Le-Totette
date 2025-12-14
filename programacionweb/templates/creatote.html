@@ -1,13 +1,15 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Diseña tu Tote</title>
-  <link rel="stylesheet" href="{{ url_for('static', filename='css/creatote.css') }}">
-  <script src="https://kit.fontawesome.com/56579e118f.js" crossorigin="anonymous"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/creatote.css') }}">
+    <!--AGREGO PARA CODIGO ALE MENU-->
+    <script src="https://kit.fontawesome.com/56579e118f.js" crossorigin="anonymous"></script>
 </head>
 <body>
+
     <!--INICIO CODIGO ALE MENU-->
     
     <!-- HEADER -->
@@ -63,7 +65,7 @@
     <div class="flexbox">
         <aside class="imagen" id="preview-wrap">
             <div class="imagenespreview">
-                <img src="../../0. img/tote-removebg-preview.png" id="totevacia">
+                <img src="{{ url_for('static', filename='img/tote_vacia.png') }}" id="totevacia">
                 <img id="preview">
             </div>
         </aside>
@@ -71,10 +73,10 @@
         <main class="descr">
             <h1 class="nombre">Tu tote bag</h1>
             <p class="caract">
-                En este apartado van las caracteristicas de la tote bag. El administrador puede introducir un texto dando informacion sobre el producto seleccionado. No se que mas decir pero aca va la info :)
+                Convierte tu foto favorita, el retrato de tu mascota o ese momento inolvidable en un accesorio único y funcional. Solo tienes que subir tu imagen y nosotros la imprimimos con alta definición en tela de algodón resistente y ecológica. Es el regalo perfecto o el capricho ideal para lucir un estilo 100% tuyo. ¡Diseña la tuya hoy mismo!
             </p>
         <form>
-                <div class="opciones">
+                <!--<div class="opciones">
                     <input type="radio" id="color1" name="color">
                     <label for="color1">
                         <div class="circle col1"></div>
@@ -83,7 +85,7 @@
                     <label for="color2">
                         <div class="circle col2" ></div>
                     </label>
-                </div>
+                </div>-->
 
                 <div>
                     <input type="file" name="archivo" id="archivo" accept=".jpeg">
@@ -97,7 +99,7 @@
 
         </main>
     </div>
-          <!--- BOTONES MOBILE -->
+        <!--- BOTONES MOBILE -->
     <div class="container_MenuBotonesMobile">
         <a href=""><img src="{{ url_for('static', filename='img/whats.png') }}" class="menu_mobile_botones"></a>
 
