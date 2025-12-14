@@ -192,6 +192,13 @@ def obtener_total_carrito(cliente_id):
     fila = selectDB(BASE, sSql, (cliente_id,))
     return fila[0][0] if fila and fila[0][0] else 0
 
+def crear_pedido(cliente_id, total):
+    sSql = """
+    INSERT INTO pedidos (cliente_id, fecha, precio_total, estado)
+    VALUES (%s, CURDATE(), %s, 'espera');
+    """
+    return insertDB(BASE, sSql, (cliente_id, total))
+
 
 
 # ---------------------------------------------------------------------------
