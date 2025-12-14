@@ -80,15 +80,16 @@
                     </label>
                 </div>
                 
-                <form method="POST" action="{{ url_for('carrito_agregar', producto_id=producto['id']) }}">
-                    <div class="botones"> 
-                        <button type="submit" class="bot">
-                            Carrito
-                        </button>
-                    </div>
-                </form>
 
-                <form method="POST" action="{{ url_for('wishlist_agregar', producto_id=producto['id']) }}">
+
+                    <form action="{{ url_for('carrito_agregar', producto_id=producto.id) }}" method="post">
+
+                        <button type="submit" class="bot" >
+                             Carrito
+                        </button>
+                    </form>
+
+                <form method="POST" action="{{ url_for('wishlist_agregar', producto_id=producto.id) }}">
                     <div class="botones"> 
                         <button type="submit" class="bot">
                             Wishlist

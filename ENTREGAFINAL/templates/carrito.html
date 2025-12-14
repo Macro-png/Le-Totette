@@ -80,7 +80,7 @@
                     <p>{{ producto[2] }}</p>
                 </div>
 
-            <!-- AQUÍ ESTABA EL ERROR: Cambia producto['id'] por producto[0] -->
+            <!--  producto[0]es el id y asi... -->
                 <form action="{{ url_for('carrito_eliminar', producto_id=producto[0]) }}" method="post">
                     <button type="submit" class="btn-remove">
                         <i class="fa-solid fa-trash"></i>
