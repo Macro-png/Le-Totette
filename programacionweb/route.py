@@ -52,10 +52,10 @@ def route(app):
     # HOME / CATALOGO / CREATOTE
     # -----------------------------------------------------------------
     @app.route("/cliente", methods=["GET"])
-    @app.route("/cliente/home", methods=["GET"])
-    def home():
+    @app.route("/cliente/index", methods=["GET"])
+    def index():
         param = {}
-        return home_pagina(param)
+        return index_pagina(param)
 
     @app.route("/cliente/catalogo", methods=["GET"])
     def catalogo():

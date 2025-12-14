@@ -1,9 +1,8 @@
 from flask import render_template, redirect, request, session
 import model
 
-
 # ---------------------------------------------------------------------------
-# helpers
+# HELPERS
 # ---------------------------------------------------------------------------
 
 def requiere_login():
@@ -20,7 +19,7 @@ def cerrar_sesion():
 
 
 # ---------------------------------------------------------------------------
-# auth
+# AUTH
 # ---------------------------------------------------------------------------
 
 def login_pagina(param):
@@ -48,9 +47,9 @@ def ingreso_usuario_valido(param):
         if result['tipo'] == 'admin':
             return redirect('/admin/estadisticas')
 
-        return redirect('/cliente/home')
+        return redirect('/cliente/index')
 
-    param['error'] = 'mail o contraseña incorrectos'
+    param['error'] = 'Mail o contraseña incorrectos'
     return render_template('login.html', param=param)
 
 
@@ -58,20 +57,20 @@ def signup(param):
     if model.crearCliente(request.form):
         return redirect('/login')
 
-    param['error'] = 'error al crear el usuario'
+    param['error'] = 'Error al crear el usuario'
     return render_template('signup.html', param=param)
 
 
 # ---------------------------------------------------------------------------
-# cliente
+# CLIENTE
 # ---------------------------------------------------------------------------
 
-def home_pagina(param):
+def index_pagina(param):
     if not requiere_login() or es_admin():
         return redirect('/login')
 
     param['productos'] = model.obtenerTodosLosProductos()
-    return render_template('home.html', param=param)
+    return render_template('index.html', param=param)
 
 
 def catalogo_pagina(param):
@@ -86,9 +85,36 @@ def producto_pagina(param, producto_id):
     if not requiere_login() or es_admin():
         return redirect('/login')
 
-    param['producto'] = model.obtenerProductoPorId(producto_id)
+    producto = model.obtenerProductoPorId(producto_id)
+    if not producto:
+        return redirect('/cliente/index')
+
+    param['producto'] = producto
     return render_template('producto.html', param=param)
 
+
+# ---------------------------------------------------------------------------
+# CREATOTE
+# ---------------------------------------------------------------------------
+
+def creatote_pagina(param):
+    if not requiere_login() or es_admin():
+        return redirect('/login')
+
+    return render_template('creatote.html', param=param)
+
+
+def creatote_formulario(param):
+    if not requiere_login() or es_admin():
+        return redirect('/login')
+
+    # Acá después podés guardar archivo / diseño
+    return redirect('/cliente/carrito')
+
+
+# ---------------------------------------------------------------------------
+# CARRITO
+# ---------------------------------------------------------------------------
 
 def ver_carrito(param):
     if not requiere_login() or es_admin():
@@ -96,6 +122,7 @@ def ver_carrito(param):
 
     cliente_id = session['usuario']['id']
     param['carrito'] = model.obtener_carrito(cliente_id)
+    param['total'] = model.obtener_total_carrito(cliente_id)
     return render_template('carrito.html', param=param)
 
 
@@ -126,6 +153,10 @@ def vaciar_carrito(param):
     return redirect('/cliente/carrito')
 
 
+# ---------------------------------------------------------------------------
+# WISHLIST
+# ---------------------------------------------------------------------------
+
 def view_wishlist(param):
     if not requiere_login() or es_admin():
         return redirect('/login')
@@ -153,6 +184,10 @@ def eliminar_wishlist(param, producto_id):
     return redirect('/cliente/wishlist')
 
 
+# ---------------------------------------------------------------------------
+# PEDIDOS CLIENTE
+# ---------------------------------------------------------------------------
+
 def pedidos_usuario(param):
     if not requiere_login() or es_admin():
         return redirect('/login')
@@ -170,7 +205,7 @@ def mi_cuenta_pagina(param):
 
 
 # ---------------------------------------------------------------------------
-# admin
+# ADMIN
 # ---------------------------------------------------------------------------
 
 def admin_estadisticas_pagina(param):
@@ -209,6 +244,10 @@ def guardar_producto(param):
     if not es_admin():
         return redirect('/login')
 
-    # depende de tu model, acá solo queda el hook
-    # model.crear_producto(request.form)
-    return redirect('/admin/catalogo')
+    nombre = request.form.get('nombre')
+    precio = request.form.get('precio')
+    img = request.form.get('img')
+    descripcion = request.form.get('descripcion')
+
+    model.crear_producto(nombre, precio, img, descripcion)
+    return redirect('/admin/estadisticas')
