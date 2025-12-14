@@ -1,4 +1,4 @@
-from flask import render_template, redirect, request, session
+from flask import render_template, redirect, request, session, url_for
 import model
 
 # ---------------------------------------------------------------------------
@@ -53,12 +53,37 @@ def ingreso_usuario_valido(param):
     return render_template('login.html', param=param)
 
 
-def signup(param):
-    if model.crearCliente(request.form):
-        return redirect('/login')
 
-    param['error'] = 'Error al crear el usuario'
-    return render_template('signup.html', param=param)
+def signup(param):
+    nombre = request.form.get("nombre")
+    mail = request.form.get("mail")
+    contrasena = request.form.get("contrasena")
+    verificar = request.form.get("verificarcontrasena")
+
+    # Validaciones básicas
+    if not nombre or not mail or not contrasena:
+        param["error"] = "Faltan datos"
+        return render_template("signup.html", **param)
+
+    if contrasena != verificar:
+        param["error"] = "Las contraseñas no coinciden"
+        return render_template("signup.html", **param)
+
+    if len(contrasena) < 6:
+        param["error"] = "Contraseña muy corta"
+        return render_template("signup.html", **param)
+
+    data = {
+        "nombre": nombre,
+        "mail": mail,
+        "contrasena": contrasena
+    }
+
+    if model.crearCliente(data):
+        return redirect(url_for("login"))
+
+    param["error"] = "No se pudo crear la cuenta"
+    return render_template("signup.html", **param)
 
 
 # ---------------------------------------------------------------------------
