@@ -248,6 +248,46 @@ def obtener_pedidos_cliente(cliente_id):
     """
     return selectDB(BASE, sSql, (cliente_id,))
 
+
+def obtener_pedidos_cliente_con_productos(cliente_id):
+    sSql = """
+    SELECT
+        p.id,
+        p.fecha,
+        p.estado,
+        pr.id,
+        pr.nombre,
+        pr.img
+    FROM pedidos p
+    LEFT JOIN detalle_pedido dp ON dp.pedidos_id = p.id
+    LEFT JOIN productos pr ON pr.id = dp.productos_id
+    WHERE p.cliente_id = %s
+    ORDER BY p.id;
+    """
+    return selectDB(BASE, sSql, (cliente_id,))
+
+
+
+#def obtener_pedidos_cliente_con_productos(cliente_id):
+    sSql = """
+    SELECT
+        p.id AS pedido_id,
+        p.fecha,
+        p.estado,
+        pr.id AS producto_id,
+        pr.nombre,
+        pr.img
+    FROM pedidos p
+    JOIN detalle_pedido dp ON dp.pedidos_id = p.id
+    JOIN productos pr ON pr.id = dp.productos_id
+    WHERE p.cliente_id = %s
+    ORDER BY p.id;
+    """
+    return selectDB(BASE, sSql, (cliente_id,))
+
+
+
+
 def obtener_pedidos_admin():
     sSql = """
     SELECT p.id, c.nombre, p.fecha, p.precio_total, p.estado
