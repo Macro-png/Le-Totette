@@ -1,4 +1,4 @@
-from flask import request
+from flask import request, session, redirect
 from controller import *
 
 def route(app):
@@ -30,10 +30,10 @@ def route(app):
     # CLIENTE
     # -----------------------------------------------------------------
 
-    @app.route("/cliente/home", methods=["GET"])
-    def home():
+    @app.route("/cliente/index", methods=["GET"])
+    def index():
         param = {}
-        return home_pagina(param)
+        return index_pagina(param)
 
     @app.route("/cliente/catalogo", methods=["GET"])
     def catalogo():
@@ -44,6 +44,13 @@ def route(app):
     def producto(producto_id):
         param = {}
         return producto_pagina(param, producto_id)
+
+    @app.route("/cliente/creatote", methods=["GET", "POST"])
+    def creatote():
+        param = {}
+        if request.method == "GET":
+            return creatote_pagina(param)
+        return creatote_formulario(param)
 
     # -------------------- CARRITO --------------------
 
@@ -130,4 +137,4 @@ def route(app):
     def not_found(e):
         if 'usuario' in session and session['usuario']['tipo'] == 'admin':
             return redirect('/admin/estadisticas')
-        return redirect('/cliente/home')
+        return redirect('/cliente/index')

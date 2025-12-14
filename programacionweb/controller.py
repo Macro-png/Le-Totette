@@ -60,7 +60,7 @@ def catalogo_pagina(param):
     return render_template("catalogo.html", productos)    
 
 
-def home_pagina(param):
+def index_pagina(param):
     if not requiere_login():
         return redirect('/login')
 
@@ -231,7 +231,7 @@ def ingresoUsuarioValido(param):
         if result['tipo'] == 'admin':
             return redirect('/admin/estadisticas')
 
-        return redirect('/cliente/home')
+        return redirect('/cliente/index')
 
     param['error'] = "Mail o contraseña incorrectos"
     return render_template("login.html", param=param)
