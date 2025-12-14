@@ -154,7 +154,7 @@ def route(app):
     def pedido_confirmar():
         param = {}
         return confirmar_pedido(param)
-
+    
 
     @app.route("/cliente/miCuenta", methods=["GET"])
     def miCuenta():
