@@ -274,7 +274,7 @@ def add_product_pagina(param):
 
     return render_template('add_product.html', param=param)
 
-def guardar_producto(param):
+def guardar_producto(param, diRequest):
     if not es_admin():
         return redirect('/login')
 
@@ -282,27 +282,18 @@ def guardar_producto(param):
     descripcion = request.form.get('descripcion')
     precio = request.form.get('precio')
 
-    if not nombre or not precio:
-        param['error'] = 'Faltan datos'
-        return render_template('add_product.html', param=param)
-
     # subir imagen
-    filename, error = subir_imagen()
-    if error:
-        param['error'] = error
-        return render_template('add_product.html', param=param)
+    #diResult = getRequest(diRequest)
+    filename= upload_file(diRequest)
 
     # crear producto
-    producto_id = model.crear_producto(
+    model.crear_producto(
         nombre=nombre,
         precio=precio,
         img=filename,
         descripcion=descripcion
     )
 
-    if not producto_id:
-        param['error'] = 'No se pudo guardar el producto'
-        return render_template('add_product.html', param=param)
 
     return redirect('/admin/add_product')
 
@@ -311,21 +302,62 @@ def guardar_producto(param):
 #                MANEJO DE  SUBIDA DE ARCHIVOS  
 ##########################################################################
 
-UPLOAD_FOLDER = 'static/img'
-UPLOAD_EXTENSIONS = ['.jpg', '.png', '.gif']
+def upload_file (diResult) :
+    UPLOAD_EXTENSIONS = ['.jpg', '.png', '.gif']
+    MAX_CONTENT_LENGTH = 1024 * 1024     
+    if request.method == 'POST' :         
+        for key in request.files.keys():  
+            diResult[key]={} 
+            diResult[key]['file_error']=False            
+            
+            f = request.files[key] 
+            if f.filename!="":     
+                #filename_secure = secure_filename(f.filename)
+                file_extension=str(os.path.splitext(f.filename)[1])
+                filename_unique = uuid4().__str__() + file_extension
+                path_filename=os.path.join( config['upload_folder'] , filename_unique)
+                # Validaciones
+                if file_extension not in UPLOAD_EXTENSIONS:
+                    diResult[key]['file_error']=True
+                    diResult[key]['file_msg']='Error: No se admite subir archivos con extension '+file_extension
+                if os.path.exists(path_filename):
+                    diResult[key]['file_error']=True
+                    diResult[key]['file_msg']='Error: el archivo ya existe.'
+                    diResult[key]['file_name']=f.filename
+                try:
+                    if not diResult[key]['file_error']:
+                        diResult[key]['file_error']=True
+                        diResult[key]['file_msg']='Se ha producido un error.'
 
-def subir_imagen():
-    archivo = request.files.get('img')
-
-    if not archivo or archivo.filename == '':
-        return None, 'No se subió ninguna imagen'
-
-    ext = os.path.splitext(archivo.filename)[1].lower()
-    if ext not in UPLOAD_EXTENSIONS:
-        return None, 'Formato de imagen no permitido'
-
-    filename = f"{uuid4()}{ext}"
-    ruta = os.path.join(UPLOAD_FOLDER, filename)
-    archivo.save(ruta)
-
-    return filename, None
+                        f.save(path_filename)   
+                        diResult[key]['file_error']=False
+                        diResult[key]['file_name_new']=filename_unique
+                        diResult[key]['file_name']=f.filename
+                        diResult[key]['file_msg']='OK. Archivo cargado exitosamente'
+                    return filename_unique
+ 
+                except:
+                        pass
+            else:
+                diResult[key]={} # viene vacio el input del file upload
+                
+def getRequest(diResult):
+    if request.method=='POST':
+        for name in request.form.to_dict().keys():
+            li=request.form.getlist(name)
+            if len(li)>1:
+                diResult[name]=request.form.getlist(name)
+            elif len(li)==1:
+                diResult[name]=li[0]
+            else:
+                diResult[name]=""
+    elif request.method=='GET':  
+        for name in request.args.to_dict().keys():
+            li=request.args.getlist(name)
+            if len(li)>1:
+                diResult[name]=request.args.getlist(name)
+            elif len(li)==1:
+                diResult[name]=li[0]
+            else:
+                diResult[name]=""     
+ 

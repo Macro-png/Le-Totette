@@ -127,7 +127,9 @@ def route(app):
         param = {}
         if request.method == "GET":
             return add_product_pagina(param)
-        return guardar_producto(param)
+        else:
+            diRequest={}
+            return guardar_producto(param, diRequest)
 
     # -----------------------------------------------------------------
     # NOT FOUND
