@@ -145,6 +145,11 @@ def route(app):
     # -------------------- PEDIDOS CLIENTE --------------------
 
     
+    @app.route("/cliente/pedido", methods=["GET", "POST"])
+    def pedidosusuario_pagina():
+        param = {}
+        return pedidos_usuario(param)
+    
     @app.route("/cliente/pedido/confirmar", methods=["POST"])
     def pedido_confirmar():
         param = {}

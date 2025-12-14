@@ -65,17 +65,17 @@
                 <div class="pedidos">
                     <ul class="producto">
                         <h2>Pedido #{{ pedido[0] }}</h2>
-                        {% if pedido|length > 0 %}
+                        
                             <li>
                                 <i class="fa-solid fa-arrow-right"></i>
                                 Pedido realizado el {{ pedido[2] }} - Total: {{ pedido[3] }}
                             </li>
-                        {% endif %}
+                        
                     </ul>
                 </div>
                 <div class="estado">
                     <h2>Estado</h2>
-                    <p class="espera">{{ pedido[4] }}</p>
+                    <p class="{{ pedido[4] }}">{{ pedido[4] }}</p>
                 </div>
             </section>
         {% endfor %}
