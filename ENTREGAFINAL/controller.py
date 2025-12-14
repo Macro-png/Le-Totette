@@ -133,7 +133,7 @@ def producto_pagina(param, producto_id):
         return redirect('/cliente/home')
 
     param['producto'] = producto
-    return render_template('producto.html', param=param)
+    return render_template('producto.html', **param)
 
 
 # ---------------------------------------------------------------------------

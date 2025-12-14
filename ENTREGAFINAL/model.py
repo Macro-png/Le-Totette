@@ -92,7 +92,18 @@ def obtenerProductoPorId(pid):
     WHERE id = %s;
     """
     fila = selectDB(BASE, sSql, (pid,))
-    return fila[0] if fila else None
+    if not fila:
+        return None
+
+    fila = fila[0]
+    return {
+        'id': fila[0],
+        'nombre': fila[1],
+        'precio_unidad': fila[2],
+        'img': fila[3],
+        'descripcion': fila[4]
+    }
+
 
 def obtenerProductosporFiltros(filtro):
     sSql = """
