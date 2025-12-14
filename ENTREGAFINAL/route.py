@@ -98,10 +98,11 @@ def route(app):
 
     # -------------------- WISHLIST --------------------
 
-    @app.route("/cliente/wishlist", methods=["GET"])
+    @app.route("/cliente/wishlist")
     def wishlist():
-        param={}
+        param = {}
         return view_wishlist(param)
+
 
 
     @app.route("/cliente/wishlist/agregar/<int:producto_id>", methods=["POST"])

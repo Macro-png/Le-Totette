@@ -61,41 +61,21 @@
     
     <!--FIN CODIGO ALE MENU-->
   <main>
-    <div class="wishlist-items">
-    <h1>Mi Wishlist</h1>
+    {% for producto in param.productos %}
+    <div class="products">
 
-    {% for producto in productos %}
-    <div class="wishlist-item">
-        <!-- producto = (id, nombre, precio, img) -->
-        <img src="{{ url_for('static', filename='uploads/' + producto[3]) }}" alt="{{ producto[1] }}">
+        <img src="{{ url_for('static', filename='uploads/' + producto[3]) }}">
+        <h4>{{ producto[1] }}</h4>
+        <p>$ {{ producto[2] }}</p>
 
-        <div class="item-info">
-            <h4>{{ producto[1] }}</h4>
-        </div>
+        <form action="{{ url_for('wishlist_eliminar', producto_id=producto[0]) }}" method="post">
+            <button type="submit">
+                <i class="fa-solid fa-trash"></i>
+            </button>
+        </form>
 
-        <div class="item-price">
-            <p>$ {{ producto[2] }}</p>
-        </div>
-
-        <div class="item-actions">
-            <!-- ELIMINAR DE WISHLIST -->
-            <form action="{{ url_for('wishlist_eliminar', producto_id=producto[0]) }}" method="post">
-                <button type="submit" class="btn-remove">
-                    <i class="fa-solid fa-trash"></i>
-                </button>
-            </form>
-
-            <!-- MOVER A CARRITO -->
-            <form action="{{ url_for('carrito_agregar', producto_id=producto[0]) }}" method="post">
-                <button type="submit" class="btn-add-cart">
-                    <i class="fa-solid fa-cart-shopping"></i>
-                </button>
-            </form>
-        </div>
     </div>
     {% endfor %}
-</div>
-
   </main>
         <!--- BOTONES MOBILE -->
     <div class="container_MenuBotonesMobile">
