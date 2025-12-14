@@ -358,7 +358,8 @@ def eliminar_wishlist(param, producto_id):
         return redirect('/login')
 
     cliente_id = session['usuario']['id']
-    model.eliminar_wishlist(cliente_id, producto_id)
+    model.eliminar_producto_wishlist(cliente_id, producto_id)
+
     return redirect('/cliente/wishlist')
 
 

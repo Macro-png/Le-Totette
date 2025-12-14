@@ -112,15 +112,8 @@ def route(app):
 
     @app.route("/cliente/wishlist/eliminar/<int:producto_id>", methods=["POST"])
     def wishlist_eliminar(producto_id):
-
-        if "cliente_id" not in session:
-            return redirect(url_for("login"))
-
-        cliente_id = session["cliente_id"]
-
-        model.eliminar_producto_wishlist(cliente_id, producto_id)
-
-        return redirect(url_for("wishlist"))
+        param = {}
+        return eliminar_wishlist(param, producto_id)
 
 
     # -------------------- PEDIDOS CLIENTE --------------------

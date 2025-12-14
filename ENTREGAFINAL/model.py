@@ -190,9 +190,9 @@ def obtener_wishlist(cliente_id):
 def eliminar_producto_wishlist(cliente_id, producto_id):
     sSql = """
     DELETE FROM wishlist
-    WHERE clientes_id = %s AND productos_id = %s;
+    WHERE cliente_id = %s AND producto_id = %s;
     """
-    return insertDB(BASE, sSql, (cliente_id, producto_id)) == 1
+    return deleteDB(BASE, sSql, (cliente_id, producto_id)) > 0
 
 
 # ---------------------------------------------------------------------------
