@@ -84,6 +84,25 @@ def route(app):
         agregar_producto_carrito(cliente_id, producto_id)
 
         return redirect(url_for("carrito"))
+    
+    @app.route('/carrito/agregar/<int:producto_id>', methods=['POST'])
+    def carrito_agregar(producto_id):
+        # 1. Validar sesión
+        if 'usuario' not in session:
+            return redirect(url_for('login')) # Ajusta al nombre de tu ruta de login
+    
+        if es_admin:
+            return redirect("/admin")
+
+    # 2. Obtener ID del cliente desde la sesión
+        cliente_id = session['usuario']['id']
+
+    # 3. Llamar al modelo para insertar en BD
+        exito = model.agregar_producto_carrito(cliente_id, producto_id)
+        if exito:
+            return redirect(url_for('carrito'))
+        else:
+            return "error al agregar al carrito"
 
 
     @app.route("/cliente/carrito/eliminar/<int:producto_id>", methods=["POST"])
