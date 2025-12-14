@@ -151,6 +151,8 @@ function agregarColor() {
   nuevoInput.type = "text";
   nuevoInput.id = "color" + nuevoNumero;
   nuevoInput.className = "color";
+  nuevoInput.name = "colores[]";
+
 
   // Small de error
   var nuevoSmall = document.createElement("small");
