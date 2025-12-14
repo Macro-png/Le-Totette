@@ -181,17 +181,18 @@ def obtener_wishlist(cliente_id):
     sSql = """
     SELECT p.id, p.nombre, p.precio_unidad, p.img
     FROM wishlist w
-    JOIN productos p ON p.id = w.producto_id
-    WHERE w.cliente_id = %s;
+    JOIN productos p ON p.id = w.productos_id
+    WHERE w.clientes_id = %s;
     """
     return selectDB(BASE, sSql, (cliente_id,))
 
-def eliminar_wishlist(cliente_id, producto_id):
+
+def eliminar_producto_wishlist(cliente_id, producto_id):
     sSql = """
     DELETE FROM wishlist
-    WHERE cliente_id = %s AND producto_id = %s;
+    WHERE clientes_id = %s AND productos_id = %s;
     """
-    return deleteDB(BASE, sSql, (cliente_id, producto_id)) > 0
+    return insertDB(BASE, sSql, (cliente_id, producto_id)) == 1
 
 
 # ---------------------------------------------------------------------------

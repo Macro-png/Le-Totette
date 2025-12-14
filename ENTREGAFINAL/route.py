@@ -100,8 +100,19 @@ def route(app):
 
     @app.route("/cliente/wishlist", methods=["GET"])
     def wishlist():
-        param = {}
-        return view_wishlist(param)
+
+        if "cliente_id" not in session:
+            return redirect(url_for("login"))
+
+        cliente_id = session["cliente_id"]
+
+        productos = model.obtener_wishlist(cliente_id)
+
+        return render_template(
+            "wishlist.html",
+            productos=productos
+        )
+
 
     @app.route("/cliente/wishlist/agregar/<int:producto_id>", methods=["POST"])
     def wishlist_agregar(producto_id):
@@ -110,8 +121,16 @@ def route(app):
 
     @app.route("/cliente/wishlist/eliminar/<int:producto_id>", methods=["POST"])
     def wishlist_eliminar(producto_id):
-        param = {}
-        return eliminar_wishlist(param, producto_id)
+
+        if "cliente_id" not in session:
+            return redirect(url_for("login"))
+
+        cliente_id = session["cliente_id"]
+
+        model.eliminar_producto_wishlist(cliente_id, producto_id)
+
+        return redirect(url_for("wishlist"))
+
 
     # -------------------- PEDIDOS CLIENTE --------------------
 
