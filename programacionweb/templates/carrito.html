@@ -81,10 +81,14 @@
 
             
             <form action="{{ url_for('remove_from_cart') }}" method="post">
-               <button class="btn-remove">
-                  <i class="fa-solid fa-trash"></i>
+      
+                <input type="hidden" name="producto_id" value="{{ producto['id'] }}"> 
+    
+                <button type="submit" class="btn-remove">
+                    <i class="fa-solid fa-trash"></i>
                 </button>
             </form>
+
           </div>
         {% endfor %}
       </section>

@@ -68,3 +68,20 @@
       // Hace visible el elemento <img>, que estaba oculto por defecto
     });
   })();
+
+  (function() {
+    // Seleccionamos el formulario y la imagen de preview
+    var formulario = document.querySelector('form');
+    var imgPreview = document.getElementById('preview');
+
+    // Creamos la función que limpia la imagen
+    function limpiarPreview() {
+        imgPreview.style.display = 'none';
+        imgPreview.src = '';
+    }
+
+    // Escuchamos el evento 'reset' del formulario
+    if (formulario) {
+        formulario.addEventListener('reset', limpiarPreview);
+    }
+})();
