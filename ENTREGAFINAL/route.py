@@ -98,8 +98,8 @@ def route(app):
         param = {}
         return pedidos_usuario(param)
 
-    @app.route("/cliente/micuenta", methods=["GET"])
-    def micuenta():
+    @app.route("/cliente/miCuenta", methods=["GET"])
+    def miCuenta():
         param = {}
         return mi_cuenta_pagina(param)
 
