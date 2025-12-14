@@ -60,22 +60,27 @@
     
     
     <!--FIN CODIGO ALE MENU-->
+    <h1>Mi Wishtlist</h1>
+  <aside>
+  </aside>
   <main>
+    <section class="products">
     {% for producto in param.productos %}
-    <div class="products">
+        <div class="product">
 
-        <img src="{{ url_for('static', filename='uploads/' + producto[3]) }}">
-        <h4>{{ producto[1] }}</h4>
-        <p>$ {{ producto[2] }}</p>
+            <img src="{{ url_for('static', filename='uploads/' + producto[3]) }}">
+            <h4>{{ producto[1] }}</h4>
+            <p>$ {{ producto[2] }}</p>
 
-        <form action="{{ url_for('wishlist_eliminar', producto_id=producto[0]) }}" method="post">
-            <button type="submit">
-                <i class="fa-solid fa-trash"></i>
-            </button>
-        </form>
+            <form action="{{ url_for('wishlist_eliminar', producto_id=producto[0]) }}" method="post">
+                <button type="submit">
+                    <i class="fa-solid fa-trash"></i>
+                </button>
+            </form>
 
-    </div>
-    {% endfor %}
+        </div>
+        {% endfor %}
+    </section>
   </main>
         <!--- BOTONES MOBILE -->
     <div class="container_MenuBotonesMobile">
