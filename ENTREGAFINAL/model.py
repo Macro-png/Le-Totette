@@ -151,12 +151,29 @@ def obtener_carrito(cliente_id):
 
 
 def eliminar_producto_carrito(cliente_id, producto_id):
-    sSql = """
-    DELETE FROM carrito
-    WHERE clientes_id = %s AND productos_id = %s
-    LIMIT 1;
+    # 1. Intentar bajar cantidad
+    sSql_update = """
+    UPDATE carrito
+    SET cantidad = cantidad - 1
+    WHERE clientes_id = %s
+      AND productos_id = %s
+      AND cantidad > 1;
     """
-    return deleteDB(BASE, sSql, (cliente_id, producto_id)) > 0
+    filas = updateDB(BASE, sSql_update, (cliente_id, producto_id))
+
+    # 2. Si no se actualizó nada, borrar
+    if filas == 0:
+        sSql_delete = """
+        DELETE FROM carrito
+        WHERE clientes_id = %s
+          AND productos_id = %s
+          AND cantidad = 1
+        LIMIT 1;
+        """
+        return deleteDB(BASE, sSql_delete, (cliente_id, producto_id)) > 0
+
+    return True
+
 
 def vaciar_carrito(cliente_id):
     sSql = """
