@@ -93,7 +93,7 @@ def route(app):
     # -----------------------------------------------------------------
     # CARRITO
     # -----------------------------------------------------------------
-    @app.route("/cliente/carrito", methods=["GET", "POST"], endpoint="ver_carrito")
+    @app.route("/cliente/carrito", methods=["GET", "POST"])
     def carrito():
         param = {}
     
@@ -155,7 +155,7 @@ def route(app):
         param = {}
         return estadisticas_pagina(param)
 
-    @app.route("/admin/add_product", methods=["GET","POST"], endpoint="add_product")
+    @app.route("/admin/add_product", methods=["GET","POST"])
     def add_product():
         param = {}
         if request.method == "GET":
@@ -163,7 +163,7 @@ def route(app):
         else:
             return guardar_producto(param)
 
-    @app.route("/admin/mod_product", methods=["GET","POST"], endpoint="add_product")
+    @app.route("/admin/mod_product", methods=["GET","POST"])
     def add_product():
         param = {}
         if request.method == "GET":
@@ -173,7 +173,7 @@ def route(app):
     # -----------------------------------------------------------------
     # MI CUENTA / EDITAR
     # -----------------------------------------------------------------
-    @app.route("/cliente/miCuenta", methods=["GET"], endpoint="mi_cuenta")
+    @app.route("/cliente/miCuenta", methods=["GET"])
     def miCuenta():
         param = {}
         return miCuenta_pagina(param)
