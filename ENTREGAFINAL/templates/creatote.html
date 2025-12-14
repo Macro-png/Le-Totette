@@ -75,7 +75,7 @@
             <p class="caract">
                 Convierte tu foto favorita, el retrato de tu mascota o ese momento inolvidable en un accesorio único y funcional. Solo tienes que subir tu imagen y nosotros la imprimimos con alta definición en tela de algodón resistente y ecológica. Es el regalo perfecto o el capricho ideal para lucir un estilo 100% tuyo. ¡Diseña la tuya hoy mismo!
             </p>
-        <form>
+        <form action="{{ url_for('creatote') }}" method="POST" enctype="multipart/form-data">
                 <!--<div class="opciones">
                     <input type="radio" id="color1" name="color">
                     <label for="color1">
@@ -88,11 +88,11 @@
                 </div>-->
 
                 <div>
-                    <input type="file" name="archivo" id="archivo" accept=".jpeg">
+                    <input type="file" name="archivo" id="archivo" accept=".jpg,.jpeg,.png" required>
                 </div>
 
                 <div class="botones"> 
-                    <input type="button" value="Carrito" class="bot">
+                    <input type="submit" value="Carrito" class="bot" >
                     <input type="reset" value="Reset" class="bot">
                 </div>
             </form>
