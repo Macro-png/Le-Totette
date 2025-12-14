@@ -335,8 +335,10 @@ def vaciar_carrito(param):
 # ---------------------------------------------------------------------------
 
 def view_wishlist(param):
-    if not requiere_login() or es_admin():
+    if not requiere_login():
         return redirect('/login')
+    if es_admin():
+        return redirect("/admin")
 
     cliente_id = session['usuario']['id']
     param['wishlist'] = model.obtener_wishlist(cliente_id)

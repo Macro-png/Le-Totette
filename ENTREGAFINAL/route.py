@@ -100,18 +100,8 @@ def route(app):
 
     @app.route("/cliente/wishlist", methods=["GET"])
     def wishlist():
-
-        if "cliente_id" not in session:
-            return redirect(url_for("login"))
-
-        cliente_id = session["cliente_id"]
-
-        productos = model.obtener_wishlist(cliente_id)
-
-        return render_template(
-            "wishlist.html",
-            productos=productos
-        )
+        param={}
+        return view_wishlist(param)
 
 
     @app.route("/cliente/wishlist/agregar/<int:producto_id>", methods=["POST"])
