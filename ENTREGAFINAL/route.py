@@ -73,17 +73,17 @@ def route(app):
 
     from flask import session, redirect, url_for, abort
 
-    @app.route("/cliente/carrito/agregar/<int:producto_id>", methods=["POST"])
-    def carrito_agregar(producto_id):
+    #@app.route("/cliente/carrito/agregar/<int:producto_id>", methods=["POST"])
+    #def carrito_agregar(producto_id):
 
-        if "cliente_id" not in session:
-            return redirect(url_for("login"))
+        #if "cliente_id" not in session:
+            #return redirect(url_for("login"))
 
-        cliente_id = session["cliente_id"]
+        #cliente_id = session["cliente_id"]
 
-        agregar_producto_carrito(cliente_id, producto_id)
+        #agregar_producto_carrito(cliente_id, producto_id)
 
-        return redirect(url_for("carrito"))
+        #return redirect(url_for("carrito"))
     
     @app.route('/carrito/agregar/<int:producto_id>', methods=['POST'])
     def carrito_agregar(producto_id):
