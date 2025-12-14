@@ -197,7 +197,7 @@ def pedidos_usuario(param):
     return render_template('pedidos.html', param=param)
 
 
-def mi_cuenta_pagina(param):
+def miCuenta_pagina(param):
     if not requiere_login() or es_admin():
         return redirect('/login')
 
