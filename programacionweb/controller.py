@@ -68,7 +68,7 @@ def home_pagina(param):
     return render_template("index.html")
     
     
-def view_carrito(param):
+def ver_carrito(param):
     if not requiere_login():
         return redirect('/login')
     if es_admin():

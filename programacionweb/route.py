@@ -98,7 +98,7 @@ def route(app):
         param = {}
     
         if request.method == "GET":
-            return view_carrito(param)
+            return ver_carrito(param)
     
         # POST
         accion = request.form.get("accion")
