@@ -269,15 +269,32 @@ def add_product_pagina(param):
 
     return render_template('add_product.html', param=param)
 
-
 def guardar_producto(param):
     if not es_admin():
         return redirect('/login')
 
     nombre = request.form.get('nombre')
-    precio = request.form.get('precio')
-    img = request.form.get('img')
     descripcion = request.form.get('descripcion')
+    precio = request.form.get('precio')
+    archivo = request.files.get('img')
 
-    model.crear_producto(nombre, precio, img, descripcion)
-    return redirect('/admin/estadisticas')
+    if not nombre or not precio or not archivo:
+        param['error'] = 'Faltan datos obligatorios'
+        return render_template('add_product.html', param=param)
+
+    filename = archivo.filename
+    ruta = f"static/uploads/{filename}"
+    archivo.save(ruta)
+
+    producto_id = model.crear_producto(
+        nombre,
+        precio,
+        filename,
+        descripcion
+    )
+
+    if not producto_id:
+        param['error'] = 'No se pudo crear el producto'
+        return render_template('add_product.html', param=param)
+
+    return redirect('/admin/add_product')

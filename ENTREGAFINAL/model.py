@@ -47,7 +47,7 @@ def crear_producto(nombre, precio, img, descripcion):
     INSERT INTO productos (nombre, precio_unidad, img, descripcion, ventas)
     VALUES (%s, %s, %s, %s, 0);
     """
-    return insertDB(BASE, sSql, (nombre, precio, img, descripcion)) == 1
+    return insertDB(BASE, sSql, (nombre, precio, img, descripcion))
 
 def actualizar_producto(pid, nombre, precio, img, descripcion):
     sSql = """

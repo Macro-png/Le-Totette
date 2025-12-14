@@ -35,15 +35,15 @@
 
         
         <main>
-            <form class="descr" id="formProducto">
+            <form class="descr" id="formProducto" action="{{ url_for('add_product') }}" method="POST" enctype="multipart/form-data">
                 <div>
                     <label for="nombre" class="nombre">Nombre del Producto:</label>
-                    <input type="text" id="nombre" class="nombre">
+                    <input type="text" id="nombre" class="nombre" name="nombre">
                     <small class="error-text"></small>
                 </div>
                 <div> 
                     <label for="caract" class="caract">Caracteristicas:</label>
-                    <textarea type="text" id="caract" class="caract"> </textarea>
+                    <textarea type="text" id="caract" class="caract" name="descripcion"> </textarea>
                     <small class="error-text"></small>
                 </div>
                 <div class="menucolor">
@@ -60,12 +60,12 @@
                 </div>
 
                 <div class="archivo">
-                    <input type="file" name="archivo" id="archivo">
+                    <input type="file" name="archivo" id="archivo" name="img">
                     <small class="error-text"></small>
                 </div>
                 <div>
                     <label for="precio">Precio</label>
-                    <input type="text" id="precio" class="precio">
+                    <input type="text" id="precio" class="precio" name="precio">
                     <small class="error-text"></small>
                 </div>
                 <!-- Mensaje general de validación -->
