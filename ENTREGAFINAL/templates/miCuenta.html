@@ -8,7 +8,7 @@
     <script src="https://kit.fontawesome.com/56579e118f.js" crossorigin="anonymous"></script>
 </head>
 <body>
-        <!--INICIO CODIGO ALE MENU-->
+    <!--INICIO CODIGO ALE MENU-->
     
     <!-- HEADER -->
     <header class="header">
@@ -56,18 +56,7 @@
     </div>
     </header>
 
-        <!--- BOTONES MOBILE -->
-    <div class="container_MenuBotonesMobile">
-        <a href=""><img src="{{ url_for('static', filename='img/whats.png') }}" class="menu_mobile_botones"></a>
-
-       
-        <a href="{{ url_for('carrito') }}"><img src="{{ url_for('static', filename='img/carrito.png') }}" class="menu_mobile_botones"></a>
-        
-
-        
-        <a href="{{ url_for('miCuenta') }}"><img src="{{ url_for('static', filename='img/login.png') }}" class="menu_mobile_botones"></a>
-        
-    </div>
+    
     
     <!--FIN CODIGO ALE MENU-->
 
@@ -89,7 +78,18 @@
             </a>
         </div>
     </main>
+      <!--- BOTONES MOBILE -->
+    <div class="container_MenuBotonesMobile">
+        <a href=""><img src="{{ url_for('static', filename='img/whats.png') }}" class="menu_mobile_botones"></a>
 
+       
+        <a href="{{ url_for('carrito') }}"><img src="{{ url_for('static', filename='img/carrito.png') }}" class="menu_mobile_botones"></a>
+        
+
+        
+        <a href="{{ url_for('miCuenta') }}"><img src="{{ url_for('static', filename='img/login.png') }}" class="menu_mobile_botones"></a>
+        
+    </div>
     <script src="{{ url_for('static', filename='js/miCuenta.js') }}"></script>
 </body>
 </html>
