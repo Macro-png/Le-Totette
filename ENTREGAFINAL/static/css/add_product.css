@@ -132,7 +132,7 @@ aside input[type="checkbox"], aside label {
     }
 }
 /* MENU DE HAMBURGUESA PARA PANTALLAS MUY CHIQUITAS */
-@media screen and (max-width:291px) {
+@media screen and (max-width:500px) {
     label {
         display: flex;
         flex-direction: row;
