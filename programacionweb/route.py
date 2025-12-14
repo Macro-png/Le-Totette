@@ -164,7 +164,7 @@ def route(app):
             return guardar_producto(param)
 
     @app.route("/admin/mod_product", methods=["GET","POST"])
-    def add_product():
+    def mod_product():
         param = {}
         if request.method == "GET":
             return mod_product_pagina(param)
