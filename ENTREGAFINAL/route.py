@@ -85,35 +85,42 @@ def route(app):
 
         #return redirect(url_for("carrito"))
     
-    @app.route('/carrito/agregar/<int:producto_id>', methods=['POST'])
+    @app.route('/cliente/carrito/agregar/<int:producto_id>', methods=['POST'])
     def carrito_agregar(producto_id):
-        # 1. Validar sesión
-        if 'usuario' not in session:
-            return redirect(url_for('login')) # Ajusta al nombre de tu ruta de login
-    
-        if es_admin:
+        if not requiere_login():
+            return redirect(url_for('login'))
+
+        if es_admin():
             return redirect("/admin")
 
-    # 2. Obtener ID del cliente desde la sesión
         cliente_id = session['usuario']['id']
+        model.agregar_producto_carrito(cliente_id, producto_id)
 
-    # 3. Llamar al modelo para insertar en BD
-        exito = model.agregar_producto_carrito(cliente_id, producto_id)
-        if exito:
-            return redirect(url_for('carrito'))
-        else:
-            return "error al agregar al carrito"
+        return redirect(url_for('carrito'))
+
 
 
     @app.route("/cliente/carrito/eliminar/<int:producto_id>", methods=["POST"])
     def carrito_eliminar(producto_id):
-        param = {}
-        return eliminar_producto_carrito(param, producto_id)
+        if not requiere_login() or es_admin():
+            return redirect('/login')
+
+        cliente_id = session['usuario']['id']
+        model.eliminar_producto_carrito(cliente_id, producto_id)
+
+        return redirect('/cliente/carrito')
+
 
     @app.route("/cliente/carrito/vaciar", methods=["POST"])
     def carrito_vaciar():
-        param = {}
-        return vaciar_carrito(param)
+        if not requiere_login() or es_admin():
+            return redirect('/login')
+
+        cliente_id = session['usuario']['id']
+        model.vaciar_carrito(cliente_id)
+
+        return redirect('/cliente/carrito')
+
 
     # -------------------- WISHLIST --------------------
 

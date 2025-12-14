@@ -125,22 +125,30 @@ def obtenerProductosporFiltros(filtro):
 
 
 def agregar_producto_carrito(cliente_id, producto_id):
-    
     sSql = """
-    INSERT INTO carrito (clientes_id, productos_id)
-    VALUES (%s, %s)
+    INSERT INTO carrito (clientes_id, productos_id, cantidad)
+    VALUES (%s, %s, 1)
+    ON DUPLICATE KEY UPDATE
+        cantidad = cantidad + 1;
     """
-   
-    return insertDB(BASE, sSql, (cliente_id, producto_id)) >= 1
+    return insertDB(BASE, sSql, (cliente_id, producto_id)) is not None
+
 
 def obtener_carrito(cliente_id):
     sSql = """
-    SELECT p.id, p.nombre, p.precio_unidad, p.img
+    SELECT 
+        p.id,
+        p.nombre,
+        p.precio_unidad,
+        p.img,
+        c.cantidad,
+        (p.precio_unidad * c.cantidad) AS subtotal
     FROM carrito c
     JOIN productos p ON p.id = c.productos_id
     WHERE c.clientes_id = %s;
     """
     return selectDB(BASE, sSql, (cliente_id,))
+
 
 def eliminar_producto_carrito(cliente_id, producto_id):
     sSql = """
@@ -158,7 +166,7 @@ def vaciar_carrito(cliente_id):
 
 def obtener_total_carrito(cliente_id):
     sSql = """
-    SELECT SUM(p.precio_unidad)
+    SELECT SUM(p.precio_unidad * c.cantidad)
     FROM carrito c
     JOIN productos p ON p.id = c.productos_id
     WHERE c.clientes_id = %s;
