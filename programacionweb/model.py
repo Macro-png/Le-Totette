@@ -42,6 +42,41 @@ def validarClientePorMailYContrasena(result, mail, contrasena):
 # PRODUCTOS
 # ---------------------------------------------------------------------------
 
+def crear_producto(nombre, precio, img, descripcion):
+    sSql = """
+    INSERT INTO productos (nombre, precio_unidad, img, descripcion, ventas)
+    VALUES (%s, %s, %s, %s, 0);
+    """
+    return insertDB(BASE, sSql, (nombre, precio, img, descripcion)) == 1
+
+def actualizar_producto(pid, nombre, precio, img, descripcion):
+    sSql = """
+    UPDATE productos
+    SET nombre=%s, precio_unidad=%s, img=%s, descripcion=%s
+    WHERE id=%s;
+    """
+    return updateDB(BASE, sSql, (nombre, precio, img, descripcion, pid)) == 1
+
+def eliminar_colores_producto(pid):
+    return deleteDB(BASE, "DELETE FROM colores WHERE productos_id=%s;", (pid,)) > 0
+
+def agregar_color(pid, codigo):
+    return insertDB(BASE,
+        "INSERT INTO colores (productos_id, codigo_hexa) VALUES (%s,%s);",
+        (pid, codigo)
+    ) == 1
+    
+def eliminar_filtros_producto(pid):
+    return deleteDB(BASE, "DELETE FROM filtros WHERE productos_id=%s;", (pid,)) > 0
+
+def agregar_filtro(pid, filtro):
+    return insertDB(
+        BASE,
+        "INSERT INTO filtros (productos_id, filtro) VALUES (%s,%s);",
+        (pid, filtro)
+    ) == 1
+
+
 def obtenerTodosLosProductos():
     sSql = """
     SELECT id, nombre, precio_unidad, img, descripcion, ventas
@@ -67,7 +102,7 @@ def obtenerProductosporFiltros(filtro):
         INNER JOIN
             filtros ON productos.id = filtros.productos_id
         WHERE
-            filtros.filtro=%$ ;"""
+            filtros.filtro=%s ;"""
     filas = selectDB(BASE, sSql, (filtro,))
     return [f[0] for f in filas] if filas else []
 
@@ -97,14 +132,25 @@ def eliminar_producto_carrito(cliente_id, producto_id):
     DELETE FROM carrito
     WHERE clientes_id = %s AND productos_id = %s;
     """
-    return deleteDB(BASE, sSql, (cliente_id, producto_id)) >= 0
+    return deleteDB(BASE, sSql, (cliente_id, producto_id)) > 0
 
 def vaciar_carrito(cliente_id):
     sSql = """
     DELETE FROM carrito
     WHERE clientes_id = %s;
     """
-    return deleteDB(BASE, sSql, (cliente_id,)) >= 0
+    return deleteDB(BASE, sSql, (cliente_id,)) > 0
+
+def obtener_total_carrito(cliente_id):
+    sSql = """
+    SELECT SUM(p.precio_unidad)
+    FROM carrito c
+    JOIN productos p ON p.id = c.productos_id
+    WHERE c.clientes_id = %s;
+    """
+    fila = selectDB(BASE, sSql, (cliente_id,))
+    return fila[0][0] if fila and fila[0][0] else 0
+
 
 
 # ---------------------------------------------------------------------------
@@ -132,7 +178,7 @@ def eliminar_wishlist(cliente_id, producto_id):
     DELETE FROM wishlist
     WHERE cliente_id = %s AND producto_id = %s;
     """
-    return deleteDB(BASE, sSql, (cliente_id, producto_id)) >= 0
+    return deleteDB(BASE, sSql, (cliente_id, producto_id)) > 0
 
 
 # ---------------------------------------------------------------------------
