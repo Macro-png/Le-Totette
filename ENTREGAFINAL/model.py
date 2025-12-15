@@ -338,13 +338,21 @@ def obtener_producto_mas_vendido():
     return fila[0] if fila else None
 
 def obtener_ventas_por_categoria():
-    sSql = """
-    SELECT c.nombre, COALESCE(SUM(p.ventas), 0)
-    FROM categorias c
-    LEFT JOIN productos p ON p.categoria_id = c.id
-    GROUP BY c.id;
+    sql = """
+    SELECT
+        f.filtro AS nombre,
+        SUM(dp.cantidad) AS ventas
+    FROM filtros f
+    JOIN productos p ON p.id = f.productos_id
+    JOIN detalle_pedido dp ON dp.productos_id = p.id
+    JOIN pedidos pe ON pe.id = dp.pedidos_id
+    WHERE pe.estado <> 'cancelado'
+    GROUP BY f.filtro
+    ORDER BY ventas DESC;
     """
-    return selectDB(BASE, sSql) or []
+    res = selectDB(BASE, sql)
+    return res if res else []
+
 
 
 #-----------------------------------------
