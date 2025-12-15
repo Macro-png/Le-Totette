@@ -67,30 +67,63 @@
                 <p id="correo-usuario">📧 Correo: {{ mail_usuario }}</p>
             </section>
                         <!-- FORMULARIO DE CAMBIO DE CONTRASEÑA -->
-            <form id="formUsuario" class="form-usuario">
+            <!-- FORMULARIO DE CAMBIO DE CONTRASEÑA -->
+            <form
+                id="formUsuario"
+                class="form-usuario"
+                method="POST"
+                action="{{ url_for('cambiar_contrasena_route') }}"
+            >
                 <!-- Contraseña actual -->
                 <div class="campo">
                     <label for="passActual" class="label-usuario">Contraseña actual:</label>
-                    <input type="password" id="passActual" class="input-usuario" placeholder="Ingresa tu contraseña actual">
+                    <input
+                        type="password"
+                        id="passActual"
+                        name="contrasena_actual"
+                        class="input-usuario"
+                        placeholder="Ingresa tu contraseña actual"
+                        required
+                    >
                     <small class="error-text"></small>
                 </div>
 
                 <!-- Nueva contraseña -->
                 <div class="campo">
                     <label for="passNueva" class="label-usuario">Nueva contraseña:</label>
-                    <input type="password" id="passNueva" class="input-usuario" placeholder="Crea una nueva contraseña">
+                    <input
+                        type="password"
+                        id="passNueva"
+                        name="nueva_contrasena"
+                        class="input-usuario"
+                        placeholder="Crea una nueva contraseña"
+                        required
+                    >
                     <small class="error-text"></small>
                 </div>
 
                 <!-- Confirmar nueva contraseña -->
                 <div class="campo">
                     <label for="passConfirmar" class="label-usuario">Confirmar nueva contraseña:</label>
-                    <input type="password" id="passConfirmar" class="input-usuario" placeholder="Repite la nueva contraseña">
+                    <input
+                        type="password"
+                        id="passConfirmar"
+                        name="repetir_contrasena"
+                        class="input-usuario"
+                        placeholder="Repite la nueva contraseña"
+                        required
+                    >
                     <small class="error-text"></small>
                 </div>
 
                 <!-- Mensaje general -->
-                <p id="mensaje-general" class="mensaje-general"></p>
+                {% if error %}
+                    <p class="mensaje-general error">{{ error }}</p>
+                {% endif %}
+
+                {% if success %}
+                    <p class="mensaje-general success">{{ success }}</p>
+                {% endif %}
 
                 <!-- Botón -->
                 <div class="botones">

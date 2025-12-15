@@ -38,6 +38,15 @@ def validarClientePorMailYContrasena(result, mail, contrasena):
         return True
     return False
 
+def actualizar_contrasena(cliente_id, nueva_contrasena):
+    sSql = """
+    UPDATE clientes
+    SET contrasena = %s
+    WHERE id = %s;
+    """
+    return updateDB(BASE, sSql, (nueva_contrasena, cliente_id)) == 1
+
+
 # ---------------------------------------------------------------------------
 # PRODUCTOS
 # ---------------------------------------------------------------------------
@@ -62,14 +71,6 @@ def actualizar_producto(pid, nombre, precio, img, descripcion):
     """
     return updateDB(BASE, sSql, (nombre, precio, img, descripcion, pid)) == 1
 
-def agregar_color(pid, codigo):
-    return insertDB(BASE,
-        "INSERT INTO colores (productos_id, codigo_hexa) VALUES (%s,%s);",
-        (pid, codigo)
-    ) == 1
-    
-def eliminar_colores_producto(pid):
-    return deleteDB(BASE, "DELETE FROM colores WHERE productos_id=%s;", (pid,)) >= 0
 
 def eliminar_filtros_producto(pid):
     return deleteDB(BASE, "DELETE FROM filtros WHERE productos_id=%s;", (pid,)) >= 0

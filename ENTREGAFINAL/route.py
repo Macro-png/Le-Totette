@@ -63,6 +63,12 @@ def route(app):
         if request.method == "GET":
             return creatote_pagina(param)
         return creatote_formulario(param)
+    
+    @app.route("/cliente/cambiar_contrasena", methods=["POST"])
+    def cambiar_contrasena_route():
+        param = {}
+        return cambiar_contrasena(param)
+
 
     # -------------------- CARRITO --------------------
 
