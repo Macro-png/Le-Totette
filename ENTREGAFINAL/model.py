@@ -297,6 +297,13 @@ def obtener_pedidos_cliente_con_productos(cliente_id):
 
     return list(pedidos.values())
 
+def obtener_pedidos_admin(): 
+    sSql = """
+    SELECT p.id, c.nombre, p.fecha, p.precio_total, p.estado 
+    FROM pedidos p JOIN clientes c ON c.id = p.cliente_id; 
+    """ 
+    return selectDB(BASE, sSql)
+
 def actualizar_estado_pedido(pedido_id, estado):
     sSql = """
     UPDATE pedidos

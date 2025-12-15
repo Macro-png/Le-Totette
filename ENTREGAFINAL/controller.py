@@ -203,8 +203,9 @@ def confirmar_pedido(param):
     
     model.insertDB(BASE, sSql, (cliente_id, precio_total))
     
-    pedido_id=model.selectDB(BASE, """SELECT id FROM pedidos WHERE fecha = CURDATE() AND cliente_id = %s;""", (cliente_id))
-
+    res=model.selectDB(BASE, """SELECT id FROM pedidos WHERE precio_total = %s AND cliente_id = %s;""", (precio_total, cliente_id))
+    
+    pedido_id = res[0][0]
     total = 0
 
     # -------------------------
@@ -219,15 +220,9 @@ def confirmar_pedido(param):
 
         subtotal = precio * cantidad
         total += subtotal
-
-        model.insertDB(BASE, """
-                       INSERT INTO detalle_pedido
-                       (pedidos_id, productos_id, cantidad, precio_unidad)
-                       VALUES (%s, %s, %s, %s);""", (pedido_id, producto_id, cantidad, precio))
         
-        #model.agregar_detalle_pedido(pedido_id, producto_id, cantidad, precio)
+        model.agregar_detalle_pedido(pedido_id, producto_id, cantidad, precio)
 
-        
         model.aumentar_ventas_producto(producto_id, cantidad)
         
         

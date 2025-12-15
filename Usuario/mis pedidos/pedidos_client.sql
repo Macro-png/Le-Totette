@@ -9,6 +9,11 @@ SELECT * FROM detalle_pedido;
 
 SELECT * FROM pedidos;
 
+INSERT INTO detalle_pedido (pedidos_id, productos_id, cantidad, precio_unidad)
+VALUES (1, 1, 2, 1500);
+
+SELECT id FROM pedidos WHERE precio_total = 3500 AND cliente_id = 3;
+
 DESCRIBE pedidos;
 DESCRIBE detalle_pedido;
 -- alter table pedidos auto_increment = 1;
