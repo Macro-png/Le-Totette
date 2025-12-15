@@ -110,7 +110,12 @@ def catalogo_pagina(param):
     if not requiere_login() or es_admin():
         return redirect('/login')
 
-    productos_db = model.obtenerTodosLosProductos()
+    filtros_seleccionados = request.args.getlist('filtro')
+
+    if filtros_seleccionados:
+        productos_db = model.obtener_productos_por_filtros(filtros_seleccionados)
+    else:
+        productos_db = model.obtenerTodosLosProductos()
 
     productos = []
     for p in productos_db:
@@ -122,9 +127,14 @@ def catalogo_pagina(param):
             'descripcion': p[4],
         })
 
-    param['productos'] = productos
-    return render_template('catalogo.html', **param)
+    filtros_db = model.obtener_filtros()
+    filtros = [f[0] for f in filtros_db]
 
+    param['productos'] = productos
+    param['filtros'] = filtros
+    param['filtros_seleccionados'] = filtros_seleccionados
+
+    return render_template('catalogo.html', **param)
 
 
 def producto_pagina(param, producto_id):

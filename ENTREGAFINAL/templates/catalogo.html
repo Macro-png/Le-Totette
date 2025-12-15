@@ -62,12 +62,23 @@
 
   <main>
     <aside>
-      <div class="filters">
-        <h3>Filtros</h3>
-        <label><input type="checkbox"> Filtro 1</label>
-        <label><input type="checkbox"> Filtro 2</label>
-        <label><input type="checkbox"> Filtro 3</label>
-      </div>
+      <form method="GET" action="{{ url_for('catalogo') }}">
+        <div class="filters">
+          <h3>Filtros</h3>
+          {% for f in filtros %}
+            <label>
+              <input
+                type="checkbox"
+                name="filtro"
+                value="{{ f }}"
+                {% if f in filtros_seleccionados %}checked{% endif %}
+                onchange="this.form.submit()"
+              >
+              {{ f }}
+            </label>
+          {% endfor %}
+        </div>
+      </form>
     </aside>
 
     <section class="products">

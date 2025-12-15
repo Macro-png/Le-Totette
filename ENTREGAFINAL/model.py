@@ -82,6 +82,10 @@ def agregar_filtro(pid, filtro):
         "INSERT INTO filtros (productos_id, filtro) VALUES (%s,%s);",
         (pid, filtro)
     ) == 1
+    
+def obtener_filtros():
+    sql = "SELECT DISTINCT filtro FROM filtros ORDER BY filtro;"
+    return selectDB(BASE, sql)
 
 
 def obtenerTodosLosProductos():
@@ -111,18 +115,17 @@ def obtenerProductoPorId(pid):
     }
 
 
-def obtenerProductosporFiltros(filtro):
-    sSql = """
-        SELECT
-            productos.nombre AS 'Nombre del Producto'
-        FROM
-            productos
-        INNER JOIN
-            filtros ON productos.id = filtros.productos_id
-        WHERE
-            filtros.filtro=%s ;"""
-    filas = selectDB(BASE, sSql, (filtro,))
-    return [f[0] for f in filas] if filas else []
+def obtener_productos_por_filtros(filtros):
+    placeholders = ','.join(['%s'] * len(filtros))
+
+    sql = f"""
+    SELECT DISTINCT p.id, p.nombre, p.precio_unidad, p.img, p.descripcion
+    FROM productos p
+    JOIN filtros f ON p.id = f.productos_id
+    WHERE f.filtro IN ({placeholders});
+    """
+
+    return selectDB(BASE, sql, tuple(filtros))
 
 
 # ---------------------------------------------------------------------------
