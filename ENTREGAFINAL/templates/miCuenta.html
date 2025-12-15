@@ -66,8 +66,7 @@
                 <h2 id="nombre-usuario">👤 Nombre: {{ nombre_usuario }}</h2>
                 <p id="correo-usuario">📧 Correo: {{ mail_usuario }}</p>
             </section>
-                        <!-- FORMULARIO DE CAMBIO DE CONTRASEÑA -->
-            <!-- FORMULARIO DE CAMBIO DE CONTRASEÑA -->
+
             <form
                 id="formUsuario"
                 class="form-usuario"
@@ -118,7 +117,7 @@
 
                 <p id="mensaje-general" class="mensaje-general"></p>
 
-                <!-- Mensaje general -->
+                
                 {% if error %}
                     <p class="mensaje-general error">{{ error }}</p>
                 {% endif %}
@@ -127,7 +126,7 @@
                     <p class="mensaje-general success">{{ success }}</p>
                 {% endif %}
 
-                <!-- Botón -->
+                
                 <div class="botones">
                     <input type="submit" value="Actualizar contraseña" class="boton-usuario">
                 </div>

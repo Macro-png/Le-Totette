@@ -225,13 +225,3 @@ def route(app):
         return creatote_funcion(param, diRequest)
     
     
-    #def extracreatote():
-        
-    
-    #@app.route{{ url_for('producto', producto_id=producto['id']) }}
-    #@app.route("/cliente/creatote", methods=["GET", "POST"])
-    #def creatote():
-    #    param = {}
-    #    if request.method == "GET":
-    #        return creatote_pagina(param)
-    #    return creatote_formulario(param)

@@ -230,54 +230,14 @@ def confirmar_pedido(param):
         
         model.aumentar_ventas_producto(producto_id, cantidad)
         
-        
-                    
-        
-    # -------------------------
-    # Totes personalizados
-    # -------------------------
-    for item in session.get('totes_temp', []):
-        producto_id = item['producto_id']
 
-        precio = model.selectDB(
-            BASE,
-            "SELECT precio_unidad FROM productos WHERE id=%s;",
-            (producto_id,)
-        )[0][0]
 
-        total += precio
-
-        model.insertDB(BASE, """
-            INSERT INTO detalle_pedido
-            (pedidos_id, productos_id, cantidad, precio_unidad)
-            VALUES (%s, %s, 1, %s);
-        """, (pedido_id, producto_id, precio))
-
-        detalle_id = model.selectDB(BASE, "SELECT LAST_INSERT_ID();")[0][0]
-
-        model.insertDB(BASE, """
-            INSERT INTO detalle_personalizados
-            (detalle_pedido_id, img)
-            VALUES (%s, %s);
-        """, (detalle_id, item['img']))
-
-        # sumar venta del tote
-        model.aumentar_ventas_producto(producto_id, 1)
-
-    # -------------------------
-    # Actualizar total
-    # -------------------------
-    model.updateDB(BASE, """
-        UPDATE pedidos
-        SET precio_total = %s
-        WHERE id = %s;
-    """, (total, pedido_id))
 
     # -------------------------
     # Limpiar carrito y sesión
     # -------------------------
     model.vaciar_carrito(cliente_id)
-    session.pop('totes_temp', None)
+   
 
     return redirect('/cliente/pedido')
 
@@ -463,6 +423,7 @@ def guardar_producto(param, diRequest):
 
 ##########################################################################
 #                MANEJO DE  SUBIDA DE ARCHIVOS  
+#                  los archivos de mariano
 ##########################################################################
 
 def upload_file (diResult) :
