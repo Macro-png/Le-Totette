@@ -117,43 +117,26 @@ function validarArchivo() {
 // ------------------ AGREGAR NUEVO FILTRO------------------
 function agregarfiltros() {
   if (getCantidadfiltros() >= MAX_FILTROS) {
-    // Defensa adicional por si el botón no estuviera deshabilitado
     alert("Solo puedes tener " + MAX_FILTROS + " filtros en total.");
     actualizarEstadoBotonAgregar();
     return;
   }
-  var cantidadActual = contenedorfiltros.querySelectorAll(".filtros").length;
-  var nuevoNumero = cantidadActual + 1;
 
   // Crear nuevo bloque .filtros
-  var nuevoDiv = document.createElement("div");
-  nuevoDiv.className = "filtros";
+  const div = document.createElement("div");
+  div.classList.add("filtros");
 
-  // Label
-  var nuevoLabel = document.createElement("label");
-  nuevoLabel.setAttribute("for", "filtro" + nuevoNumero);
-  nuevoLabel.textContent = "Filtro " + nuevoNumero;
+  div.innerHTML = `
+      <label>Filtro</label>
+      <input type="text" class="filtro" name="filtros[]">
+      <small class="error-text"></small>
+  `;
 
-  // Input
-  var nuevoInput = document.createElement("input");
-  nuevoInput.type = "text";
-  nuevoInput.id = "filtro" + nuevoNumero;
-  nuevoInput.className = "filtro";
-
-  // Small de error
-  var nuevoSmall = document.createElement("small");
-  nuevoSmall.className = "error-text";
-
-  // Ensamblar
-  nuevoDiv.appendChild(nuevoLabel);
-  nuevoDiv.appendChild(nuevoInput);
-  nuevoDiv.appendChild(nuevoSmall);
-  contenedorfiltros.appendChild(nuevoDiv);
-
-  // Agregar validación en tiempo real  
+  contenedorfiltros.appendChild(div);
 
   actualizarEstadoBotonAgregar();
 }
+
 
 // ------------------ VALIDACIÓN EN TIEMPO REAL ------------------
 function activarValidaciones() {
@@ -192,18 +175,9 @@ function validarFormulario() {
 
   
 // ------------------ EVENTOS PRINCIPALES ------------------
-const contenedor = document.getElementById("contenedor-filtros");
-const btnAgregar = document.getElementById("agregarfiltros");
+btnAgregarfiltros.addEventListener("click", agregarfiltros);
+form.addEventListener("submit", validarFormulario);
+activarValidaciones();
+// Ajusta el estado inicial del botón según la cantidad de filtros ya presentes en el HTML
+actualizarEstadoBotonAgregar();
 
-btnAgregar.addEventListener("click", () => {
-    const div = document.createElement("div");
-    div.classList.add("filtros");
-
-    div.innerHTML = `
-        <label>Filtro</label>
-        <input type="text" class="filtro" name="filtros[]">
-        <small class="error-text"></small>
-    `;
-
-    contenedor.appendChild(div);
-});
