@@ -157,7 +157,7 @@ def obtener_carrito(cliente_id):
 
 
 def eliminar_producto_carrito(cliente_id, producto_id):
-    # 1. Intentar bajar cantidad
+    # baja cantidad
     sSql_update = """
     UPDATE carrito
     SET cantidad = cantidad - 1
@@ -167,7 +167,7 @@ def eliminar_producto_carrito(cliente_id, producto_id):
     """
     filas = updateDB(BASE, sSql_update, (cliente_id, producto_id))
 
-    # 2. Si no se actualizó nada, borrar
+    # 2. si no se actualizó nada, borrar
     if filas == 0:
         sSql_delete = """
         DELETE FROM carrito
@@ -347,6 +347,14 @@ def obtener_ventas_por_categoria():
 #-----------------------------------------
 #              CREA TU TOTE
 #-----------------------------------------
+
+
+
+def agregar_producto_carrito_por_nombre(cliente_id, nombre):
+    sSql = """
+    INSERT INTO carrito (clientes_id, productos_id, cantidad)
+    VALUES (%s, (SELECT id FROM productos WHERE nombre = %s),  1) """
+    return insertDB(BASE, sSql, (cliente_id, nombre)) is not None
 
 
 def creatutote(nombre, precio, img, descripcion):
