@@ -210,13 +210,14 @@ def confirmar_pedido(param):
     # Crear pedido
     # -------------------------
     sSql = """
-    INSERT INTO pedidos (cliente_id, fecha, precio_total, estado)
-    VALUES (%s, CURDATE(), %s, 'espera');
+    INSERT INTO pedidos (id, cliente_id, fecha, precio_total, estado)
+    VALUES (NULL, %s, CURDATE(), %s, 'espera');
     """
     precio_total = model.obtener_total_carrito(cliente_id) or 0
     
     model.insertDB(BASE, sSql, (cliente_id, precio_total))
-    pedido_id = model.selectDB(BASE, "SELECT LAST_INSERT_ID();")[0][0]
+    
+    pedido_id=model.selectDB(BASE, """SELECT id FROM pedidos WHERE fecha = CURDATE() AND cliente_id = %s;""", (cliente_id))
 
     total = 0
 
@@ -233,11 +234,19 @@ def confirmar_pedido(param):
         subtotal = precio * cantidad
         total += subtotal
 
-        model.agregar_detalle_pedido(pedido_id, producto_id, cantidad, precio)
+        model.insertDB(BASE, """
+                       INSERT INTO detalle_pedido
+                       (pedidos_id, productos_id, cantidad, precio_unidad)
+                       VALUES (%s, %s, %s, %s);""", (pedido_id, producto_id, cantidad, precio))
+        
+        #model.agregar_detalle_pedido(pedido_id, producto_id, cantidad, precio)
 
-        # 🔥 AUMENTAR VENTAS CORRECTAMENTE
+        
         model.aumentar_ventas_producto(producto_id, cantidad)
-
+        
+        
+                    
+        
     # -------------------------
     # Totes personalizados
     # -------------------------
@@ -266,7 +275,7 @@ def confirmar_pedido(param):
             VALUES (%s, %s);
         """, (detalle_id, item['img']))
 
-        # 🔥 sumar venta del tote
+        # sumar venta del tote
         model.aumentar_ventas_producto(producto_id, 1)
 
     # -------------------------
