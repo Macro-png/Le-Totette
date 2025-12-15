@@ -6,6 +6,8 @@ from werkzeug.utils import secure_filename
 from uuid import uuid4
 from appConfig import config
 import _mysql_db
+import random
+import string
 
 # ---------------------------------------------------------------------------
 # HELPERS
@@ -177,62 +179,6 @@ def cambiar_contrasena(param):
 
     return render_template('miCuenta.html', **param)
 
-# ---------------------------------------------------------------------------
-# CREATOTE
-# ---------------------------------------------------------------------------
-
-def creatote_pagina(param):
-    if not requiere_login() or es_admin():
-        return redirect('/login')
-
-    return render_template('creatote.html', param=param)
-
-
-# ---------------------------------------------------------------------------
-# CREA TU TOTE - resolviendo problemas de la base de datos
-# ---------------------------------------------------------------------------
-
-
-def tote_creatote():
-    BASE = { "host":"localhost",
-        "user":"root",
-        "pass":"",
-        "dbname":"base_le_totette"}
-
-    # -------------------------
-    #  Crear pedido
-    # -------------------------
-    sSql = """
-    SELECT id
-    FROM productos
-    WHERE nombre = 'disena';
-    """
-    return _mysql_db.selectDB(BASE, sSql, ())
-
-def creatote_formulario(param):
-    if not requiere_login():
-        return redirect('/login', param=param)
-    if es_admin():
-        return redirect('/admin', param=param)
-    diRequest = {}
-    filename = upload_file(diRequest)
-
-    # si no se subió archivo, no seguimos
-    if not filename:
-        param['error'] = 'No se subió ninguna imagen'
-        return redirect('/cliente/creatote')
-
-    if 'totes_temp' not in session:
-        session['totes_temp'] = []
-
-    session['totes_temp'].append({
-        'producto_id': int(request.form.get('producto_id')),
-        'img': filename,
-        'cantidad': 1
-    })
-
-    session.modified = True
-    return redirect('/cliente/carrito')
 
 
 def confirmar_pedido(param):
@@ -578,3 +524,48 @@ def getRequest(diResult):
             else:
                 diResult[name]=""     
  
+ 
+ # ---------------------------------------------------------------------------
+# CREATOTE
+# ---------------------------------------------------------------------------
+
+def creatote_pagina(param):
+    if not requiere_login() or es_admin():
+        return redirect('/login')
+
+    return render_template('creatote.html', param=param)
+
+
+# ---------------------------------------------------------------------------
+# CREA TU TOTE - resolviendo problemas de la base de datos
+# ---------------------------------------------------------------------------
+
+def creatote_funcion(param, diRequest):
+    nombre = "Tu tote{}".format(generar_string_aleatorio(10))
+    descripcion = ""
+    precio = "3000"
+
+    # subir imagen
+    #diResult = getRequest(diRequest)
+    filename= upload_file(diRequest)
+
+    # crear producto
+    model.crear_producto(
+        nombre=nombre,
+        precio=precio,
+        img=filename,
+        descripcion=descripcion
+    )
+    return redirect('/cliente/carrito')
+
+
+
+
+def generar_string_aleatorio(longitud):
+    # caracteres posibles
+    caracteres = string.ascii_letters + string.digits # Incluye (a-z, A-Z, 0-9)
+    
+    # caracteres random hasta long
+    string_aleatorio = ''.join(random.choice(caracteres) for i in range(longitud))
+    
+    return string_aleatorio

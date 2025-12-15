@@ -57,12 +57,7 @@ def route(app):
         return redirect("/cliente/home")
 
 
-    @app.route("/cliente/creatote", methods=["GET", "POST"])
-    def creatote():
-        param = {}
-        if request.method == "GET":
-            return creatote_pagina(param)
-        return creatote_formulario(param)
+
     
     @app.route("/cliente/cambiar_contrasena", methods=["POST"])
     def cambiar_contrasena_route():
@@ -219,6 +214,16 @@ def route(app):
     #=============================
     # EXTRA PARA EL CREA TU TOTE
     #====================-==========
+    
+    
+    @app.route("/cliente/creatote", methods=["GET", "POST"])
+    def creatote():
+        param = {}
+        if request.method == "GET":
+            return creatote_pagina(param)
+        diRequest={}
+        return creatote_funcion(param, diRequest)
+    
     
     #def extracreatote():
         
