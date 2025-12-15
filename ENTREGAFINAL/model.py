@@ -40,11 +40,11 @@ def validarClientePorMailYContrasena(result, mail, contrasena):
 
 def actualizar_contrasena(cliente_id, nueva_contrasena):
     sSql = """
-    UPDATE clientes
-    SET contrasena = %s
-    WHERE id = %s;
+        UPDATE clientes
+        SET contrasena = %s
+        WHERE id = %s;
     """
-    return updateDB(BASE, sSql, (nueva_contrasena, cliente_id)) == 1
+    return updateDB(BASE, sSql, (nueva_contrasena, cliente_id))
 
 
 # ---------------------------------------------------------------------------
