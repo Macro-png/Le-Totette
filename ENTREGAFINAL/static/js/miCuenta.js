@@ -125,10 +125,7 @@ function activarValidacionesTiempoReal() {
 
 // ================== VALIDACIÓN GENERAL Y ENVÍO ==================
 function validarFormulario(event) {
-  // Bloquea el envío hasta comprobar todo
-  if (event && typeof event.preventDefault === "function") {
-    event.preventDefault();
-  }
+  event.preventDefault(); // bloquea primero
 
   var valido = true;
 
@@ -137,12 +134,10 @@ function validarFormulario(event) {
   if (!validarPassConfirmar()) valido = false;
 
   if (valido) {
-    setMensajeGeneralOk("✅ Contraseña actualizada correctamente.");
-    // Aquí harías la petición al servidor (fetch/AJAX).
-  } else {
-    setMensajeGeneralError("⚠️ Hay campos con errores. Corrígelos antes de continuar.");
+    formUsuario.submit();
   }
 }
+
 
 // ================== INICIALIZACIÓN ==================
 function init() {

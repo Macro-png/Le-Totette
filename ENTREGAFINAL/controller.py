@@ -136,6 +136,46 @@ def producto_pagina(param, producto_id):
     param['producto'] = producto
     return render_template('producto.html', **param)
 
+def cambiar_contrasena(param):
+    if not requiere_login():
+        return redirect('/login')
+
+    cliente_id = session['usuario']['id']
+
+    actual = request.form.get('contrasena_actual')
+    nueva = request.form.get('nueva_contrasena')
+    repetir = request.form.get('repetir_contrasena')
+
+    # Validaciones
+    if not actual or not nueva or not repetir:
+        param['error'] = "Faltan datos"
+        return render_template('miCuenta.html', **param)
+
+    if nueva != repetir:
+        param['error'] = "Las contraseñas no coinciden"
+        return render_template('miCuenta.html', **param)
+
+    if len(nueva) < 6:
+        param['error'] = "La contraseña debe tener al menos 6 caracteres"
+        return render_template('miCuenta.html', **param)
+
+    # Verificar contraseña actual
+    result = {}
+    if not model.validarClientePorMailYContrasena(
+        result,
+        session['usuario']['mail'],
+        actual
+    ):
+        param['error'] = "Contraseña actual incorrecta"
+        return render_template('miCuenta.html', **param)
+
+    # Actualizar contraseña
+    if model.actualizar_contrasena(cliente_id, nueva):
+        param['success'] = "Contraseña actualizada correctamente"
+    else:
+        param['error'] = "No se pudo actualizar la contraseña"
+
+    return render_template('miCuenta.html', **param)
 
 # ---------------------------------------------------------------------------
 # CREATOTE
