@@ -72,16 +72,18 @@
 
     <section class="products">
       {% for producto in productos %}
-        <div class="product">
-          <img id="img-prod1" src="{{ url_for('static', filename='uploads/' + (producto['img'] or '')) }}" alt="{{ producto['nombre'] }}">
-          <h4>{{ producto['nombre'] }}</h4>
-          <p>{{ producto['precio_unidad'] }}</p>
-          <button>
-            <a href="{{ url_for('producto', producto_id=producto['id']) }}">
-              Más Información
-            </a>
-          </button>
-        </div>
+        {% if producto['precio_unidad'] != 3000%}
+          <div class="product">
+            <img id="img-prod1" src="{{ url_for('static', filename='uploads/' + (producto['img'] or '')) }}" alt="{{ producto['nombre'] }}">
+            <h4>{{ producto['nombre'] }}</h4>
+            <p>{{ producto['precio_unidad'] }}</p>
+            <button>
+              <a href="{{ url_for('producto', producto_id=producto['id']) }}">
+                Más Información
+              </a>
+            </button>
+          </div>
+        {% endif %}
       {% endfor %}
     </section>
   </main>
