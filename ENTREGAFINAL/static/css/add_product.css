@@ -298,13 +298,13 @@ input[type="file"]::file-selector-button:hover{
     background-color: #d6786a;
 }
 
-.menucolor{
+.menufiltros{
     display: flex;
     flex-direction: row;
     align-items: center;
 }
 
-.agregarcolor{
+.agregarfiltros{
         background-color: #d2fab1;
         border:1px solid black;
         border-radius: 50%;
@@ -316,7 +316,7 @@ input[type="file"]::file-selector-button:hover{
         cursor: pointer;
 }
 
-.colores{
+.filtros{
     display: flex;
     flex-direction: row;
     align-items: center;
@@ -325,14 +325,14 @@ input[type="file"]::file-selector-button:hover{
 }
 
 @media screen and (max-width:500px) {
-    .colores{
+    .filtros{
         display: flex;
         flex-direction: column;
     }
 }
 
 @media screen and (max-width:260px) {
-    .menucolor{
+    .menufiltros{
         display: flex;
         flex-direction: column;
         align-items: center;
@@ -366,23 +366,23 @@ input[type="file"]::file-selector-button:hover{
     display: block !important;
 }
 
-/* Agregar colores dinamicamente */
-#contenedor-colores {
+/* Agregar filtros dinamicamente */
+#contenedor-filtros {
     display: flex;
     flex-direction: column;
-    gap: 10px; /* separa cada input de color nuevo */
+    gap: 10px; /* separa cada input de flitros nuevo */
 }
 
-.colores label {
+.filtros label {
     font-size: 16px;
 }
 
-.colores .error-text {
+.filtros .error-text {
     align-self: flex-start;
 }
 
-/* Cuando el boton agregar color llego a su maximo */
-#agregarcolor:disabled { opacity: 0.6; cursor: not-allowed; }
+/* Cuando el boton agregar filtros llego a su maximo */
+#agregarfiltros:disabled { opacity: 0.6; cursor: not-allowed; }
 
 /* -------- MENSAJE GENERAL ANTES DE ENVIAR EL FORMULARIO -------- */
 .mensaje-general {

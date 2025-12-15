@@ -1,5 +1,8 @@
 // ------------------ SELECCIÓN DE ELEMENTOS ------------------
 var form = document.getElementById("formProducto");
+var btnAgregarfiltros = document.getElementById("agregarfiltros");
+var contenedorfiltros = document.getElementById("contenedor-filtros");
+const MAX_FILTROS = 3;
 
 // ------------------ FUNCIONES DE APOYO ------------------
 function mostrarError(input, mensaje) {
@@ -19,7 +22,21 @@ function limpiarError(input) {
   errorText.textContent = "";
   errorText.classList.remove("mensaje-error");
 }
+// Contar filtros actuales
+function getCantidadfiltros() {
+  return contenedorfiltros.querySelectorAll(".filtros").length;
+}
+// Habilitar/Deshabilitar botón "+" según tope
+function actualizarEstadoBotonAgregar() {
+  var cantidad = getCantidadfiltros();
+  var alMaximo = cantidad >= MAX_FILTROS;
 
+  btnAgregarfiltros.disabled = alMaximo;
+  btnAgregarfiltros.title = alMaximo 
+    ? "Ya alcanzaste el máximo de " + MAX_FILTROS + " filtros."
+    : "Agregar un nuevo filtro";
+    // Operador ternario -> manera corta de if-else -> ? si es true, : si es false
+}
 
 // ------------------ VALIDACIONES INDIVIDUALES ------------------
 
@@ -97,12 +114,54 @@ function validarArchivo() {
 
 
 
+// ------------------ AGREGAR NUEVO FILTRO------------------
+function agregarfiltros() {
+  if (getCantidadfiltros() >= MAX_FILTROS) {
+    // Defensa adicional por si el botón no estuviera deshabilitado
+    alert("Solo puedes tener " + MAX_FILTROS + " filtros en total.");
+    actualizarEstadoBotonAgregar();
+    return;
+  }
+  var cantidadActual = contenedorfiltros.querySelectorAll(".filtros").length;
+  var nuevoNumero = cantidadActual + 1;
+
+  // Crear nuevo bloque .filtros
+  var nuevoDiv = document.createElement("div");
+  nuevoDiv.className = "filtros";
+
+  // Label
+  var nuevoLabel = document.createElement("label");
+  nuevoLabel.setAttribute("for", "filtro" + nuevoNumero);
+  nuevoLabel.textContent = "Filtro " + nuevoNumero;
+
+  // Input
+  var nuevoInput = document.createElement("input");
+  nuevoInput.type = "text";
+  nuevoInput.id = "filtro" + nuevoNumero;
+  nuevoInput.className = "filtro";
+
+  // Small de error
+  var nuevoSmall = document.createElement("small");
+  nuevoSmall.className = "error-text";
+
+  // Ensamblar
+  nuevoDiv.appendChild(nuevoLabel);
+  nuevoDiv.appendChild(nuevoInput);
+  nuevoDiv.appendChild(nuevoSmall);
+  contenedorfiltros.appendChild(nuevoDiv);
+
+  // Agregar validación en tiempo real  
+
+  actualizarEstadoBotonAgregar();
+}
+
 // ------------------ VALIDACIÓN EN TIEMPO REAL ------------------
 function activarValidaciones() {
   document.getElementById("nombre").addEventListener("input", validarNombre);
   document.getElementById("caract").addEventListener("input", validarCaracteristicas);
   document.getElementById("precio").addEventListener("input", validarPrecio);
   document.getElementById("archivo").addEventListener("change", validarArchivo);
+
 
 }
 
@@ -118,7 +177,7 @@ function validarFormulario() {
   if (!validarPrecio()) valido = false;
   if (!validarArchivo()) valido = false;
 
-  
+
   var mensaje = document.getElementById("mensaje-general");
 
   if (valido) {
@@ -133,6 +192,8 @@ function validarFormulario() {
 
   
 // ------------------ EVENTOS PRINCIPALES ------------------
-
+btnAgregarfiltros.addEventListener("click", agregarfiltros);
 form.addEventListener("submit", validarFormulario);
 activarValidaciones();
+// Ajusta el estado inicial del botón según la cantidad de filtros ya presentes en el HTML
+actualizarEstadoBotonAgregar();
