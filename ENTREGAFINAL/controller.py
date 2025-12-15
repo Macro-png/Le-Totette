@@ -541,7 +541,7 @@ def creatote_pagina(param):
 # ---------------------------------------------------------------------------
 
 def creatote_funcion(param, diRequest):
-    nombre = "Tu tote{}".format(generar_string_aleatorio(10))
+    nombre = "Tote personalizada: {}".format(generar_string_aleatorio(9))
     descripcion = ""
     precio = "3000"
 
@@ -556,6 +556,11 @@ def creatote_funcion(param, diRequest):
         img=filename,
         descripcion=descripcion
     )
+    
+    cliente_id = session['usuario']['id']
+    
+    model.agregar_producto_carrito_por_nombre(cliente_id, nombre)
+    
     return redirect('/cliente/carrito')
 
 

@@ -342,6 +342,14 @@ def obtener_ventas_por_categoria():
 #-----------------------------------------
 
 
+
+def agregar_producto_carrito_por_nombre(cliente_id, nombre):
+    sSql = """
+    INSERT INTO carrito (clientes_id, productos_id, cantidad)
+    VALUES (%s, (SELECT id FROM productos WHERE nombre = %s),  1) """
+    return insertDB(BASE, sSql, (cliente_id, nombre)) is not None
+
+
 def creatutote(nombre, precio, img, descripcion):
     sSql = """
     INSERT INTO productos (img)
