@@ -14,6 +14,8 @@ VALUES (1, 1, 2, 1500);
 
 SELECT id FROM pedidos WHERE precio_total = 3500 AND cliente_id = 3;
 
+DESCRIBE filtros;
+
 DESCRIBE pedidos;
 DESCRIBE detalle_pedido;
 -- alter table pedidos auto_increment = 1;

@@ -400,9 +400,11 @@ def guardar_producto(param, diRequest):
     descripcion = request.form.get('descripcion')
     precio = request.form.get('precio')
 
+    # obtener filtros (LISTA)
+    filtros = request.form.getlist('filtros[]')
+
     # subir imagen
-    #diResult = getRequest(diRequest)
-    filename= upload_file(diRequest)
+    filename = upload_file(diRequest)
 
     # crear producto
     model.crear_producto(
@@ -412,8 +414,26 @@ def guardar_producto(param, diRequest):
         descripcion=descripcion
     )
 
+    # obtener ID del producto recién creado
+    res = model.selectDB(
+        _mysql_db.BASE,
+        "SELECT id FROM productos WHERE nombre = %s ORDER BY id DESC LIMIT 1;",
+        (nombre,)
+    )
+
+    if not res:
+        param["error"] = "No se pudo obtener el producto"
+        return render_template("add_product.html", param=param)
+
+    producto_id = res[0][0]
+
+    # guardar filtros
+    for filtro in filtros:
+        if filtro.strip():
+            model.agregar_filtro(producto_id, filtro.strip())
 
     return redirect('/admin/add_product')
+
 
 
 ##########################################################################
